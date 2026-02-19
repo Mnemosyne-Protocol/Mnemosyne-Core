@@ -6,7 +6,7 @@ The theoretical framework and mathematical proof for the Mnemosyne Protocol is o
 
 > **Title:** The Mnemosyne Protocol: A Contextual Orchestration Framework for Generative Media
 > 
-> **DOI:** [10.5281/zenodo.18685082](https://zenodo.org/records/18685082)
+> **DOI:** [10.5281/zenodo.18685082]> https://zenodo.org/records/18699491
 >
 > **Status:** Preprint / Open Standard
 
