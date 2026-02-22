@@ -1,3 +1,3 @@
 def run_self_consistency(frames):
-    # Ürettikten sonra kontrol eder. Gecikme maliyeti yüksektir.
-    return {"rejects": int(len(frames) * 0.2), "resamples": 0, "hallucinations": int(len(frames) * 0.1)}
+    drift_count = sum(1 for f in frames if f.get('style_score', 1.0) < 0.85)
+    return {"rejects": drift_count, "resamples": 0, "hallucinations": drift_count // 2}
