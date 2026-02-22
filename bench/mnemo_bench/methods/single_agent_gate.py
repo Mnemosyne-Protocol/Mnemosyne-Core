@@ -1,3 +1,3 @@
 def run_single_agent_gate(frames):
-    # Sadece tek bir modaliteyi (örn: sadece stili) kontrol eder.
-    return {"rejects": int(len(frames) * 0.1), "resamples": int(len(frames) * 0.1), "hallucinations": int(len(frames) * 0.05)}
+    drift_count = sum(1 for f in frames if f.get('style_score', 1.0) < 0.85)
+    return {"rejects": drift_count, "resamples": drift_count, "hallucinations": 0}

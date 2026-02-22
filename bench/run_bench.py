@@ -1,9 +1,4 @@
-import argparse
-import json
-import os
-import sys
-
-# CTO İstemi: Absolute Imports (Net ve Çakışmasız)
+import argparse, json, os, sys
 from bench.mnemo_bench.logfmt import set_log_file
 from bench.mnemo_bench.methods.naive_chaining import run_naive_chaining
 from bench.mnemo_bench.methods.memory_buffer import run_memory_buffer
@@ -14,16 +9,14 @@ from bench.mnemo_bench.methods.mnemosyne_fail_closed import run_mnemosyne_pipeli
 def generate_synthetic_frames(num_frames):
     frames = []
     for i in range(1, num_frames + 1):
-        # CTO İstemi: Baseline green'i yükselt, drift'i daha gerçekçi yap.
-        # Her 5 karede 1 kasıtlı halüsinasyon (Drift)
-        if i % 5 == 0: 
+        if i % 5 == 0: # %20 Drift (Hata) oranı
             frames.append({"name": f"Frame_{i:03d}.mp4", "style_score": 0.40, "geometry_score": 0.95, "policy_score": 0.95})
         else:
             frames.append({"name": f"Frame_{i:03d}.mp4", "style_score": 0.95, "geometry_score": 0.95, "policy_score": 0.95})
     return frames
 
 def main():
-    parser = argparse.ArgumentParser(description="Mnemosyne Benchmark Suite")
+    parser = argparse.ArgumentParser()
     parser.add_argument("--frames", type=int, default=100)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--report", default="bench/out/report.csv")
@@ -33,8 +26,6 @@ def main():
 
     os.makedirs(os.path.dirname(args.report), exist_ok=True)
     set_log_file(args.terminal_log)
-
-    print(f"\n🚀 Starting Mnemosyne Benchmark (Frames: {args.frames}, Seed: {args.seed})\n")
     frames = generate_synthetic_frames(args.frames)
 
     results = {
@@ -45,21 +36,12 @@ def main():
         "Mnemosyne": run_mnemosyne_pipeline(frames)
     }
 
-    # JSON Kaydet
-    with open(args.trace, "w") as f:
-        json.dump(results, f, indent=2)
-
-    # CSV Kaydet (CTO İstemi: CHR hesaplamasını Final Accepted üzerinden yap)
+    with open(args.trace, "w") as f: json.dump(results, f, indent=2)
     with open(args.report, "w") as f:
-        f.write("Method,Rejects,Resamples,CHR_Percentage\n")
+        f.write("Method,Rejects,Resamples,CHR\n")
         for method, stats in results.items():
-            # CHR = Halüsinasyonlu Final Kare / Toplam Kare
-            chr_rate = (stats['hallucinations'] / args.frames) * 100
-            f.write(f"{method},{stats['rejects']},{stats['resamples']},{chr_rate:.1f}%\n")
-
-    print("\n\033[1;36m=== SEQUENCE FINALIZED ===\033[0m")
-    print(f"📊 Results saved to: {args.report} and {args.trace}")
-    print(f"📝 Clean terminal trace saved to: {args.terminal_log}")
+            chr_rate = (stats['hallucinations'] / args.frames)
+            f.write(f"{method},{stats['rejects']},{stats['resamples']},{chr_rate:.2f}\n")
 
 if __name__ == "__main__":
     main()
