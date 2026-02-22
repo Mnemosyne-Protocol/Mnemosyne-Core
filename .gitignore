@@ -1,0 +1,11 @@
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Benchmark Generated Outputs
+bench/out/report.csv
+bench/out/trace.json
+
+# (Opsiyonel) MacOS gizli dosyaları
+.DS_Store
