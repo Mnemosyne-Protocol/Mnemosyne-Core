@@ -1,6 +1,4 @@
 import argparse, json, os, sys
-
-# Python namespace çakışması çözümü
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from bench.mnemo_bench.logfmt import set_log_file
@@ -13,9 +11,13 @@ from bench.mnemo_bench.methods.mnemosyne_fail_closed import run_mnemosyne_pipeli
 def generate_synthetic_frames(num_frames):
     frames = []
     for i in range(1, num_frames + 1):
-        if i % 5 == 0: # %20 Drift (Hata) oranı. Sadece Style bozuluyor.
+        if i % 15 == 0: # Style Hatası (Scar missing)
             frames.append({"name": f"Frame_{i:03d}.mp4", "style_score": 0.40, "geometry_score": 0.95, "policy_score": 0.95})
-        else:
+        elif i % 15 == 5: # Geometry Hatası (Object permanence)
+            frames.append({"name": f"Frame_{i:03d}.mp4", "style_score": 0.95, "geometry_score": 0.40, "policy_score": 0.95})
+        elif i % 15 == 10: # Policy Hatası (Brand rule / Violence)
+            frames.append({"name": f"Frame_{i:03d}.mp4", "style_score": 0.95, "geometry_score": 0.95, "policy_score": 0.40})
+        else: # Kusursuz Kare
             frames.append({"name": f"Frame_{i:03d}.mp4", "style_score": 0.95, "geometry_score": 0.95, "policy_score": 0.95})
     return frames
 
@@ -44,7 +46,6 @@ def main():
     with open(args.report, "w") as f:
         f.write("Method,Rejects,Resamples,CHR\n")
         for method, stats in results.items():
-            # CTO FIX: CHR artık final karedeki halüsinasyonların toplam frame'e oranıdır.
             chr_rate = stats['hallucinations'] / args.frames
             f.write(f"{method},{stats['rejects']},{stats['resamples']},{chr_rate:.2f}\n")
 
