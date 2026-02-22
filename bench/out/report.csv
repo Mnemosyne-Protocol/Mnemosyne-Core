@@ -1,6 +1,0 @@
-chr,reject_rate,resamples_per_frame,latency_ms_per_frame,hard_stop_frames,total_rejects,method
-1.0,0.0,0.0,0.007088979085286458,0,0,naive_chaining
-1.0,0.0,0.0,0.006397565205891927,0,0,memory_buffer
-1.0,0.0,0.0,0.02696514129638672,0,0,self_consistency
-1.0,0.3333333333333333,0.3333333333333333,0.010323524475097656,0,10,single_agent_gate
-1.0,1.0,7.0,0.041794776916503906,30,210,mnemosyne_fail_closed
