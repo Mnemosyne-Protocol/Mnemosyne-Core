@@ -62,8 +62,7 @@ This repository serves as the public validation and artifacts tracker for the Mn
 We have received early technical feedback highlighting three credibility gates: (1) reproducible baselines/benchmarks, (2) explicit cost/latency overhead, and (3) executable artifacts demonstrating Algorithm 1 beyond narrative description. We agree with these requirements and are addressing them in sequence:
 
 * **v1.5.1 (Artifacts Patch) - CURRENT:** Publish executable code artifacts and demo traces for Algorithm 1 (fail-closed continuity gate + rollback + localized re-sampling).
-* **✅ [RELEASED] v1.6.1 (Benchmarks, Baselines & Zero-Hallucination Traces)** Release a reproducible benchmark suite with baseline comparisons (naive prompt chaining, memory buffer/RAG, self-consistency) and quantitative metrics (continuity hallucination rate, reject rate, latency/cost).
-* Artifacts & Verifiable Proofs available on [Zenodo] : https://zenodo.org/records/18742084
+* **✅ [RELEASED] v1.6.1 (Benchmarks, Baselines & Zero-Hallucination Traces):** Release a reproducible benchmark suite with baseline comparisons (naive prompt chaining, memory buffer/RAG, self-consistency) and quantitative metrics (continuity hallucination rate, reject rate, latency/cost). Artifacts & Verifiable Proofs available on [Zenodo] : https://zenodo.org/records/18742084
 * **v1.7 (Pilots & ROI) - PLANNED:** Validate in design-partner pilots and publish ROI-style results under the same measurement harness.
 
 *All updates remain additive and backward-compatible at the protocol level.*
