@@ -76,5 +76,5 @@ We are currently opening discussions with select **Design Partners** (Gaming Stu
 > *Currently operating in Stealth Mode.*
 
 **Founder & Chief Architect:** Kerem Salman  
-**Contact:** keremsalman@gmail.com  
+**Contact:** ks@mnemosynelabs.ai
 **Website:** [www.mnemosynelabs.ai](http://www.mnemosynelabs.ai)
