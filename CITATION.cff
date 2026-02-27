@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+message: "If you use this specification, please cite it as below."
+authors:
+  - family-names: "Salman"
+    given-names: "Kerem"
+title: "Mnemosyne Protocol: Deterministic Governance and Zero-Trust Pipelines"
+version: 1.7.0
+date-released: 2026-02-27
