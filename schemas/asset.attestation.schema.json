@@ -2,12 +2,41 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Mnemosyne Asset Attestation Protocol",
   "type": "object",
+  "additionalProperties": false,
   "properties": {
     "protocol": { "type": "string", "const": "mnemosyne:v1.7" },
-    "asset_identity": { "type": "object" },
-    "governance_binding": { "type": "object" },
-    "cryptographic_proofs": { "type": "object" },
-    "signature": { "type": "object" }
+    "asset_identity": {
+      "type": "object",
+      "required": ["file_name", "asset_cid"],
+      "properties": {
+        "file_name": { "type": "string" },
+        "asset_cid": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+      }
+    },
+    "governance_binding": {
+      "type": "object",
+      "required": ["policy_hash", "psi_evaluation"],
+      "properties": {
+        "policy_hash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+        "psi_evaluation": { "type": "integer", "enum": [0, 1] }
+      }
+    },
+    "cryptographic_proofs": {
+      "type": "object",
+      "required": ["cv1_digest", "render_merkle_root", "environment_envelope_hash"],
+      "properties": {
+        "cv1_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+        "render_merkle_root": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+        "environment_envelope_hash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+      }
+    },
+    "signature": {
+      "type": "object",
+      "required": ["ed25519_signature"],
+      "properties": {
+        "ed25519_signature": { "type": "string", "pattern": "^[a-f0-9]{128}$" }
+      }
+    }
   },
   "required": ["protocol", "asset_identity", "governance_binding", "cryptographic_proofs", "signature"]
 }
