@@ -139,7 +139,7 @@ The `asset.attestation.json` MUST contain the required cryptographic bindings.
   "cryptographic_proofs": {
     "cv1_digest": "sha256:8d3fd83061563864597b0a898cc2a67c1ca79281005b06aa08e7f73e9dbab2a8",
     "render_merkle_root": "sha256:1a2b3c4d5e6...",
-    "environment_envelope_hash": "sha256:5e6f7g8h9i0..."
+    "environment_envelope_hash": "sha256:5e6f7a8b9c0..."
   },
   "signature": {
     "ed25519_signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca4..."
