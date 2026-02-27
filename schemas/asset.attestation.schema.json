@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Mnemosyne Asset Attestation Protocol",
+  "type": "object",
+  "properties": {
+    "protocol": { "type": "string", "const": "mnemosyne:v1.7" },
+    "asset_identity": { "type": "object" },
+    "governance_binding": { "type": "object" },
+    "cryptographic_proofs": { "type": "object" },
+    "signature": { "type": "object" }
+  },
+  "required": ["protocol", "asset_identity", "governance_binding", "cryptographic_proofs", "signature"]
+}
