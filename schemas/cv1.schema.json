@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Mnemosyne CV1 Envelope Schema",
+  "type": "object",
+  "description": "Enforces fixed-point string formatting for deterministic hashing.",
+  "properties": {
+    "emissive_budget": { 
+      "type": "string", 
+      "pattern": "^[0-9]+\\.[0-9]{6}$" 
+    },
+    "allowed_colors": { 
+      "type": "array", 
+      "items": { "type": "string" } 
+    }
+  },
+  "required": ["emissive_budget", "allowed_colors"]
+}
