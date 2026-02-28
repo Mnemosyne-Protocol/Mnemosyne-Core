@@ -1,11 +1,15 @@
-cff-version: 1.2.0
-message: "If you use this protocol, please cite it as below."
-authors:
-  - family-names: "Salman"
-    given-names: "Kerem"
-    affiliation: "Mnemosyne Labs"
+cff-version: 1.2.1
 title: "Mnemosyne Protocol v1.7.1: Deterministic Governance and Zero-Trust Pipelines"
-version: 1.7.1
-doi: 10.5281/zenodo.18809100
-date-released: 2026-02-28
+message: "If you use this specification, please cite it."
+type: software
+authors:
+  - family-names: Salman
+    given-names: Kerem
+    affiliation: "Mnemosyne Labs"
+repository-code: "https://github.com/Mnemosyne-Protocol/Mnemosyne-Core"
+version: "1.7.1"
+date-released: "2026-02-28"
+doi: "10.5281/zenodo.18809100"
+url: "https://doi.org/10.5281/zenodo.18809100"
+license: "CC-BY-4.0"
 url: "[https://doi.org/10.5281/zenodo.18809100](https://doi.org/10.5281/zenodo.18809100)"
