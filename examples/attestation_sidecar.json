@@ -1,0 +1,19 @@
+{
+  "protocol": "mnemosyne:v1.7",
+  "asset_identity": {
+    "file_name": "hero_mesh_lod0.fbx",
+    "asset_cid": "sha256:a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2"
+  },
+  "governance_binding": {
+    "policy_hash": "sha256:9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3b2a1f0e9d8c7b6a5f4e3d2c1b0a9f8e",
+    "psi_evaluation": 1
+  },
+  "cryptographic_proofs": {
+    "cv1_digest": "sha256:8d3fd83061563864597b0a898cc2a67c1ca79281005b06aa08e7f73e9dbab2a8",
+    "render_merkle_root": "sha256:1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b",
+    "environment_envelope_hash": "sha256:5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f"
+  },
+  "signature": {
+    "ed25519_signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}
