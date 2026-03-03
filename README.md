@@ -1,5 +1,5 @@
 # Mnemosyne Protocol: Deterministic Governance for GenAI
-ABSTRACT: THE MNEMOSYNE PROTOCOL
+**ABSTRACT:**
 
 A Zero-Trust, deterministic orchestration layer powered by vector-based Merkle trees and cryptography. This protocol does more than just ensure generative continuity; it enforces absolute local data sovereignty, transforming the generative "black box" into a transparent, rule-abiding state machine.
 
