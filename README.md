@@ -1,4 +1,9 @@
 # Mnemosyne Protocol: Deterministic Governance for GenAI
+ABSTRACT: THE MNEMOSYNE PROTOCOL
+
+A Zero-Trust, deterministic orchestration layer powered by vector-based Merkle trees and cryptography. This protocol does more than just ensure generative continuity; it enforces absolute local data sovereignty, transforming the generative "black box" into a transparent, rule-abiding state machine.
+
+In a standard Model Context Protocol (MCP), data is pushed to the model, exposing it to the cloud. Mnemosyne introduces a paradigm shift through Inverse Context Flow (ICF). Instead of sending your sensitive data to the cloud, the protocol pulls the model's intelligence into the local environment, mathematically confining it within a strict "fail-closed" architecture.
 
 **Formal Specification v1.7 (Draft / Normative)**
 
