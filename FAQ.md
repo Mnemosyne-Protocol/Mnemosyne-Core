@@ -33,21 +33,22 @@ A compact cryptographic 'passport' produced when an artifact passes the gate. It
 
 **HOW DOES THE INVERSE CONTEXT FLOW (ICF) ARCHITECTURE HELP WITH SECURITY?**
 
+```mermaid
 graph LR
     subgraph Untrusted_Zone [Untrusted Zone - Cloud]
-        A[AI Reasoning Engine\nModels / Tools]
+        A[AI Reasoning Engine<br>Models / Tools]
     end
 
     subgraph Sovereign_Zone [Trusted Sovereign Zone - Local]
-        B[(Local Memory &amp; IP\nSensitive Context)]
-        C{Fail-Closed\nVerification Gate}
-        D[Verified Output +\nTamper-Evident Proof]
+        B[(Local Memory & IP<br>Sensitive Context)]
+        C{Fail-Closed<br>Verification Gate}
+        D[Verified Output +<br>Tamper-Evident Proof]
     end
 
-    A -- &quot;Inverse Context Flow\n(Pulls logic to local)&quot; --&gt; B
-    B -- &quot;Candidate Artifact&quot; --&gt; C
-    C -- &quot;Pass (ψ = 1)&quot; --&gt; D
-    C -. &quot;Fail (ψ = 0)\nRollback&quot; .-&gt; B
+    A -- "Inverse Context Flow<br>(Pulls logic to local)" --> B
+    B -- "Candidate Artifact" --> C
+    C -- "Pass (ψ = 1)" --> D
+    C -. "Fail (ψ = 0)<br>Rollback" .-> B
 
     style Untrusted_Zone fill:#1a1a1a,stroke:#ff3333,stroke-width:2px,color:#fff
     style Sovereign_Zone fill:#1a1a1a,stroke:#73f442,stroke-width:2px,color:#fff
@@ -55,7 +56,7 @@ graph LR
     style B fill:#2d2d2d,stroke:#73f442,color:#fff
     style C fill:#2d2d2d,stroke:#73f442,color:#fff
     style D fill:#2d2d2d,stroke:#73f442,color:#fff
-    
+  ```  
 
 ICF is a **local-first** pattern: keep sensitive memory (assets, constraints, policies) under operator control; minimize what must leave the environment; prefer exchanging **proofs** over exporting raw IP.
 
