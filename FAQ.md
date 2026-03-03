@@ -33,8 +33,29 @@ A compact cryptographic 'passport' produced when an artifact passes the gate. It
 
 **HOW DOES THE INVERSE CONTEXT FLOW (ICF) ARCHITECTURE HELP WITH SECURITY?**
 
+graph LR
+    subgraph Untrusted_Zone [Untrusted Zone - Cloud]
+        A[AI Reasoning Engine\nModels / Tools]
+    end
 
-[Image of Zero Trust Architecture diagram]
+    subgraph Sovereign_Zone [Trusted Sovereign Zone - Local]
+        B[(Local Memory &amp; IP\nSensitive Context)]
+        C{Fail-Closed\nVerification Gate}
+        D[Verified Output +\nTamper-Evident Proof]
+    end
+
+    A -- &quot;Inverse Context Flow\n(Pulls logic to local)&quot; --&gt; B
+    B -- &quot;Candidate Artifact&quot; --&gt; C
+    C -- &quot;Pass (ψ = 1)&quot; --&gt; D
+    C -. &quot;Fail (ψ = 0)\nRollback&quot; .-&gt; B
+
+    style Untrusted_Zone fill:#1a1a1a,stroke:#ff3333,stroke-width:2px,color:#fff
+    style Sovereign_Zone fill:#1a1a1a,stroke:#73f442,stroke-width:2px,color:#fff
+    style A fill:#2d2d2d,stroke:#ff3333,color:#fff
+    style B fill:#2d2d2d,stroke:#73f442,color:#fff
+    style C fill:#2d2d2d,stroke:#73f442,color:#fff
+    style D fill:#2d2d2d,stroke:#73f442,color:#fff
+    
 
 ICF is a **local-first** pattern: keep sensitive memory (assets, constraints, policies) under operator control; minimize what must leave the environment; prefer exchanging **proofs** over exporting raw IP.
 
