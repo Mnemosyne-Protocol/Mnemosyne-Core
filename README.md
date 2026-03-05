@@ -2,7 +2,9 @@
 
 Mnemosyne v2.0: We don't just generate. We mathematically verify. You only pay for ad creatives that pass the P0 Geometrical Lock and receive a cryptographic Evidence Pack.
 
-[![DOI](https://doi.org/10.5281/zenodo.18869318)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18869318.svg)](https://doi.org/10.5281/zenodo.18869318)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Specification: CC BY 4.0](https://img.shields.io/badge/Specification-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
 **ABSTRACT:**
 
