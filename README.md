@@ -1,5 +1,15 @@
 # Mnemosyne Protocol: Deterministic Governance for GenAI
+
+Mnemosyne v2.0: We don't just generate. We mathematically verify. You only pay for ad creatives that pass the P0 Geometrical Lock and receive a cryptographic Evidence Pack.
+
+[![DOI](https://doi.org/10.5281/zenodo.18869318)
+
 **ABSTRACT:**
+
+While Generative AI (GenAI) systems have revolutionized scalable content creation, they inherently fail to meet the strict Intellectual Property (IP) and brand safety requirements of AAA gaming studios and global Ad-Tech networks. 
+In these industries, "similarity" is legally insufficient; deterministic identity preservation is mandatory. Building upon the Mnemosyne Layer-0 Protocol, this application paper introduces the Geometrical IP Lock (GIL) and the Cryptographic Attestation-asa-Service model. By extracting canonical masks and depth envelopes from licensed 3D assets, the system establishes a zero-tolerance baseline. 
+
+The Mnemosyne Core Inference Engine operates strictly as a closed-loop, fail-closed pipeline: any generated variation exhibiting geometric hallucination or brand drift is deterministically rejected. Verified frames are delivered with a cryptographically signed Evidence Pack, effectively monetizing "guaranteed compliance" and provides cryptographic evidence for standardized, data-driven dispute resolution against false-positive copyright claims.
 
 A Zero-Trust, deterministic orchestration layer powered by vector-based Merkle trees and cryptography. This protocol does more than just ensure generative continuity; it enforces absolute local data sovereignty, transforming the generative "black box" into a transparent, rule-abiding state machine.
 
