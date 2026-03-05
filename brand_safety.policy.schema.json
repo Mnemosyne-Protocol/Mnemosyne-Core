@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Brand Safety & Ad-Tech Routing Policy",
+  "description": "Ruleset preventing brand drift and unsafe generation in user acquisition creatives.",
+  "type": "object",
+  "properties": {
+    "policy_version": {
+      "type": "string"
+    },
+    "logo_deformation": {
+      "type": "object",
+      "properties": {
+        "max_warp_tolerance": {
+          "type": "number",
+          "description": "Maximum allowable homographic warp for the brand logo.",
+          "default": 0.02
+        },
+        "action": {
+          "type": "string",
+          "enum": ["REJECT"]
+        }
+      }
+    },
+    "banned_poses": {
+      "type": "array",
+      "description": "List of prohibited ControlNet pose signatures (e.g., inappropriate gestures).",
+      "items": {
+        "type": "string"
+      }
+    },
+    "color_palette_drift": {
+      "type": "object",
+      "properties": {
+        "delta_e_max": {
+          "type": "number",
+          "description": "Maximum CIE Delta E color difference allowed for primary brand colors."
+        },
+        "action": {
+          "type": "string",
+          "enum": ["RESAMPLE", "LOG"]
+        }
+      }
+    }
+  },
+  "required": ["policy_version", "logo_deformation", "banned_poses"]
+}
