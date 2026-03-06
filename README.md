@@ -1,4 +1,3 @@
-[README.md](https://github.com/user-attachments/files/25785635/README.md)
 <p align="center">
   <img src="assets/mnemosyne-sigil.svg" alt="Mnemosyne" width="64" />
 </p>
@@ -11,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://doi.org/10.5281/zenodo.18869318"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.18869318.svg" alt="DOI" /></a>
+  <a href="https://doi.org/10.5281/zenodo.18884426"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.18884426.svg" alt="DOI"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="MIT" /></a>
   <a href="https://creativecommons.org/licenses/by/4.0/"><img src="https://img.shields.io/badge/Spec-CC_BY_4.0-lightgrey.svg" alt="CC BY 4.0" /></a>
   <a href="#"><img src="https://img.shields.io/badge/KS_Standard-v3-cyan.svg" alt="KS Standard" /></a>
