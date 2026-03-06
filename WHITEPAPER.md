@@ -4,7 +4,7 @@
 Document:     Mnemosyne Layer-0 Protocol — Formal Technical Specification
 Version:      3.0.0
 Date:         2026-03-06
-Author:       Mnemosyne Labs
+Author:       Kerem Salman
 License:      CC BY 4.0
 DOI:          10.5281/zenodo.18869318 (v2.0 base)
 Status:       NORMATIVE
