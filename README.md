@@ -1,3 +1,4 @@
+[README.md](https://github.com/user-attachments/files/25785635/README.md)
 <p align="center">
   <img src="assets/mnemosyne-sigil.svg" alt="Mnemosyne" width="64" />
 </p>
