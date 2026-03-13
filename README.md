@@ -54,10 +54,10 @@ The industry calls this "Contextual Fragmentation." We call it the enemy. And we
 Mnemosyne is a **Cryptographic Toll Booth** that sits downstream of any generative model. It does not generate pixels. It *verifies* them.
 
 ```
-   AI Model ──▸ Generated Frame ──▸ ┌──────────────────┐
-   (ComfyUI,                        │  MNEMOSYNE GATE  │
+   AI Model ──▸ Generated Frame ──▸  ┌──────────────────┐
+   (ComfyUI,                         │  MNEMOSYNE GATE  │
     Midjourney,                      │                  │
-    SD, Flux,                        │  ψ = ⋀ Iᵢ(x)    │──▸ ψ=1? ──▸ SEALED ✓
+    SD, Flux,                        │  ψ = ⋀ Iᵢ(x)     │──▸ ψ=1? ──▸ SEALED ✓
     proprietary)                     │                  │         (Evidence Pack)
                                      │  Fail-Closed.    │
                                      │  Zero Trust.     │──▸ ψ=0? ──▸ REJECT ✗
@@ -108,7 +108,7 @@ $ mnemosynectl gate verify \
     --emissive-max 720000 \
     --mask-iou-min 997000
   ┌──────────────────────────────────────────┐
-  │  ψ = 1  ·  VERDICT: SEALED              │
+  │  ψ = 1  ·  VERDICT: SEALED               │
   └──────────────────────────────────────────┘
   Merkle Root:  ab3f...7e2a
   Signature:    3a7f...9c2e
@@ -134,34 +134,34 @@ Mnemosyne v3 is not a single tool. It is an integrated system across four runtim
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                                                                             │
-│  ┌─────────────────┐   ┌─────────────────┐   ┌─────────────────────────┐   │
-│  │  🛡️ THE VAULT    │   │  👁️ THE EYES     │   │  🚪 THE GATEKEEPER      │   │
-│  │  Rust Core       │   │  Python CV       │   │  TS/Node.js Gateway    │   │
-│  │                  │   │                  │   │                         │   │
-│  │  • Ψ Engine      │   │  • Depth maps    │   │  • mTLS + JWT auth     │   │
-│  │  • Fixed6 math   │◀──│  • Segmentation  │──▶│  • Tenant isolation    │   │
-│  │  • Ed25519 sign  │   │  • Embeddings    │   │  • Rate limiting       │   │
-│  │  • Merkle trees  │   │  • Color / EMD   │   │  • Circuit breaker     │   │
-│  │  • Hash chains   │   │  • Fixed6 quant  │   │  • Billing engine      │   │
+│  ┌──────────────────┐   ┌─────────────────┐   ┌─────────────────────────┐   │
+│  │  🛡️ THE VAULT    │   │  👁️ THE EYES    │   │  🚪 THE GATEKEEPER      │   │
+│  │  Rust Core       │   │  Python CV      │   │  TS/Node.js Gateway     │   │
+│  │                  │   │                 │   │                         │   │
+│  │  • Ψ Engine      │   │  • Depth maps   │   │  • mTLS + JWT auth      │   │
+│  │  • Fixed6 math   │◀──│  • Segmentation │──▶│  • Tenant isolation     │   │
+│  │  • Ed25519 sign  │   │  • Embeddings   │   │  • Rate limiting        │   │
+│  │  • Merkle trees  │   │  • Color / EMD  │   │  • Circuit breaker      │   │
+│  │  • Hash chains   │   │  • Fixed6 quant │   │  • Billing engine       │   │
 │  └────────┬─────────┘   └─────────────────┘   └────────────┬────────────┘   │
-│           │                                                  │               │
-│  ┌────────▼─────────┐                            ┌──────────▼────────────┐   │
-│  │  ⚒️ THE ASA       │                            │  📊 THE DASHBOARD     │   │
-│  │  Rust CLI         │                            │  React Executive UI   │   │
-│  │                   │                            │                       │   │
-│  │  • mnemosynectl   │                            │  • ROI counters       │   │
-│  │  • Policy signing │                            │  • Ledger explorer    │   │
-│  │  • Local verify   │                            │  • KS audit panel     │   │
-│  │  • Ledger audit   │                            │  • Quarantine mode    │   │
-│  │  • ROI reporting  │                            │  • Billing summary    │   │
-│  └──────────────────┘                            └───────────────────────┘   │
+│           │                                                │                │
+│  ┌────────▼──────────┐                          ┌──────────▼────────────┐   │
+│  │  ⚒️ THE ASA       │                          │  📊 THE DASHBOARD     │   │
+│  │  Rust CLI         │                          │  React Executive UI   │   │
+│  │                   │                          │                       │   │
+│  │  • mnemosynectl   │                          │  • ROI counters       │   │
+│  │  • Policy signing │                          │  • Ledger explorer    │   │
+│  │  • Local verify   │                          │  • KS audit panel     │   │
+│  │  • Ledger audit   │                          │  • Quarantine mode    │   │
+│  │  • ROI reporting  │                          │  • Billing summary    │   │
+│  └───────────────────┘                          └───────────────────────┘   │
 │                                                                             │
-│  ┌───────────────────────────────────────────────────────────────────────┐   │
+│  ┌──────────────────────────────────────────────────────────────────────┐   │
 │  │  🏭 THE INGRESS — ComfyUI Custom Nodes                               │   │
-│  │                                                                       │   │
+│  │                                                                      │   │
 │  │  MnemosyneGate ─▸ PolicyLoader ─▸ KeyLoader ─▸ EvidenceViewer        │   │
-│  │  Drops into any workflow. REJECT = pipeline halt. No frame escapes.   │   │
-│  └───────────────────────────────────────────────────────────────────────┘   │
+│  │  Drops into any workflow. REJECT = pipeline halt. No frame escapes.  │   │
+│  └──────────────────────────────────────────────────────────────────────┘   │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -262,20 +262,20 @@ Multiplication uses `i128` intermediates. Division is checked. Overflow returns 
   ┌──────────────────────────────────────────────────────────────┐
   │  OPEN SOURCE (MIT)                                           │
   │                                                              │
-  │  ✔ Full Ψ engine          ✔ CLI (mnemosynectl)              │
-  │  ✔ Fixed6 arithmetic      ✔ ComfyUI nodes                  │
-  │  ✔ Ed25519 signing        ✔ Python CV pipeline              │
-  │  ✔ RFC 8785 / KS hashing  ✔ TypeScript SDK                 │
-  │  ✔ Ledger (SQLite WAL)    ✔ Test vectors + benchmarks      │
-  │  ✔ Verification DSL       ✔ Executive Dashboard            │
+  │  ✔ Full Ψ engine          ✔ CLI (mnemosynectl)               │
+  │  ✔ Fixed6 arithmetic      ✔ ComfyUI nodes                    │
+  │  ✔ Ed25519 signing        ✔ Python CV pipeline               │
+  │  ✔ RFC 8785 / KS hashing  ✔ TypeScript SDK                   │
+  │  ✔ Ledger (SQLite WAL)    ✔ Test vectors + benchmarks        │
+  │  ✔ Verification DSL       ✔ Executive Dashboard              │
   ├──────────────────────────────────────────────────────────────┤
   │  ENTERPRISE (Commercial License)                             │
   │                                                              │
-  │  ✦ HSM integration (PKCS#11 / CloudHSM / YubiHSM)          │
-  │  ✦ S3 + DynamoDB Ledger backend                             │
-  │  ✦ Multi-tenant VPC isolation                               │
-  │  ✦ SSO/SAML + governance board UI                           │
-  │  ✦ SLA-backed support + on-prem deployment                  │
+  │  ✦ HSM integration (PKCS#11 / CloudHSM / YubiHSM)            │
+  │  ✦ S3 + DynamoDB Ledger backend                              │
+  │  ✦ Multi-tenant VPC isolation                                │
+  │  ✦ SSO/SAML + governance board UI                            │
+  │  ✦ SLA-backed support + on-prem deployment                   │
   │  ✦ Billing engine (Success Share computation)                │
   └──────────────────────────────────────────────────────────────┘
 ```
