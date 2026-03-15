@@ -356,5 +356,5 @@ Specification: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) · Code
   <strong>Mnemosyne Labs</strong><br/>
   Layer-0 Deterministic Governance Protocol<br/><br/>
   <em>"Trust is a vulnerability. We require cryptographic proof."</em><br/><br/>
-  Kerem Salman - <strong>KS</strong> - Chief ArchiTech > (Where Architecture meets the Deterministic Tech Layer) 
+  Kerem Salman - <strong>KS</strong> - Chief ArchiTech -> (Where Architecture meets the Deterministic Tech Layer) 
 </p>
