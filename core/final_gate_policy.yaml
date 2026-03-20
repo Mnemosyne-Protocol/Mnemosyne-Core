@@ -1,0 +1,476 @@
+# ══════════════════════════════════════════════════════════════════════════
+# Mnemosyne Protocol — Final Gate Enforcement Policy v1.0
+# ══════════════════════════════════════════════════════════════════════════
+#
+# DOI:       10.5281/zenodo.18884426
+# Spec:      Mnemosyne v3.0.0 (Sovereign)
+# License:   CC BY 4.0 (Spec) · MIT (Code)
+# Motto:     "We don't guess. We prove."
+#
+# PURPOSE:
+#   This file defines the exact fail-closed decision logic used by
+#   the Mnemosyne Final Gate. It is the enforceable contract between
+#   the studio, the generation pipeline, external vendors, and AI agents.
+#
+# STACK POSITION:
+#   render_fingerprint_spec.json  →  HOW to measure
+#   asset.attestation.json        →  WHAT was observed
+#   final_gate_policy.yaml        →  WHAT is allowed  ← YOU ARE HERE
+#
+# CARDINAL RULE:
+#   default_action: "REJECT"
+#   If anything is unclear, missing, or malformed: reject.
+#   The system does not "try its best." It proves, or it blocks.
+#
+# KS STANDARD:
+#   All hashes referenced in this policy are KS-salted:
+#   H(data) = SHA-256("MNEMOSYNE-KS-V3" || data)
+#   Domain separation is mandatory. Non-KS hashes are rejected.
+#
+# ══════════════════════════════════════════════════════════════════════════
+
+# ─── Policy Identity ─────────────────────────────────────────────────────
+
+policy_version: "1.0.0"
+policy_bundle_id: "mnemo.final_gate.v3.sovereign"
+protocol_version: "3.0.0"
+doi: "10.5281/zenodo.18884426"
+
+# The default posture. If no rule explicitly approves, the asset is blocked.
+default_action: "REJECT"
+fail_closed: true
+
+# ─── Cryptographic Requirements ──────────────────────────────────────────
+
+crypto:
+  # Only KS-salted hashes are accepted. Raw SHA-256 is rejected.
+  ks_seed: "MNEMOSYNE-KS-V3"
+  ks_seed_bytes: 15
+  hash_algorithm: "SHA-256"
+  hash_mode: "KS-salted"   # H(KS_SEED || data) — always.
+
+  # Accepted signature algorithms for Evidence Pack signing.
+  approved_signature_algorithms:
+    - "Ed25519"
+
+  # Signer trust tiers.
+  # Tier A = production signer (HSM-backed in enterprise).
+  # Tier B = staging / pre-production signer.
+  # Tier C = diagnostic only — cannot approve production assets.
+  trusted_signers:
+    tier_a:
+      label: "Production Gate"
+      can_approve: true
+      can_quarantine: true
+      requires_hsm: true   # Enterprise: keys never leave hardware.
+    tier_b:
+      label: "Staging Gate"
+      can_approve: false    # Can seal for staging, not production.
+      can_quarantine: true
+      requires_hsm: false
+    tier_c:
+      label: "Diagnostic"
+      can_approve: false
+      can_quarantine: false
+      requires_hsm: false
+
+# ─── Arithmetic Standard ─────────────────────────────────────────────────
+
+arithmetic:
+  # All threshold comparisons use Fixed6 deterministic arithmetic.
+  # No IEEE 754 float ever influences a gate decision.
+  type: "Fixed6"
+  scale: 1000000           # 10^6. Value 0.720000 = 720000 (i64).
+  overflow_action: "REJECT" # If Fixed6 overflows, the asset is rejected.
+
+# ─── Asset Classes ───────────────────────────────────────────────────────
+# Each asset class defines its own rules, thresholds, and submission modes.
+# A studio can define multiple classes (cosmetics, characters, environments).
+
+asset_classes:
+
+  # ════════════════════════════════════════════════════════════════════════
+  # GAMING COSMETICS (Unity/Unreal) — Primary use case
+  # ════════════════════════════════════════════════════════════════════════
+  gaming_cosmetic:
+    enabled: true
+
+    # Bind this policy to a specific Render Fingerprint spec and scene.
+    # This prevents verification under a wrong recipe (different camera,
+    # looser spec, older scene — all blocked).
+    required_spec_refs:
+      render_fingerprint_spec_id: "mnemo.render_fingerprint.v1"
+      canonical_scene_id: "mnemo_cosmetic_scene_v1"
+      attestation_schema_version: "2.0"
+
+    # ── Render Fingerprint Requirements ────────────────────────────────
+    # These map directly to the fields in render_fingerprint_spec.json.
+    # Each hash is KS-salted. Each comparison is Fixed6.
+    render_fingerprint:
+      # Silhouette: binary silhouette from alpha/depth pass.
+      silhouette_front:
+        hash_type: "KS-SHA256"
+        comparison: "exact"
+        on_fail: "REJECT"
+
+      # Edge map: Canny/Sobel edge detection.
+      edge_front:
+        hash_type: "KS-SHA256"
+        comparison: "exact"
+        on_fail: "REJECT"
+
+      # Beauty render: full shaded output.
+      beauty_front:
+        pixel_hash:
+          comparison: "exact"           # For curated mode.
+          on_fail_curated: "REJECT"
+          on_fail_generative: "SKIP"    # Generative mode uses perceptual.
+
+        perceptual_hash:
+          comparison: "threshold"
+          algorithm: "pHash"            # Perceptual hash (Hamming distance).
+          on_fail: "REJECT"
+          # Thresholds are per-submission-mode (see below).
+
+      # Material Response: light sweep pass.
+      material_response:
+        hash_type: "KS-SHA256"
+        comparison: "exact"
+        on_fail: "REJECT"
+
+      # Region of Interest hashes.
+      roi_hashes:
+        required_regions:
+          - "head"
+          - "chest"
+          - "emblem_zone"
+        comparison: "exact"
+        on_fail: "REJECT"
+
+    # ── Source Invariants ──────────────────────────────────────────────
+    # These verify the 3D source asset itself (before rendering).
+    source_invariants:
+      mesh_topology_hash:
+        required: true
+        comparison: "exact"
+        on_fail: "REJECT"
+
+      uv_layout_hash:
+        required: true
+        comparison: "exact"
+        on_fail: "REJECT"
+
+      palette_histogram_hash:
+        required: true
+        comparison: "exact"             # Curated: exact. Generative: threshold.
+        on_fail: "REJECT"
+
+      shader_signature_hash:
+        required: true
+        comparison: "exact"
+        on_fail: "REJECT"
+
+    # ══════════════════════════════════════════════════════════════════
+    # SUBMISSION MODES — Controlled strictness profiles
+    # ══════════════════════════════════════════════════════════════════
+    # This is the strongest commercial feature of the policy.
+    # Studios don't need one universal rule. They need graduated trust.
+
+    submission_modes:
+
+      # ── CURATED ─────────────────────────────────────────────────────
+      # For franchise skins, branded cosmetics, licensed items,
+      # executive-approved hero assets. STRICTEST mode.
+      curated:
+        description: "Locked assets. Zero tolerance. Exact match required."
+        action_on_failure: "REJECT"
+
+        requirements:
+          source_invariants:
+            mesh_topology_hash: "EXACT_MATCH"
+            uv_layout_hash: "EXACT_MATCH"
+            palette_histogram_hash: "EXACT_MATCH"
+            shader_signature_hash: "EXACT_MATCH"
+
+          render_fingerprint:
+            beauty_front.pixel_hash: "EXACT_MATCH"
+            beauty_front.perceptual_hash: "EXACT_MATCH"
+            silhouette_front.silhouette_hash: "EXACT_MATCH"
+            edge_front.edge_hash: "EXACT_MATCH"
+            material_response.hash: "EXACT_MATCH"
+            roi_hashes.head: "EXACT_MATCH"
+            roi_hashes.chest: "EXACT_MATCH"
+            roi_hashes.emblem_zone: "EXACT_MATCH"
+
+          gate_evaluation:
+            psi: 1
+            required_conditions_met: true
+            final_status: "APPROVED"
+
+          signer_minimum_tier: "tier_a"
+
+      # ── CONTROLLED GENERATIVE ───────────────────────────────────────
+      # For internal AI-assisted generation. Creative variation is
+      # allowed inside policy bounds. The main operating mode.
+      controlled_generative:
+        description: "Bounded AI variation. Hard geometry, soft pixel."
+        action_on_failure: "REJECT"
+
+        requirements:
+          source_invariants:
+            mesh_topology_hash: "EXACT_MATCH"
+            uv_layout_hash: "EXACT_MATCH"
+            shader_signature_hash: "EXACT_MATCH"
+            # palette_histogram_hash is thresholded, not exact.
+
+          thresholds:
+            # Perceptual hash: Hamming distance ≤ 4 (out of 64 bits).
+            beauty_front.perceptual_hash.max_hamming_distance: 4
+            # Palette: ≤ 3% bucket deviation.
+            palette_histogram.max_bucket_deviation_pct: 3.0
+            # Embedding: cosine similarity ≥ 0.9998 (Fixed6: 999800).
+            embedding_cosine.min_similarity: 999800
+            # Emissive: ≤ 0.72 (Fixed6: 720000).
+            emissive_budget.max: 720000
+            # Depth L2: ≤ 0.0015 (Fixed6: 1500).
+            depth_l2_norm.max: 1500
+            # Mask IoU: ≥ 0.997 (Fixed6: 997000).
+            mask_iou.min: 997000
+
+          exact_requirements:
+            silhouette_front.silhouette_hash: "EXACT_MATCH"
+            edge_front.edge_hash: "EXACT_MATCH"
+            material_response.hash: "EXACT_MATCH"
+            roi_hashes.head: "EXACT_MATCH"
+            roi_hashes.chest: "EXACT_MATCH"
+            roi_hashes.emblem_zone: "EXACT_MATCH"
+
+          gate_evaluation:
+            psi: 1
+            required_conditions_met: true
+            final_status: "APPROVED"
+
+          signer_minimum_tier: "tier_b"
+
+      # ── VENDOR INTAKE ───────────────────────────────────────────────
+      # For outsourced submissions. Co-dev studios, freelancers,
+      # external art houses, partner packs. MOST PARANOID mode.
+      vendor_intake:
+        description: "External submissions. Trust nothing. Verify everything."
+        action_on_failure: "QUARANTINE"
+
+        extra_requirements:
+          vendor_must_be_in_allowlist: true
+          evidence_pack_required: true
+          signer_must_be: "tier_a"
+          # For franchise assets from vendors, demand pixel-exact too.
+          exact_pixel_hash_for_curated_vendor_assets: true
+
+        requirements:
+          source_invariants:
+            mesh_topology_hash: "EXACT_MATCH"
+            uv_layout_hash: "EXACT_MATCH"
+            palette_histogram_hash: "EXACT_MATCH"
+            shader_signature_hash: "EXACT_MATCH"
+
+          thresholds:
+            # Tighter than controlled_generative for vendor submissions.
+            beauty_front.perceptual_hash.max_hamming_distance: 3
+            palette_histogram.max_bucket_deviation_pct: 2.0
+            embedding_cosine.min_similarity: 999900
+            emissive_budget.max: 700000
+            depth_l2_norm.max: 1000
+            mask_iou.min: 998000
+
+          exact_requirements:
+            silhouette_front.silhouette_hash: "EXACT_MATCH"
+            edge_front.edge_hash: "EXACT_MATCH"
+            material_response.hash: "EXACT_MATCH"
+            roi_hashes.head: "EXACT_MATCH"
+            roi_hashes.chest: "EXACT_MATCH"
+            roi_hashes.emblem_zone: "EXACT_MATCH"
+
+          gate_evaluation:
+            psi: 1
+            required_conditions_met: true
+            final_status: "APPROVED"
+
+          signer_minimum_tier: "tier_a"
+
+    # ══════════════════════════════════════════════════════════════════
+    # ESCALATION RULES — Classified failure taxonomy
+    # ══════════════════════════════════════════════════════════════════
+    # Failures are classified, not just dumped. This gives:
+    #   - better audits
+    #   - faster debugging
+    #   - incident response capability
+    #   - vendor accountability
+
+    escalation_rules:
+      # ── Cryptographic Failures (always fatal) ──
+      missing_signature: "REJECT"
+      invalid_signature: "REJECT"
+      unknown_signer: "REJECT"
+      signer_tier_insufficient: "REJECT"
+      ks_seed_mismatch: "REJECT"            # Non-KS hash submitted.
+
+      # ── Policy/Spec Mismatch ──
+      wrong_spec_reference: "REJECT"
+      wrong_canonical_scene: "REJECT"
+      attestation_schema_mismatch: "REJECT"
+
+      # ── Evidence Deficiency ──
+      missing_required_evidence: "QUARANTINE"
+      incomplete_render_fingerprint: "QUARANTINE"
+      missing_roi_region: "REJECT"
+
+      # ── Verification Failures ──
+      silhouette_mismatch: "REJECT"
+      edge_map_mismatch: "REJECT"
+      material_response_mismatch: "REJECT"
+      roi_mismatch: "REJECT"
+      perceptual_threshold_breach: "REJECT"
+      palette_threshold_breach: "REJECT"
+      mesh_topology_mismatch: "REJECT"
+      psi_not_one: "REJECT"
+
+      # ── Operational Failures ──
+      fixed6_overflow: "REJECT"
+      canonicalization_failure: "REJECT"
+      render_fingerprint_engine_error: "REJECT"  # If the engine fails, fail-closed.
+
+    # ══════════════════════════════════════════════════════════════════
+    # DECISION ALGORITHM — Evaluation order matters.
+    # ══════════════════════════════════════════════════════════════════
+    # Signature and policy failures kill trust immediately.
+    # Threshold checks only run if the trust foundation is solid.
+
+    evaluation_order:
+      - step: 1
+        name: "validate_attestation_schema"
+        on_fail: "REJECT"
+        reason: "Attestation structure is malformed or missing"
+
+      - step: 2
+        name: "validate_ks_hash_mode"
+        on_fail: "REJECT"
+        reason: "Non-KS-salted hashes detected — domain separation required"
+
+      - step: 3
+        name: "validate_signature"
+        on_fail: "REJECT"
+        reason: "Ed25519 signature invalid or missing"
+
+      - step: 4
+        name: "validate_signer_trust"
+        on_fail: "REJECT"
+        reason: "Signer not in trusted tier or tier insufficient for mode"
+
+      - step: 5
+        name: "validate_spec_references"
+        on_fail: "REJECT"
+        reason: "Asset verified under wrong fingerprint spec or scene"
+
+      - step: 6
+        name: "determine_submission_mode"
+        on_fail: "REJECT"
+        reason: "Cannot determine submission mode from attestation metadata"
+
+      - step: 7
+        name: "check_source_invariants"
+        on_fail: "mode.action_on_failure"
+        reason: "Source asset invariant mismatch (mesh, UV, shader, palette)"
+
+      - step: 8
+        name: "check_render_fingerprint_exact"
+        on_fail: "mode.action_on_failure"
+        reason: "Exact render fingerprint check failed (silhouette, edge, ROI, material)"
+
+      - step: 9
+        name: "check_render_fingerprint_thresholds"
+        on_fail: "mode.action_on_failure"
+        reason: "Threshold render fingerprint check failed (perceptual, palette, embedding)"
+
+      - step: 10
+        name: "evaluate_psi"
+        on_fail: "REJECT"
+        reason: "ψ ≠ 1 — at least one invariant failed the Boolean conjunction"
+
+      - step: 11
+        name: "final_verdict"
+        on_pass: "APPROVED"
+        on_fail: "default_action"
+
+    # ══════════════════════════════════════════════════════════════════
+    # AUDIT CONFIGURATION
+    # ══════════════════════════════════════════════════════════════════
+
+    audit:
+      log_all_decisions: true
+      retain_failure_evidence: true
+      retain_success_evidence: true
+      ledger_backend: "hash-chained"      # Append-only, KS-salted hash chain.
+      evidence_retention_days: 365
+      export_format: "json"
+
+  # ════════════════════════════════════════════════════════════════════════
+  # AD-TECH UA ASSETS — User Acquisition creatives
+  # ════════════════════════════════════════════════════════════════════════
+  adtech_ua:
+    enabled: true
+
+    required_spec_refs:
+      render_fingerprint_spec_id: "mnemo.render_fingerprint.adtech.v1"
+      canonical_scene_id: "mnemo_ua_scene_v1"
+      attestation_schema_version: "2.0"
+
+    submission_modes:
+      standard:
+        description: "Standard UA creative verification."
+        action_on_failure: "REJECT"
+
+        requirements:
+          render_fingerprint:
+            silhouette_front.silhouette_hash: "EXACT_MATCH"
+            edge_front.edge_hash: "EXACT_MATCH"
+            roi_hashes.brand_zone: "EXACT_MATCH"
+            roi_hashes.cta_zone: "EXACT_MATCH"
+
+          thresholds:
+            beauty_front.perceptual_hash.max_hamming_distance: 5
+            palette_histogram.max_bucket_deviation_pct: 4.0
+            embedding_cosine.min_similarity: 999700
+            emissive_budget.max: 800000
+
+          gate_evaluation:
+            psi: 1
+            required_conditions_met: true
+            final_status: "APPROVED"
+
+          signer_minimum_tier: "tier_b"
+
+    escalation_rules:
+      brand_zone_mismatch: "REJECT"
+      cta_zone_mismatch: "REJECT"
+      missing_signature: "REJECT"
+      invalid_signature: "REJECT"
+
+    audit:
+      log_all_decisions: true
+      retain_failure_evidence: true
+      retain_success_evidence: false    # UA assets are high-volume; keep failures only.
+
+# ═══════════════════════════════════════════════════════════════════════════
+# POLICY SIGNING — This file itself must be signed before deployment.
+# ═══════════════════════════════════════════════════════════════════════════
+#
+# To deploy:
+#   1. mnemosynectl policy sign -f final_gate_policy.yaml -k production.key
+#   2. Distribute the .signed_policy bundle.
+#   3. The Gate loads ONLY signed policies. Unsigned = REJECT.
+#
+# To verify:
+#   mnemosynectl policy verify -f final_gate_policy.signed_policy
+#
+# "Trust is a vulnerability. We require cryptographic proof."
+# ═══════════════════════════════════════════════════════════════════════════
