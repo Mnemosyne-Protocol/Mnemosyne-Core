@@ -21,7 +21,8 @@
 5. **No email without ONAY.** Telegram bot is the Human-in-the-Loop gate. Draft only — never send autonomously.
 6. **Preserve the three-layer spec.** Fingerprint / Attestation / Policy — never collapse or merge layers.
 7. **Test everything.** Every code artifact must include a self-test that runs without external dependencies.
-
+8. **No Co-Authored-By.** Git commits carry only "Kerem Salman <ks@mnemosynelabs.ai>". 
+   Never add Co-Authored-By Claude or Anthropic lines to any commit message.
 ---
 
 ## 1. WHAT MNEMOSYNE IS
