@@ -288,3 +288,83 @@ ROI: 12.5x
 - **Technical terms:** Always in English (original form) — e.g., Fixed6, KS_SEED, ψ engine, Fail-Closed, Evidence Pack, Ledger, attestation, pipeline
 - **Coding approach:** Proactive, chess-like — anticipate future states, not reactive patching
 - **No vibe-coding.** Every decision has a reason. Every function has a test.
+
+---
+
+## FAZ 9A ARCHITECTURAL FREEZE (CLOSED)
+- **Topoloji:** Host-native inference (Apple Silicon/Metal) + Dockerized Control Plane
+- **İletişim:** Sadece Loopback TCP (127.0.0.1:8765). Docker servisleri dışarıya kapalı.
+- **Dil:** Control Plane servisleri (ledger, gate-api) Python.
+- **Quarantine Schema v1.1:** Her reject kararı `/quarantine/` altına fail-closed JSON yazar.
+  Alanlar: asset_id, timestamp_utc, source_model, source_pipeline, violation_type, decision_reason, psi, hash_canonical, hash_ks, policy_pack_version, gate_version, benchmark_run_id, replay_pointer, operator, admission_decision="QUARANTINE"
+  Schema invalid → exception fırlatılır, kayıt yapılmaz.
+- **Exit Criteria (Bitiş Şartları):** (1) compose.yaml up — 4 servis healthy
+  (2) /submit çalışıyor (host'tan gönderim başarılı)
+  (3) Ed25519 imzalı ledger kaydı üretildi
+  (4) Schema v1.1 enforced (invalid girişte exception fırlatıyor)
+  (5) 100 frame benchmark raporu oluşturuldu.
+  
+  **FAZ 9A Result:** 100/100 verdicts, 141.45 fps, 7.0ms avg / 6.2ms p50 / 38.9ms p99. Commit: d8f7d69.
+
+---
+
+## FAZ 9B ARCHITECTURAL FREEZE (CLOSED)
+**Tema:** Synthetic Stream & Failure Corpus v1
+**Primary Rule:** "Mnemosyne is a fail-closed admission layer for policy-bound, high-throughput media pipelines."
+
+**Non-negotiable Constraints:**
+- Phase 9A topolojisi ve Loopback TCP (127.0.0.1) iletişimi KESİNLİKLE değiştirilmeyecek.
+- Bulut bağımlılığı, RLHF, UE5 eklentisi veya SDK çalışması YOKTUR.
+- Quarantine JSON Schema v1.1 katı bir şekilde uygulanmaya devam edecek (violation_type ve decision_reason zorunludur).
+
+**Görev Tanımları (Task Definitions):**
+- **TASK 1 (Harness):** Host-native sentetik stream runner yazılacak. 30 FPS sustained, 120/240 FPS burst modları ve deterministik replay desteklenecek.
+- **TASK 2 (Ontology):** Reddedilen her asset `/quarantine/` klasörüne v1.1 şemasıyla fail-closed olarak yazılacak. En az 3 farklı `violation_type` üretilecek.
+- **TASK 3 (Replay):** Karantinaya alınan kayıtları tekrar `gate-api`'den geçirip kararların tutarlılığını (verdict stability) ölçecek bir replay aracı yazılacak.
+- **TASK 4 (Latency):** FAZ 9A'daki yüksek p99 gecikmesinin (spike) nedenlerini (serialization, I/O, vs.) ölçen bir analiz raporu üretilecek.
+- **TASK 5 (Report):** Tüm bu sürecin `faz9b_benchmark_report.json` çıktısı alınacak.
+
+**Exit Criteria (Bitiş Şartları):**
+ec1_stream_30fps_stable: 30 FPS sentetik akış çökmeden tamamlandı.
+ec2_burst_mode_runs: 120/240 FPS burst testleri tamamlandı.
+ec3_quarantine_schema_written: Schema v1.1 ile fail-closed loglar yazıldı.
+ec4_violation_types_present: En az 3 farklı hata tipi karantinaya düştü.
+ec5_replay_reproducible: Replay testleri aynı sonuçları (%100 stable) verdi.
+ec6_latency_analysis_written: p99 gecikme analizi markdown olarak üretildi.
+ec7_benchmark_report_written: Konsolide FAZ 9B raporu üretildi.
+ec8_fail_closed_integrity: Hatalı şemalar reddedildi, sessizce kaydedilmedi.
+
+**FAZ 9B Result:** 510 frames, 29.9/125.3/125.6 fps, 8.8ms avg / 8.9ms p50 / 15.9ms p99. 
+306 quarantine records, 4 violation types, replay 100% stable. Commit: def3aef.
+
+---
+
+## FAZ 9B.5 & 9C ARCHITECTURAL FREEZE (CLOSED)
+**Tema:** API Contract Freeze & UE5 Export Hook MVP
+**Primary Rule:** "Mnemosyne is a fail-closed admission layer for policy-bound, high-throughput media pipelines."
+
+**Platform Notu (ÖNEMLİ):** UE5 henüz M3 Node-01'e kurulu değil. FAZ 9C'de UE5 export çıktısını simüle eden bir Python test harness (mock klasörü) kullanılacak. Gerçek UE5 entegrasyonu FAZ 9D'de yapılacaktır.
+
+**SÖZLEŞME 1: Taxonomy & Schema (v1.1 Frozen)**
+Karantina loglarındaki ana kategoriler (`violation_type`) SADECE şunlar olabilir: `GEOMETRY_BREACH`, `POLICY_MODE_VIOLATION`, `SIGNATURE_INVALID`, `SOURCE_INVARIANT_BREACH`.
+
+**TAXONOMY MAPPING (v1.0 → v1.1):** Eski ihlal detayları (`decision_reason` alanına yazılacak) şu ana kategorilere eşlenmiştir:
+- emissive_budget → POLICY_MODE_VIOLATION
+- ks_mode → POLICY_MODE_VIOLATION  
+- signature → SIGNATURE_INVALID
+- source_invariant.mesh_topology_hash → SOURCE_INVARIANT_BREACH
+
+**SÖZLEŞME 2: İletişim Protokolü (Locked)**
+- UE5 export simülatörü (Python köprüsü), Gate'e SADECE Loopback TCP (127.0.0.1:8765) üzerinden `/submit` endpoint'i ile POST atacaktır. UDS YOK.
+
+**GÖREV TANIMI (FAZ 9C - UE5 Export Hook MVP):**
+- Hedef: UE5'ten alınan/simüle edilen bir klasördeki kareleri export sonrasında (Post-Export Hook) Gate'e gönderen basit bir Python köprüsü yazmaktır.
+- Çıktı: Tüm kareler geçerse `Mnemosyne_Certified_Passport.json` sidecar dosyası üretilecek. Tek bir kare bile hata verirse (ψ=0), işlem fail-closed olarak duracak ve karantinaya yazılacak.
+
+**Exit Criteria (Bitiş Şartları):**
+ec1_contract_frozen: Şema v1.1 ve Taxonomy Mapping kurallara uygun uygulandı.
+ec2_ue5_hook_works: Simüle edilmiş export kareleri 127.0.0.1 üzerinden Gate'e başarıyla iletildi.
+ec3_certification_produced: Tüm kareler geçerli olduğunda Ed25519 imzalı sidecar JSON üretildi.
+ec4_fail_closed_blocked: Hatalı kare bulunduğunda sertifika reddedildi ve karantinaya yazıldı.
+
+**FAZ 9B.5 & 9C Result:** 4/4 Exit Criteria PASS. Taxonomy v1.1 enforced. Simulated UE5 post-export hook via 127.0.0.1:8765 working perfectly. Ed25519 `Mnemosyne_Certified_Passport.json` generated for passing frames. Fail-closed block verified for invalid frames. Commit: 278ea16.
