@@ -1,0 +1,26 @@
+{
+  "schema": "mnemosyne.faz9d1.blank_project_status.v1",
+  "generated_at": "2026-03-21T00:00:00+00:00",
+  "status": "PENDING_OPERATOR_CONFIRMATION",
+  "reason": "UE5 not installed. Blank project cannot be created or verified until UE5 is confirmed.",
+  "specification": {
+    "project_name": "MnemosyneHookMVP",
+    "template": "Blank",
+    "project_type": "Game",
+    "language": "Blueprint",
+    "note": "Blueprint-only project avoids Xcode requirement. Python scripting works without C++ project type.",
+    "target_path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/MnemosyneHookMVP",
+    "recommended_plugins_to_enable": [
+      "PythonScriptPlugin",
+      "EditorScriptingUtilities",
+      "MovieRenderPipeline"
+    ],
+    "recommended_plugins_to_disable": [
+      "VirtualReality",
+      "MixedReality",
+      "AndroidSupport",
+      "IOSSupport"
+    ]
+  },
+  "next_action": "Operator creates blank project after UE5 install and confirms path."
+}

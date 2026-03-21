@@ -1,0 +1,48 @@
+{
+  "record_type": "rejection",
+  "asset_id": "tmpvvogjm0l",
+  "status": "rejected",
+  "psi": 0,
+  "source_file": "/private/var/folders/jx/xqhqy56x76n9pn8r2c__91g40000gn/T/tmpvvogjm0l.png",
+  "quarantined_asset_copy": "/Volumes/MNEMOSYNE-GATE/Vault/pipeline-tests/quarantine/tmpvvogjm0l.png",
+  "file_sha256": "3f398c04be47d53c8cda0ca36733b4a26254959d3d0ce6d46ef70203fb4488a9",
+  "canonical_sha256": null,
+  "metadata": {
+    "file_name": "tmpvvogjm0l.png",
+    "suffix": ".png",
+    "size_bytes": 12432,
+    "width": 64,
+    "height": 64,
+    "channels": 3,
+    "dtype": "uint8",
+    "opencv_shape": [
+      64,
+      64,
+      3
+    ]
+  },
+  "reasons": [
+    {
+      "check": "min_resolution",
+      "detail": "width=64, height=64, min=(256x256)"
+    }
+  ],
+  "engine": {
+    "name": "Mnemosyne Gate Engine",
+    "version": "3.0.0"
+  },
+  "timestamp_utc": "2026-03-20T22:41:18+00:00",
+  "ledger": {
+    "version": "1",
+    "record_index": 2,
+    "previous_record_hash": "68b5b16789dd36cd5613fe9b0142206c339e106d829adb8905949a29d9f584e2",
+    "previous_record_file": "00000001_approval_tmpf_r_f77u.json",
+    "record_hash": "6274d382b607a1188b89ba89bcdf57bed16b48247a463ae709e8fc7504bff667"
+  },
+  "signature": {
+    "algorithm": "Ed25519",
+    "public_key_fingerprint_sha256": "4be9f3b96001bb3137fabef6d58f7f347b64e26bb9b0b71f4f4836a3995b2ad1",
+    "signature_hex": "66ca0a988e49733b0496337ef1d93e70ce6eb15aae2572bd1d12c49d370c5a5ca1e7e20637c5f58a82470bd181577d954626e59d2e272a9acefba19dc937530c",
+    "signed_fields_canonical_json_sha256": "7304754d72c0fa1cd0ab6a745ed11b7219dfe5ecd1023712e82aab9ba5065593"
+  }
+}

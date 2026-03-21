@@ -1,0 +1,37 @@
+{
+  "asset_id": "tmp5qayo5t6",
+  "node_id": "MNEMOSYNE-NODE-01",
+  "stage": "layer0_gate_precheck",
+  "timestamp_utc": "2026-03-20T22:41:29+00:00",
+  "status": "rejected",
+  "psi": 0,
+  "source_file": "/private/var/folders/jx/xqhqy56x76n9pn8r2c__91g40000gn/T/tmp5qayo5t6.png",
+  "file_sha256": "95649a2c47e755df3b18d45b655c66fcf806f78b89dd9060e0a6381211643907",
+  "canonical_sha256": null,
+  "metadata": {
+    "file_name": "tmp5qayo5t6.png",
+    "suffix": ".png",
+    "opencv_decode": "failed"
+  },
+  "fingerprint": null,
+  "engine": {
+    "name": "Mnemosyne Gate Engine",
+    "version": "3.0.0"
+  },
+  "reasons": [
+    "opencv_decode_failed"
+  ],
+  "quarantined_asset_copy": "/Volumes/MNEMOSYNE-GATE/Vault/pipeline-tests/quarantine/tmp5qayo5t6.png",
+  "ledger": {
+    "record_index": 20,
+    "record_hash": "04167069d103937063e292b02e246ffafe0efeed7df204cecfa52a3cad2c4c7f",
+    "merkle_root": "ccf817495940a38ee2fea26c4d772ecd871028453d92c6247b447cad85732bcc",
+    "record_path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/runway_stress_vault/ledger/records/00000020_rejection_tmp5qayo5t6.json"
+  },
+  "signature": {
+    "algorithm": "Ed25519",
+    "public_key_fingerprint_sha256": "4be9f3b96001bb3137fabef6d58f7f347b64e26bb9b0b71f4f4836a3995b2ad1",
+    "signature_hex": "6338d4dd3dafe5a607a64f7f173192d83909f4b0f6c835e30e207bbe9377b7eb55634cc08b8de16fb881968f1163300010d39835ce7c1a0a5249d14cf56d790c",
+    "signed_fields_canonical_json_sha256": "24454a0ca4271b555c0073f5e6188f18c4dd0daac1ebbffa2359f8455eb28b14"
+  }
+}

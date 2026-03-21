@@ -1,0 +1,51 @@
+{
+  "asset_id": "tmp8n4mtvb_",
+  "node_id": "MNEMOSYNE-NODE-01",
+  "stage": "layer0_gate_precheck",
+  "timestamp_utc": "2026-03-20T22:41:29+00:00",
+  "status": "approved",
+  "psi": 1,
+  "source_file": "/private/var/folders/jx/xqhqy56x76n9pn8r2c__91g40000gn/T/tmp8n4mtvb_.png",
+  "file_sha256": "80cd6589c56c3f4932b74fa3574f0075733238ceafd448469b5c778d76b14ebb",
+  "canonical_sha256": "80cd6589c56c3f4932b74fa3574f0075733238ceafd448469b5c778d76b14ebb",
+  "metadata": {
+    "file_name": "tmp8n4mtvb_.png",
+    "suffix": ".png",
+    "size_bytes": 1051012,
+    "width": 512,
+    "height": 512,
+    "channels": 4,
+    "dtype": "uint8",
+    "opencv_shape": [
+      512,
+      512,
+      4
+    ]
+  },
+  "fingerprint": {
+    "pixel_mean": [
+      127.680286,
+      127.399036,
+      127.774635,
+      127.613823
+    ]
+  },
+  "engine": {
+    "name": "Mnemosyne Gate Engine",
+    "version": "3.0.0"
+  },
+  "canonical_size_bytes": 1051012,
+  "validated_asset_copy": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/runway_stress_vault/assets/validated/tmp8n4mtvb_.png",
+  "ledger": {
+    "record_index": 12,
+    "record_hash": "f9dd93bb0c8763b3b36453f54e68753aea973099d848f86202291543c6c00fa2",
+    "merkle_root": "20b2f40af595ca51562bd4fafebf222d1ed39a610965a4bf317d2b9cce80f03f",
+    "record_path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/runway_stress_vault/ledger/records/00000012_approval_tmp8n4mtvb_.json"
+  },
+  "signature": {
+    "algorithm": "Ed25519",
+    "public_key_fingerprint_sha256": "4be9f3b96001bb3137fabef6d58f7f347b64e26bb9b0b71f4f4836a3995b2ad1",
+    "signature_hex": "ca8240ce8ec14634fc267693960633729d512c3279c7536e2ab1f72701caa5ae39ce49104e13b3e72c33132fabd07d202a7460021465df44f6246dcda7b0b70c",
+    "signed_fields_canonical_json_sha256": "6a97a0cca8a6f075c294fa4fb9ae83ce776d1a65167b754d3d54ab2e2329188a"
+  }
+}

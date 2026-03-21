@@ -1,0 +1,54 @@
+{
+  "schema": "mnemosyne.faz9d1.ue5_status.v1",
+  "generated_at": "2026-03-21T00:00:00+00:00",
+  "node": "MNEMOSYNE-NODE-01",
+  "status": "PENDING_OPERATOR_CONFIRMATION",
+  "reason": "Epic Games Launcher and UE5 not found on disk. Operator must install and confirm paths.",
+  "discovery": {
+    "epic_launcher_app": {
+      "searched": ["/Applications/Epic Games Launcher.app"],
+      "found": false
+    },
+    "ue5_install": {
+      "searched": [
+        "/Users/Shared/Epic Games/",
+        "/Users/ks/UnrealEngine",
+        "/Users/ksadmin/UnrealEngine",
+        "/Users/ksadmin/Library/Application Support/Epic"
+      ],
+      "found": false,
+      "version_detected": null,
+      "binary_path": null
+    }
+  },
+  "env_snapshot": {
+    "macos_version": "26.3.1",
+    "macos_build": "25D2128",
+    "macos_name": "Tahoe",
+    "chip": "Apple M3 Ultra",
+    "python_version": "3.12.9",
+    "python_arch": "arm64",
+    "xcode_cli_tools": true,
+    "xcode_cli_version": "clang 17.0.0",
+    "xcode_sdk_version": "26.2",
+    "xcode_full_ide": false,
+    "disk_root_available_gb": 903,
+    "disk_root_total_gb": 995
+  },
+  "readiness": {
+    "disk_space_ok": true,
+    "disk_note": "903 GB available — UE5 5.5 requires ~80 GB install + ~60 GB project cache",
+    "python_ok": true,
+    "xcode_cli_ok": true,
+    "xcode_full_ide_ok": false,
+    "xcode_full_ide_note": "BLOCKER for C++ plugin approach. NOT required for Python Editor Scripting MVP.",
+    "macos_compatible": true,
+    "macos_note": "macOS Tahoe 26.3.1. UE5 5.3+ supports macOS 14+ (Apple Silicon). Tahoe is post-Sonoma; verify UE5 5.5 release notes for compatibility.",
+    "overall_blockers": [
+      "Epic Games Launcher not installed",
+      "UE5 not installed",
+      "Xcode full IDE not installed (required only if C++ plugin path chosen)"
+    ]
+  },
+  "next_action": "Operator installs Epic Games Launcher + UE5 5.5, then confirms: 'Installation complete. Paths: [launcher path] [ue5 path] [project path]'"
+}

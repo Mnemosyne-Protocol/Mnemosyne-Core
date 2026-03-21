@@ -1,0 +1,49 @@
+{
+  "asset_id": "tmpo5qiztu7",
+  "node_id": "MNEMOSYNE-NODE-01",
+  "stage": "layer0_gate_precheck",
+  "timestamp_utc": "2026-03-20T22:41:29+00:00",
+  "status": "rejected",
+  "psi": 0,
+  "source_file": "/private/var/folders/jx/xqhqy56x76n9pn8r2c__91g40000gn/T/tmpo5qiztu7.gif",
+  "file_sha256": "22e3b9190900ee048c55e85a30b783fb4e4eee3f48a7d11434ee40aa02da4355",
+  "canonical_sha256": null,
+  "metadata": {
+    "file_name": "tmpo5qiztu7.gif",
+    "suffix": ".gif",
+    "size_bytes": 788404,
+    "width": 512,
+    "height": 512,
+    "channels": 3,
+    "dtype": "uint8",
+    "opencv_shape": [
+      512,
+      512,
+      3
+    ]
+  },
+  "fingerprint": null,
+  "engine": {
+    "name": "Mnemosyne Gate Engine",
+    "version": "3.0.0"
+  },
+  "reasons": [
+    {
+      "check": "allowed_extension",
+      "detail": "extension=.gif"
+    }
+  ],
+  "quarantined_asset_copy": "/Volumes/MNEMOSYNE-GATE/Vault/pipeline-tests/quarantine/tmpo5qiztu7.gif",
+  "ledger": {
+    "record_index": 18,
+    "record_hash": "8ef5b2136922c031ab551e3fa9b58ed2c5076ee68ec8d501fcec9d318eaf1eff",
+    "merkle_root": "b441f79dcf9ee506347ba61e36fa397f344f40e0daa7de3948bb3ab12417ee99",
+    "record_path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/runway_stress_vault/ledger/records/00000018_rejection_tmpo5qiztu7.json"
+  },
+  "signature": {
+    "algorithm": "Ed25519",
+    "public_key_fingerprint_sha256": "4be9f3b96001bb3137fabef6d58f7f347b64e26bb9b0b71f4f4836a3995b2ad1",
+    "signature_hex": "a5811cce913d5b2422aeaf715b301618ed510e666efb9bde6bf355a2465e7a03183404ae53e1974ef04453ef427a89e3815a119d4b831715eefeb6c6b7a44906",
+    "signed_fields_canonical_json_sha256": "8ddd5841e1debafff9a06c62c64e3895a7ca31a9878548cc4d00f7736186c83c"
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "schema": "mnemosyne.faz9d1.summary.v1",
+  "generated_at": "2026-03-21T00:00:00+00:00",
+  "faz": "9D.1",
+  "phase": "Discovery & Design",
+  "node": "MNEMOSYNE-NODE-01",
+  "overall_status": "PARTIAL_PENDING_OPERATOR_CONFIRMATION",
+
+  "exit_criteria": {
+    "ec1_env_readiness": {
+      "status": "PASS",
+      "evidence": "bench/out/faz9d1_ue5_status.json",
+      "summary": "Node env documented: macOS Tahoe 26.3.1, M3 Ultra, 903GB disk, Python 3.12.9 arm64, Xcode CLI OK, UE5 not installed"
+    },
+    "ec2_launcher_bringup_plan": {
+      "status": "PASS",
+      "evidence": "docs/faz9d1_launcher_bringup.md",
+      "summary": "6-step Epic Games Launcher + UE5 5.5 install plan with verification commands"
+    },
+    "ec3_ue5_verified": {
+      "status": "PENDING_OPERATOR_CONFIRMATION",
+      "evidence": "bench/out/faz9d1_ue5_status.json",
+      "epic_launcher_path": null,
+      "ue5_path": null,
+      "ue5_version": null,
+      "python_plugin_enabled": null
+    },
+    "ec4_blank_project_created": {
+      "status": "PENDING_OPERATOR_CONFIRMATION",
+      "evidence": "bench/out/faz9d1_blank_project_status.json",
+      "project_path": null,
+      "project_name": "MnemosyneHookMVP",
+      "python_initialized": null
+    },
+    "ec5_export_surface_discovery": {
+      "status": "PASS",
+      "evidence": "docs/faz9d1_export_surface_discovery.md",
+      "mvp_surface": "Python Editor Scripting — on_individual_job_finished delegate",
+      "deferred_surfaces": ["C++ FAssetExportTask (FAZ 9E)", "CommandLet (FAZ 9E)"],
+      "sozzlesme2_compliant": true,
+      "no_xcode_required_for_mvp": true
+    },
+    "ec6_real_hook_design": {
+      "status": "PASS",
+      "evidence": "docs/faz9d1_real_hook_design.md",
+      "components": [
+        "init_unreal.py",
+        "hook_registrar.py",
+        "gate_client.py",
+        "frame_attestation.py",
+        "session_certifier.py",
+        "scene_manifest_loader.py"
+      ],
+      "delta_from_faz9c_mock": "Frame source: PNG/EXR renders (not JSON); attestation built live; MRQ delegate trigger"
+    },
+    "ec7_scene_manifest_v1": {
+      "status": "PASS",
+      "evidence": "docs/faz9d1_scene_manifest_v1.md",
+      "schema": "mnemosyne.scene_manifest.v1",
+      "fields_defined": ["mesh_topology_hash", "uv_layout_hash", "shader_signature_hash", "light_rig_hash", "emissive_budget_fixed6"],
+      "trust_chain_closed": true,
+      "ks_seed_compliant": true
+    },
+    "ec8_summary_report": {
+      "status": "PASS",
+      "evidence": "docs/faz9d1_summary.md"
+    }
+  },
+
+  "env_snapshot": {
+    "macos_version": "26.3.1",
+    "macos_name": "Tahoe",
+    "chip": "Apple M3 Ultra",
+    "python_version": "3.12.9",
+    "python_arch": "arm64",
+    "xcode_cli_ok": true,
+    "xcode_full_ide": false,
+    "disk_available_gb": 903,
+    "epic_launcher_installed": false,
+    "ue5_installed": false
+  },
+
+  "mvp_architecture": {
+    "hook_surface": "unreal.MoviePipelineQueueEngineSubsystem.on_individual_job_finished",
+    "hook_language": "Python 3.11.x (embedded in UE5)",
+    "gate_url": "http://127.0.0.1:8765",
+    "sozzlesme2_loopback_tcp": true,
+    "c_plus_plus_required": false,
+    "xcode_full_ide_required": false,
+    "attestation_source": "frame_attestation.py + canonical_scene_manifest.json",
+    "certification_output": "Mnemosyne_Certified_Passport.json (Ed25519 signed)"
+  },
+
+  "pending_after_confirmation": [
+    "Verify launcher + UE5 paths on disk",
+    "Update faz9d1_ue5_status.json → status=CONFIRMED",
+    "Update faz9d1_blank_project_status.json → status=CONFIRMED",
+    "Fill ec3/ec4 fields in this summary",
+    "git commit: feat(faz9d1): ue5 bring-up, export surface discovery, and real hook design"
+  ],
+
+  "output_files": {
+    "bench/out/faz9d1_ue5_status.json": "written",
+    "bench/out/faz9d1_blank_project_status.json": "written",
+    "docs/faz9d1_launcher_bringup.md": "written",
+    "docs/faz9d1_ue5_install_verification.md": "written (skeleton)",
+    "docs/faz9d1_blank_project.md": "written (skeleton)",
+    "docs/faz9d1_export_surface_discovery.md": "written",
+    "docs/faz9d1_real_hook_design.md": "written",
+    "docs/faz9d1_scene_manifest_v1.md": "written",
+    "docs/faz9d1_summary.md": "written",
+    "bench/out/faz9d1_summary.json": "written"
+  }
+}

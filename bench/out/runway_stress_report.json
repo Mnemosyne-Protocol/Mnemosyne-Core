@@ -1,0 +1,195 @@
+{
+  "test": "runway_stress_test",
+  "gate_engine": "gate_engine_v3",
+  "gate_version": "3.0.0",
+  "frames_per_scenario": 3,
+  "seed": 42,
+  "total": 18,
+  "approved": 9,
+  "rejected": 9,
+  "unexpected_outcomes": 0,
+  "quarantine_dir": "/Volumes/MNEMOSYNE-GATE/Vault/pipeline-tests/quarantine",
+  "vault_dir": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/runway_stress_vault",
+  "results": [
+    {
+      "label": "runway_hd_rgb_001",
+      "psi": 1,
+      "status": "approved",
+      "reasons": [],
+      "elapsed_ms": 131.074,
+      "expected_psi": 1,
+      "scenario": "runway_hd_rgb"
+    },
+    {
+      "label": "runway_hd_rgb_002",
+      "psi": 1,
+      "status": "approved",
+      "reasons": [],
+      "elapsed_ms": 130.516,
+      "expected_psi": 1,
+      "scenario": "runway_hd_rgb"
+    },
+    {
+      "label": "runway_hd_rgb_003",
+      "psi": 1,
+      "status": "approved",
+      "reasons": [],
+      "elapsed_ms": 129.71,
+      "expected_psi": 1,
+      "scenario": "runway_hd_rgb"
+    },
+    {
+      "label": "runway_4k_rgb_001",
+      "psi": 1,
+      "status": "approved",
+      "reasons": [],
+      "elapsed_ms": 517.213,
+      "expected_psi": 1,
+      "scenario": "runway_4k_rgb"
+    },
+    {
+      "label": "runway_4k_rgb_002",
+      "psi": 1,
+      "status": "approved",
+      "reasons": [],
+      "elapsed_ms": 518.116,
+      "expected_psi": 1,
+      "scenario": "runway_4k_rgb"
+    },
+    {
+      "label": "runway_4k_rgb_003",
+      "psi": 1,
+      "status": "approved",
+      "reasons": [],
+      "elapsed_ms": 516.39,
+      "expected_psi": 1,
+      "scenario": "runway_4k_rgb"
+    },
+    {
+      "label": "runway_rgba_alpha_001",
+      "psi": 1,
+      "status": "approved",
+      "reasons": [],
+      "elapsed_ms": 23.048,
+      "expected_psi": 1,
+      "scenario": "runway_rgba_alpha"
+    },
+    {
+      "label": "runway_rgba_alpha_002",
+      "psi": 1,
+      "status": "approved",
+      "reasons": [],
+      "elapsed_ms": 22.767,
+      "expected_psi": 1,
+      "scenario": "runway_rgba_alpha"
+    },
+    {
+      "label": "runway_rgba_alpha_003",
+      "psi": 1,
+      "status": "approved",
+      "reasons": [],
+      "elapsed_ms": 22.663,
+      "expected_psi": 1,
+      "scenario": "runway_rgba_alpha"
+    },
+    {
+      "label": "runway_fail_tiny_001",
+      "psi": 0,
+      "status": "rejected",
+      "reasons": [
+        "min_resolution"
+      ],
+      "elapsed_ms": 1.374,
+      "expected_psi": 0,
+      "scenario": "runway_fail_tiny"
+    },
+    {
+      "label": "runway_fail_tiny_002",
+      "psi": 0,
+      "status": "rejected",
+      "reasons": [
+        "min_resolution"
+      ],
+      "elapsed_ms": 1.588,
+      "expected_psi": 0,
+      "scenario": "runway_fail_tiny"
+    },
+    {
+      "label": "runway_fail_tiny_003",
+      "psi": 0,
+      "status": "rejected",
+      "reasons": [
+        "min_resolution"
+      ],
+      "elapsed_ms": 1.396,
+      "expected_psi": 0,
+      "scenario": "runway_fail_tiny"
+    },
+    {
+      "label": "runway_fail_ext_001",
+      "psi": 0,
+      "status": "rejected",
+      "reasons": [
+        "allowed_extension"
+      ],
+      "elapsed_ms": 2.375,
+      "expected_psi": 0,
+      "scenario": "runway_fail_ext"
+    },
+    {
+      "label": "runway_fail_ext_002",
+      "psi": 0,
+      "status": "rejected",
+      "reasons": [
+        "allowed_extension"
+      ],
+      "elapsed_ms": 2.663,
+      "expected_psi": 0,
+      "scenario": "runway_fail_ext"
+    },
+    {
+      "label": "runway_fail_ext_003",
+      "psi": 0,
+      "status": "rejected",
+      "reasons": [
+        "allowed_extension"
+      ],
+      "elapsed_ms": 2.394,
+      "expected_psi": 0,
+      "scenario": "runway_fail_ext"
+    },
+    {
+      "label": "runway_fail_corrupt_001",
+      "psi": 0,
+      "status": "rejected",
+      "reasons": [
+        "opencv_decode_failed"
+      ],
+      "elapsed_ms": 1.255,
+      "expected_psi": 0,
+      "scenario": "runway_fail_corrupt"
+    },
+    {
+      "label": "runway_fail_corrupt_002",
+      "psi": 0,
+      "status": "rejected",
+      "reasons": [
+        "opencv_decode_failed"
+      ],
+      "elapsed_ms": 1.43,
+      "expected_psi": 0,
+      "scenario": "runway_fail_corrupt"
+    },
+    {
+      "label": "runway_fail_corrupt_003",
+      "psi": 0,
+      "status": "rejected",
+      "reasons": [
+        "opencv_decode_failed"
+      ],
+      "elapsed_ms": 1.284,
+      "expected_psi": 0,
+      "scenario": "runway_fail_corrupt"
+    }
+  ]
+}
