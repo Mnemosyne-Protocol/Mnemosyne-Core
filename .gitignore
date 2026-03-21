@@ -9,3 +9,5 @@ bench/out/trace.json
 
 # (Opsiyonel) MacOS gizli dosyaları
 .DS_Store
+bench/out/runway_stress_vault/keys/
+**/*.pem
