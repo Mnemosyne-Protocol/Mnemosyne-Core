@@ -1,0 +1,63 @@
+{
+  "$schema": "https://mnemosynelabs.ai/schemas/scene_manifest_v1.json",
+  "schema_version": "scene_manifest_v1",
+  "description": "Mnemosyne UE5 Export Manifest — per-frame submission payload for Gate API /submit",
+  "faz": "9D.1",
+  "date": "2026-03-21",
+
+  "envelope": {
+    "manifest_id": "<uuid4>",
+    "timestamp_utc": "<ISO 8601>",
+    "gate_version": "1.0",
+    "policy_pack_version": "1.0",
+    "source_pipeline": "UE5_MRQ",
+    "source_model": "UE5_RENDERER",
+    "operator": "UE5_HOOK"
+  },
+
+  "render_job": {
+    "project_name": "<string>",
+    "sequence_path": "<UE asset path, e.g. /Game/Sequences/MyScene>",
+    "map_path": "<UE map path>",
+    "output_directory": "<absolute path on disk>",
+    "render_preset": "<MRQ preset name>",
+    "total_frames_expected": "<int>",
+    "frame_rate": "<e.g. 24>",
+    "resolution": {
+      "width": "<int>",
+      "height": "<int>"
+    }
+  },
+
+  "frame": {
+    "frame_number": "<int — sequential render frame>",
+    "frame_path": "<absolute path to rendered PNG/EXR>",
+    "frame_size_bytes": "<int>",
+    "hash_canonical": "<SHA-256 of raw frame bytes, hex>",
+    "hash_ks": "<KS-SHA-256 = SHA-256('MNEMOSYNE-KS-V3' || raw_bytes), hex>",
+    "timestamp_utc": "<ISO 8601 — time frame file was written>"
+  },
+
+  "invariants": {
+    "submission_mode": "controlled_generative",
+    "emissive_budget_fixed6": "<i64, e.g. 720000 = 0.720000>",
+    "allowed_colors": ["<hex color strings>"],
+    "mesh_topology_hash": "<KS-SHA-256 of mesh descriptor, if available>",
+    "silhouette_hash": "<KS-SHA-256 of alpha mask binary, if available>",
+    "depth_envelope_l2": "<Fixed6 i64, if available>"
+  },
+
+  "attestation": {
+    "signer_id": "<Ed25519 public key fingerprint>",
+    "tier": "B",
+    "signature_ed25519": "<hex — covers canonical JSON of envelope+frame+invariants>",
+    "merkle_root": "<KS-SHA-256 of policy_hash + render_hash + context_hash>"
+  },
+
+  "notes": [
+    "Fields marked <if available> are optional for MVP — Gate evaluates available invariants only.",
+    "submission_mode defaults to 'controlled_generative' for UE5 hook.",
+    "hash_canonical and hash_ks are REQUIRED for every frame submission.",
+    "Taxonomy v1.1 violation_type in quarantine: GEOMETRY_BREACH | POLICY_MODE_VIOLATION | SIGNATURE_INVALID | SOURCE_INVARIANT_BREACH"
+  ]
+}

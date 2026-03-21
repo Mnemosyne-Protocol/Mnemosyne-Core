@@ -1,0 +1,105 @@
+{
+  "faz": "9D.1",
+  "title": "UE5 Bring-Up, Export Surface Discovery & Real Hook Design",
+  "timestamp_utc": "2026-03-21T00:00:00Z",
+  "operator": "Kerem Salman",
+
+  "environment_readiness": {
+    "ec": "ec1_readiness_checked",
+    "status": "PASS",
+    "machine": "Apple Mac Studio M3 Ultra",
+    "os": "macOS Tahoe 26.3.1",
+    "xcode": "present (required for UE5 shader compilation)",
+    "python": "3.12.9 via pyenv",
+    "disk_ue5_volume": "MNEMOSYNE-GATE (FileVault Encrypted APFS)",
+    "blockers": []
+  },
+
+  "epic_launcher": {
+    "ec": "ec2_launcher_plan_written",
+    "status": "COMPLETE — Operator Action done",
+    "path": "/Applications/Epic Games Launcher.app",
+    "verification": "ls confirmed"
+  },
+
+  "ue5_install": {
+    "ec": "ec3_ue5_status_written",
+    "status": "COMPLETE — Operator Action done",
+    "version": "5.7.4",
+    "changelist": 51494982,
+    "branch": "++UE5+Release-5.7",
+    "root": "/Volumes/MNEMOSYNE-GATE/Vault/UnrealEngine/UE_5.7",
+    "editor_binary": "/Volumes/MNEMOSYNE-GATE/Vault/UnrealEngine/UE_5.7/Engine/Binaries/Mac/UnrealEditor",
+    "python_plugin_present": true,
+    "python_plugin_path": "/Volumes/MNEMOSYNE-GATE/Vault/UnrealEngine/UE_5.7/Engine/Plugins/Experimental/PythonScriptPlugin",
+    "detail_file": "ue5_install_status.json"
+  },
+
+  "blank_project": {
+    "ec": "ec4_blank_project_defined",
+    "status": "COMPLETE — Operator Action done",
+    "name": "MnemosyneHookMVP",
+    "uproject": "/Volumes/MNEMOSYNE-GATE/Vault/repos/MnemosyneHookMVP/MnemosyneHookMVP/MnemosyneHookMVP.uproject",
+    "engine_association": "5.7",
+    "python_plugin_enabled": false,
+    "note": "PythonScriptPlugin will be enabled in FAZ 9D.2",
+    "detail_file": "blank_project_status.json"
+  },
+
+  "export_surface": {
+    "ec": "ec5_export_surface_ranked",
+    "status": "COMPLETE",
+    "winner": "Python Editor Scripting via PythonScriptPlugin",
+    "hook_class": "MoviePipelinePythonHostExecutor",
+    "rationale": "Zero compile cost. Stdlib HTTP. Frame-level per-shot callback. Fail-closed via Python raise.",
+    "rejected": ["Editor Utility Widget (no headless CI)", "C++ Plugin (compile required, ABI coupling)"],
+    "detail_file": "export_surface_ranking.md"
+  },
+
+  "hook_design": {
+    "ec": "ec6_real_hook_design_written",
+    "status": "COMPLETE",
+    "executor_class": "MnemosyneExecutor (Python subclass of MoviePipelinePythonHostExecutor)",
+    "gate_endpoint": "http://127.0.0.1:8765/submit",
+    "transport": "HTTP/1.1 loopback — no UDS, no external network",
+    "per_frame_flow": [
+      "render frame N → PNG written to Saved/MovieRenders/",
+      "MnemosyneExecutor.on_individual_shot_work_finished() fires",
+      "KS-SHA256(frame bytes) computed",
+      "POST scene_manifest_v1 payload to Gate",
+      "psi=1 → continue | psi=0 → write quarantine v1.1 → raise → ABORT"
+    ],
+    "passport_on_success": "Mnemosyne_Certified_Passport.json (Ed25519 signed)",
+    "taxonomy": "v1.1 — GEOMETRY_BREACH | POLICY_MODE_VIOLATION | SIGNATURE_INVALID | SOURCE_INVARIANT_BREACH",
+    "detail_file": "real_hook_design.md"
+  },
+
+  "scene_manifest": {
+    "ec": "ec7_scene_manifest_defined",
+    "status": "COMPLETE",
+    "schema": "scene_manifest_v1",
+    "required_fields": ["manifest_id", "timestamp_utc", "frame_number", "frame_path", "hash_canonical", "hash_ks"],
+    "optional_fields": ["silhouette_hash", "depth_envelope_l2", "mesh_topology_hash"],
+    "detail_file": "scene_manifest_v1.json"
+  },
+
+  "exit_criteria_summary": {
+    "ec1_readiness_checked": "PASS",
+    "ec2_launcher_plan_written": "PASS",
+    "ec3_ue5_status_written": "PASS",
+    "ec4_blank_project_defined": "PASS",
+    "ec5_export_surface_ranked": "PASS",
+    "ec6_real_hook_design_written": "PASS",
+    "ec7_scene_manifest_defined": "PASS",
+    "ec8_summary_written": "PASS"
+  },
+
+  "all_ec_pass": true,
+
+  "next_phase": {
+    "faz": "9D.2",
+    "title": "Hook Implementation & Integration Test",
+    "first_action": "Enable PythonScriptPlugin in MnemosyneHookMVP.uproject",
+    "deliverable": "Working mnemo_ue5_executor.py that fires against live Gate API on 127.0.0.1:8765"
+  }
+}
