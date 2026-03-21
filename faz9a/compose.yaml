@@ -1,0 +1,82 @@
+# Mnemosyne FAZ 9A — Control Plane
+# Topoloji: Host-native inference + Dockerized Control Plane
+# Iletisim: Sadece Loopback TCP (127.0.0.1:8765)
+# Docker servisleri disariya kapali.
+
+services:
+
+  gate-api:
+    build:
+      context: ./gate-api
+    ports:
+      - "127.0.0.1:8765:8765"   # ONLY loopback — no external interface
+    environment:
+      LEDGER_URL: "http://ledger-service:8766"
+      QUARANTINE_URL: "http://quarantine-logger:8768"
+      ATTESTATION_URL: "http://attestation-service:8767"
+      GATE_VERSION: "3.0.0"
+      POLICY_PACK_VERSION: "final_gate_policy.v1.0"
+    networks:
+      - mnemosyne-net
+    depends_on:
+      ledger-service:
+        condition: service_healthy
+      quarantine-logger:
+        condition: service_healthy
+      attestation-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8765/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  ledger-service:
+    build:
+      context: ./ledger-service
+    # NO exposed ports — internal network only
+    environment:
+      LEDGER_PORT: "8766"
+    networks:
+      - mnemosyne-net
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8766/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  attestation-service:
+    build:
+      context: ./attestation-service
+    # NO exposed ports — internal network only
+    environment:
+      ATTESTATION_PORT: "8767"
+    networks:
+      - mnemosyne-net
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8767/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  quarantine-logger:
+    build:
+      context: ./quarantine-logger
+    # NO exposed ports — internal network only
+    volumes:
+      - /Volumes/MNEMOSYNE-GATE/Vault/pipeline-tests/quarantine:/quarantine
+    environment:
+      QUARANTINE_PORT: "8768"
+      QUARANTINE_DIR: "/quarantine"
+    networks:
+      - mnemosyne-net
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8768/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+networks:
+  mnemosyne-net:
+    driver: bridge
+    internal: false   # gate-api needs to respond to loopback; internal services route only via mnemosyne-net
