@@ -11,3 +11,6 @@ bench/out/trace.json
 .DS_Store
 bench/out/runway_stress_vault/keys/
 **/*.pem
+*.m4a
+*.mp3
+*.mp4
