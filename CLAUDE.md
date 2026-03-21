@@ -368,3 +368,33 @@ ec3_certification_produced: Tüm kareler geçerli olduğunda Ed25519 imzalı sid
 ec4_fail_closed_blocked: Hatalı kare bulunduğunda sertifika reddedildi ve karantinaya yazıldı.
 
 **FAZ 9B.5 & 9C Result:** 4/4 Exit Criteria PASS. Taxonomy v1.1 enforced. Simulated UE5 post-export hook via 127.0.0.1:8765 working perfectly. Ed25519 `Mnemosyne_Certified_Passport.json` generated for passing frames. Fail-closed block verified for invalid frames. Commit: 278ea16.
+
+---
+
+## FAZ 9D.1 ARCHITECTURAL FREEZE (ACTIVE)
+**Tema:** UE5 Bring-Up, Export Surface Discovery & Real Hook Design
+**Primary Rule:** "Mnemosyne is a fail-closed admission layer for policy-bound, high-throughput media pipelines."
+
+**Constraints & Assumptions (KIRMIZI ÇİZGİLER):**
+- Gate API contract, taxonomy ve schema v1.1 KESİNLİKLE DEĞİŞTİRİLEMEZ. İletişim: Loopback TCP (127.0.0.1:8765).
+- BU FAZDA FULL PLUGIN KODLAMASI YOKTUR. Sadece yüzey keşfi, kurulum doğrulaması ve tasarım yapılacaktır.
+- **OPERATOR ACTION REQUIRED:** Epic Games Launcher ve UE5 kurulumu manuel GUI işlemleridir. Claude bu işlemleri simüle etmeyecek, operatörden (KS) yapmasını bekleyecek ve ardından disk üzerindeki yolları (paths) doğrulayacaktır.
+
+**Görev Tanımları (Tasks):**
+- **TASK 1 (Env):** macOS sürümü, Xcode, disk alanı (300GB+ boş) ve Python gereksinimleri denetlenecek.
+- **TASK 2 (Launcher):** Epic Games Launcher kurulum adımları ve doğrulama planı (Operator Action) hazırlanacak.
+- **TASK 3 (UE5 Install):** UE5 stabil sürümünün kurulum dizini ve binary yolları doğrulanacak.
+- **TASK 4 (Blank Project):** En hafif (minimal) boş proje ayarları tanımlanıp diske kaydedildiği doğrulanacak.
+- **TASK 5 (Surface Discovery):** Python Editor Scripting, Editor Utility veya C++ seçenekleri karşılaştırılıp, en düşük riskli MVP yüzeyi seçilecek.
+- **TASK 6 (Hook Design):** Seçilen yüzey için gerçek export hook tasarımı yapılacak. `scene_manifest_v1` şeması tanımlanacak.
+- **TASK 7 (Summary):** Yapılan keşfin ve tasarımın konsolide JSON ve Markdown özeti çıkarılacak.
+
+**Exit Criteria (Bitiş Şartları):**
+ec1_readiness_checked: Ortam hazırlık raporu (blocker'lar dahil) üretildi.
+ec2_launcher_plan_written: Launcher kurulum ve doğrulama planı yazıldı.
+ec3_ue5_status_written: UE5 kurulum durumu (JSON) doğrulandı.
+ec4_blank_project_defined: Boş proje (Blank project) durumu doğrulandı.
+ec5_export_surface_ranked: Entegrasyon yüzeyleri karşılaştırıldı ve MVP seçildi.
+ec6_real_hook_design_written: Gerçek hook mimari tasarımı dokümante edildi.
+ec7_scene_manifest_defined: scene/export manifest v1 dokümanı yazıldı.
+ec8_summary_written: FAZ 9D.1 nihai özeti oluşturuldu.
