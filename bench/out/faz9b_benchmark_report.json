@@ -1,0 +1,167 @@
+{
+  "benchmark_run_id": "faz9b-c30f3b237879",
+  "timestamp_utc": "2026-03-21T15:56:59.275900+00:00",
+  "gate_url": "http://127.0.0.1:8765",
+  "gate_version": "3.0.0",
+  "policy_pack_version": "final_gate_policy.v1.0",
+  "faz": "9B",
+  "total_frames_submitted": 510,
+  "total_elapsed_ms": 10008.3,
+  "tasks": {
+    "task1_stream_harness": {
+      "sustained_30fps": {
+        "target_fps": 30.0,
+        "achieved_fps": 29.95,
+        "n_frames": 150,
+        "n_correct": 150,
+        "n_errors": 0,
+        "avg_ms": 11.11,
+        "p50_ms": 10.64,
+        "p99_ms": 18.63,
+        "total_elapsed_s": 5.008
+      },
+      "burst_120fps": {
+        "achieved_fps": 125.3,
+        "n_frames": 120,
+        "n_errors": 0,
+        "avg_ms": 7.89,
+        "p99_ms": 12.78
+      },
+      "burst_240fps": {
+        "achieved_fps": 125.6,
+        "n_frames": 240,
+        "n_errors": 0,
+        "avg_ms": 7.88,
+        "p99_ms": 12.32
+      }
+    },
+    "task2_violation_corpus": {
+      "quarantine_records_on_disk": 306,
+      "unique_violation_types": [
+        "emissive_budget",
+        "ks_mode",
+        "signature",
+        "source_invariant.mesh_topology_hash"
+      ],
+      "n_unique_violation_types": 4,
+      "violation_type_counts_by_mode": {
+        "sustained_30fps": {
+          "ks_mode": 30,
+          "signature": 30,
+          "source_invariant.mesh_topology_hash": 15,
+          "emissive_budget": 15
+        },
+        "burst_120fps": {
+          "ks_mode": 24,
+          "signature": 24,
+          "source_invariant.mesh_topology_hash": 12,
+          "emissive_budget": 12
+        },
+        "burst_240fps": {
+          "ks_mode": 48,
+          "signature": 48,
+          "source_invariant.mesh_topology_hash": 24,
+          "emissive_budget": 24
+        }
+      }
+    },
+    "task3_replay": {
+      "replay_run_id": "replay-faz9b-c30f3b",
+      "n_replayed": 306,
+      "n_stable": 306,
+      "stability_pct": 100.0,
+      "violation_types_seen_in_replay": [
+        "emissive_budget",
+        "ks_mode",
+        "signature",
+        "source_invariant.mesh_topology_hash"
+      ]
+    },
+    "task4_latency": {
+      "total_frames_analyzed": 510,
+      "client_total": {
+        "avg_ms": 8.83,
+        "p50_ms": 8.92,
+        "p99_ms": 15.91,
+        "stdev_ms": 2.55
+      },
+      "gate_eval_server": {
+        "avg_ms": 7.31,
+        "p50_ms": 7.61,
+        "p99_ms": 14.32
+      },
+      "http_overhead": {
+        "avg_ms": 1.52,
+        "p99_ms": 3.26
+      },
+      "spikes": {
+        "threshold_ms": 20.05,
+        "count": 1,
+        "pct": 0.2,
+        "causes": [
+          "Cold-path overhead (first request): container warm-up and JIT-like Python attribute caching inflate the first few frames significantly.",
+          "APPROVED path is 3.3ms slower than REJECTED: gate-api must call ledger-service (Ed25519 sign + JSONL append) vs quarantine-logger (JSON file write). Ledger signing dominates for \u03c8=1 frames."
+        ]
+      },
+      "approved_avg_ms": 10.82,
+      "rejected_avg_ms": 7.51,
+      "approved_vs_rejected_delta_ms": 3.31,
+      "report_path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/faz9b_latency_analysis.md"
+    },
+    "task5_ec8_schema_enforcement": {
+      "all_ok": true,
+      "cases": {
+        "valid_record": {
+          "should_raise": false,
+          "raised": false,
+          "ok": true
+        },
+        "psi_equals_1": {
+          "should_raise": true,
+          "raised": true,
+          "ok": true
+        },
+        "wrong_admission_decision": {
+          "should_raise": true,
+          "raised": true,
+          "ok": true
+        },
+        "ks_domain_collision": {
+          "should_raise": true,
+          "raised": true,
+          "ok": true
+        },
+        "missing_violation_type": {
+          "should_raise": true,
+          "raised": true,
+          "ok": true
+        },
+        "empty_asset_id": {
+          "should_raise": true,
+          "raised": true,
+          "ok": true
+        },
+        "bad_timestamp": {
+          "should_raise": true,
+          "raised": true,
+          "ok": true
+        },
+        "hash_wrong_length": {
+          "should_raise": true,
+          "raised": true,
+          "ok": true
+        }
+      }
+    }
+  },
+  "exit_criteria": {
+    "ec1_stream_30fps_stable": true,
+    "ec2_burst_mode_runs": true,
+    "ec3_quarantine_schema_written": true,
+    "ec4_violation_types_present": true,
+    "ec5_replay_reproducible": true,
+    "ec6_latency_analysis_written": true,
+    "ec7_benchmark_report_written": true,
+    "ec8_fail_closed_integrity": true
+  }
+}
