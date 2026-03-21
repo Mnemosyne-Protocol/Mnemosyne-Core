@@ -1,0 +1,93 @@
+{
+  "benchmark_run_id": "faz9c-c003b4c15758",
+  "timestamp_utc": "2026-03-21T17:11:34.845594+00:00",
+  "gate_url": "http://127.0.0.1:8765",
+  "gate_version": "3.0.0",
+  "policy_pack_version": "final_gate_policy.v1.0",
+  "faz": "9C",
+  "platform_note": "Mock UE5 export (real UE5 \u2192 FAZ 9D per CLAUDE.md)",
+  "loopback_tcp_only": true,
+  "ed25519_available": true,
+  "total_elapsed_ms": 1436.7,
+  "canonical_taxonomy_v11": [
+    "GEOMETRY_BREACH",
+    "POLICY_MODE_VIOLATION",
+    "SIGNATURE_INVALID",
+    "SOURCE_INVARIANT_BREACH"
+  ],
+  "tasks": {
+    "sozzlesme1_taxonomy": {
+      "all_ok": true,
+      "cases": {
+        "ks_mode\u2192POLICY_MODE_VIOLATION": {
+          "ok": true,
+          "verdict": "REJECTED",
+          "quarantine_violation_type": "POLICY_MODE_VIOLATION",
+          "expected_canonical": "POLICY_MODE_VIOLATION",
+          "is_canonical": true,
+          "vtype_correct": true
+        },
+        "signature\u2192SIGNATURE_INVALID": {
+          "ok": true,
+          "verdict": "REJECTED",
+          "quarantine_violation_type": "SIGNATURE_INVALID",
+          "expected_canonical": "SIGNATURE_INVALID",
+          "is_canonical": true,
+          "vtype_correct": true
+        },
+        "source_invariant\u2192SOURCE_INVARIANT_BREACH": {
+          "ok": true,
+          "verdict": "REJECTED",
+          "quarantine_violation_type": "SOURCE_INVARIANT_BREACH",
+          "expected_canonical": "SOURCE_INVARIANT_BREACH",
+          "is_canonical": true,
+          "vtype_correct": true
+        },
+        "roi\u2192GEOMETRY_BREACH": {
+          "ok": true,
+          "verdict": "REJECTED",
+          "quarantine_violation_type": "GEOMETRY_BREACH",
+          "expected_canonical": "GEOMETRY_BREACH",
+          "is_canonical": true,
+          "vtype_correct": true
+        }
+      },
+      "canonical_taxonomy": [
+        "GEOMETRY_BREACH",
+        "POLICY_MODE_VIOLATION",
+        "SIGNATURE_INVALID",
+        "SOURCE_INVARIANT_BREACH"
+      ]
+    },
+    "ue5_passing_session": {
+      "ec2_ok": true,
+      "ec3_ok": true,
+      "session_id": "session-passing-faz9c-c0",
+      "certified": true,
+      "n_frames": 5,
+      "n_approved": 5,
+      "n_rejected": 0,
+      "passport_path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/faz9c/mock_exports/session-passing-faz9c-c0/Mnemosyne_Certified_Passport.json",
+      "passport_valid": true,
+      "passport_has_ed25519_sig": true,
+      "total_elapsed_ms": 62.24,
+      "algorithm": "Ed25519"
+    },
+    "ue5_failing_session": {
+      "ec4_ok": true,
+      "session_id": "session-failing-faz9c-c0",
+      "certified": false,
+      "no_passport": true,
+      "fail_reason": "frame[2] session-failing-faz9c-c0-frame-0002: invalid Ed25519 format: expected 128 hex chars",
+      "n_approved_before_block": 2,
+      "n_rejected": 1,
+      "total_elapsed_ms": 29.88849999383092
+    }
+  },
+  "exit_criteria": {
+    "ec1_contract_frozen": true,
+    "ec2_ue5_hook_works": true,
+    "ec3_certification_produced": true,
+    "ec4_fail_closed_blocked": true
+  }
+}

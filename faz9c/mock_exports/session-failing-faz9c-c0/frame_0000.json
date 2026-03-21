@@ -1,0 +1,64 @@
+{
+  "frame_id": "session-failing-faz9c-c0-frame-0000",
+  "session_id": "session-failing-faz9c-c0",
+  "export_metadata": {
+    "renderer": "UE5-Lumen-RayTracing",
+    "render_pass": "beauty",
+    "scene_id": "mnemo_cosmetic_scene_v1",
+    "ue5_version": "5.4.0",
+    "export_timestamp_utc": "2026-03-21T17:11:34.814075+00:00",
+    "frame_index": 0,
+    "resolution": "3840x2160"
+  },
+  "attestation": {
+    "schema_version": "2.0",
+    "hash_mode": "KS-salted",
+    "signature": {
+      "signature_hex": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "algorithm": "Ed25519"
+    },
+    "signer": "tier_a",
+    "source_invariants": {
+      "mesh_topology_hash": {
+        "status": "PASS"
+      },
+      "uv_layout_hash": {
+        "status": "PASS"
+      },
+      "shader_signature_hash": {
+        "status": "PASS"
+      }
+    },
+    "render_fingerprint": {
+      "silhouette_front": {
+        "silhouette_hash": {
+          "status": "PASS"
+        }
+      },
+      "edge_front": {
+        "edge_hash": {
+          "status": "PASS"
+        }
+      },
+      "roi_hashes": {
+        "head": {
+          "status": "PASS"
+        },
+        "chest": {
+          "status": "PASS"
+        },
+        "emblem_zone": {
+          "status": "PASS"
+        }
+      }
+    },
+    "submission_mode": "controlled_generative",
+    "metrics": {
+      "emissive_budget": {
+        "value": 680000
+      }
+    }
+  },
+  "expected_verdict": "APPROVED",
+  "expected_violation": null
+}

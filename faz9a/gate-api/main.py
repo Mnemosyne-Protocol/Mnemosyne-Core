@@ -47,6 +47,37 @@ ATTESTATION_URL: str = os.getenv("ATTESTATION_URL", "http://attestation-service:
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [gate-api] %(levelname)s %(message)s")
 logger = logging.getLogger("mnemosyne.gate_api")
 
+# ─── SÖZLEŞME 1: Violation Taxonomy v1.1 ─────────────────────────────────────
+# Canonical violation_type values for quarantine records.
+# All internal invariant names are mapped to these 4 categories.
+
+CANONICAL_VIOLATION_TYPES = frozenset({
+    "GEOMETRY_BREACH",
+    "POLICY_MODE_VIOLATION",
+    "SIGNATURE_INVALID",
+    "SOURCE_INVARIANT_BREACH",
+})
+
+_TAXONOMY_MAP: dict[str, str] = {
+    "ks_mode":                "POLICY_MODE_VIOLATION",
+    "ks_domain_separation":   "POLICY_MODE_VIOLATION",
+    "emissive_budget":        "POLICY_MODE_VIOLATION",
+    "schema":                 "SIGNATURE_INVALID",
+    "signature":              "SIGNATURE_INVALID",
+}
+
+
+def apply_taxonomy(invariant: str) -> str:
+    """Map internal invariant name → canonical violation_type (v1.1)."""
+    if invariant in _TAXONOMY_MAP:
+        return _TAXONOMY_MAP[invariant]
+    if invariant.startswith("source_invariant"):
+        return "SOURCE_INVARIANT_BREACH"
+    if invariant.startswith("roi"):
+        return "GEOMETRY_BREACH"
+    return "POLICY_MODE_VIOLATION"   # fail-safe default
+
+
 # ─── KS Hashing ──────────────────────────────────────────────────────────────
 
 def ks_sha256(data: bytes) -> str:
@@ -297,9 +328,12 @@ async def submit(submission: FrameSubmission) -> GateResponse:
             raise HTTPException(status_code=503,
                                 detail="Ledger service unavailable — fail-closed REJECT")
     else:
-        # ψ = 0 → quarantine record (schema v1.1)
-        violation_type = violations[0]["invariant"] if violations else "UNKNOWN"
-        decision_reason = "; ".join(v["detail"] for v in violations) if violations else "gate failure"
+        # ψ = 0 → quarantine record (schema v1.1 — canonical taxonomy)
+        raw_invariant = violations[0]["invariant"] if violations else "UNKNOWN"
+        # SÖZLEŞME 1: Map internal invariant name → canonical violation_type (v1.1)
+        violation_type = apply_taxonomy(raw_invariant)
+        decision_reason = (f"{raw_invariant}: " +
+                           "; ".join(v["detail"] for v in violations)) if violations else "gate failure"
 
         quarantine_payload = {
             "asset_id": asset_id,

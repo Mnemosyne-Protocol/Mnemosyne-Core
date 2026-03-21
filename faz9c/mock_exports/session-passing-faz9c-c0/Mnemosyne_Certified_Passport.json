@@ -1,0 +1,67 @@
+{
+  "protocol": "mnemosyne:v1.7",
+  "schema": "mnemosyne.certification.v1",
+  "session_id": "session-passing-faz9c-c0",
+  "certification_timestamp": "2026-03-21T17:11:34.811392+00:00",
+  "frame_count": 5,
+  "all_frames_approved": true,
+  "gate_version": "3.0.0",
+  "policy_pack_version": "final_gate_policy.v1.0",
+  "benchmark_run_id": "faz9c-c003b4c15758",
+  "merkle_root": "14606a3cd675c286de806a4567300cfd9b13448a61176c702bbc32d896f4f091",
+  "frame_manifest": [
+    {
+      "frame_id": "session-passing-faz9c-c0-frame-0000",
+      "frame_index": 0,
+      "verdict": "APPROVED",
+      "psi": 1,
+      "hash_ks": "31768e449c52af644c285712e29ce59c20c641c5937993bb208402f30b26e2fd",
+      "ledger_record_id": "8c66ad9c-b9b0-4d9f-b2b2-60474439550c",
+      "latency_ms": 21.88
+    },
+    {
+      "frame_id": "session-passing-faz9c-c0-frame-0001",
+      "frame_index": 1,
+      "verdict": "APPROVED",
+      "psi": 1,
+      "hash_ks": "44862fcaa8c952d52fd598ff6790582c6658f427117f1ec7450376f962a2511d",
+      "ledger_record_id": "e44acb68-c68d-472a-b75e-e0c1c51eff6c",
+      "latency_ms": 11.7
+    },
+    {
+      "frame_id": "session-passing-faz9c-c0-frame-0002",
+      "frame_index": 2,
+      "verdict": "APPROVED",
+      "psi": 1,
+      "hash_ks": "aead301e023be97b0740e392961c6aefee18bfc0c58387a0951001b6f93def8d",
+      "ledger_record_id": "fc1da84e-8ca6-4138-aa4a-a387c6647f8b",
+      "latency_ms": 9.77
+    },
+    {
+      "frame_id": "session-passing-faz9c-c0-frame-0003",
+      "frame_index": 3,
+      "verdict": "APPROVED",
+      "psi": 1,
+      "hash_ks": "5d3adc4830f254d5a84287f9984f3d2cb71e9db5b1d52cc51bf736210cbaf12c",
+      "ledger_record_id": "07f0e8ea-e438-4f67-b94e-6b0174b8c9f2",
+      "latency_ms": 9.61
+    },
+    {
+      "frame_id": "session-passing-faz9c-c0-frame-0004",
+      "frame_index": 4,
+      "verdict": "APPROVED",
+      "psi": 1,
+      "hash_ks": "6040dbfc6971f297e99e1421a35cda1fd9a32e1c7b7d509774670f725f0d1a2b",
+      "ledger_record_id": "ae7e0bc7-2760-48f2-a5fa-e78f898fa6d5",
+      "latency_ms": 7.57
+    }
+  ],
+  "taxonomy_version": "v1.1",
+  "loopback_tcp_compliant": true,
+  "signature": {
+    "signature_hex": "5ba674ae5d72e64ad1ba7d73f752aae2f203d5ef1192d3e53a8f919d4c8e3d13c0d43fab4512282ab8030ab77fd3d160db3b1c6a1737d25ac2281626f2937406",
+    "algorithm": "Ed25519",
+    "public_key_hex": "c1a6d8ab832051a5ae71a42ad4eb94bda2aa14131f930735b27eafde69508254",
+    "signed_over": "canonical_json_sorted_keys"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "session_id": "session-failing-faz9c-c0",
+  "generated_at": "2026-03-21T17:11:34.815345+00:00",
+  "n_frames": 5,
+  "failing_frame_index": 2,
+  "failing_violation": "SIGNATURE_INVALID",
+  "source": "mock_export_generator \u2014 simulated UE5 post-export output",
+  "platform_note": "UE5 not installed on NODE-01 (FAZ 9D target). Mock used per CLAUDE.md."
+}

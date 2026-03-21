@@ -48,6 +48,14 @@ QUARANTINE_DIR = Path(os.getenv("QUARANTINE_DIR", "/quarantine"))
 HEX64_RE = re.compile(r"^[0-9a-f]{64}$")
 ISO8601_RE = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}")
 
+# SÖZLEŞME 1: Canonical violation_type taxonomy v1.1 (frozen)
+CANONICAL_VIOLATION_TYPES = frozenset({
+    "GEOMETRY_BREACH",
+    "POLICY_MODE_VIOLATION",
+    "SIGNATURE_INVALID",
+    "SOURCE_INVARIANT_BREACH",
+})
+
 logging.basicConfig(level=logging.INFO,
                     format="%(asctime)s [quarantine] %(levelname)s %(message)s")
 logger = logging.getLogger("mnemosyne.quarantine")
@@ -75,6 +83,17 @@ class QuarantineRecord(BaseModel):
     replay_pointer: str
     operator: str
     admission_decision: str
+
+    @field_validator("violation_type")
+    @classmethod
+    def must_be_canonical_taxonomy(cls, v: str) -> str:
+        """SÖZLEŞME 1: violation_type MUST be a canonical taxonomy value."""
+        if v not in CANONICAL_VIOLATION_TYPES:
+            raise ValueError(
+                f"violation_type must be one of {sorted(CANONICAL_VIOLATION_TYPES)}, got: {v!r}. "
+                f"Apply taxonomy mapping in gate-api before submitting to quarantine-logger."
+            )
+        return v
 
     @field_validator("asset_id", "source_model", "source_pipeline", "violation_type",
                      "decision_reason", "policy_pack_version", "gate_version",
