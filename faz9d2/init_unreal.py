@@ -12,7 +12,7 @@ DEPLOYMENT:
   or startup_scripts in plugin settings).
 
 EFFECT:
-  Registers MnemosyneExecutor as the active executor for the project's
+  Registers MnemosyneGateExecutor as the active executor for the project's
   Movie Render Queue subsystem. From this point, all MRQ jobs will run
   through the Mnemosyne fail-closed gate path.
 
@@ -35,7 +35,7 @@ except ImportError:
     sys.exit(0)
 
 try:
-    from mnemo_ue5_executor import MnemosyneExecutor
+    from mnemo_ue5_executor import MnemosyneGateExecutor
     _EXECUTOR_AVAILABLE = True
 except Exception as e:
     _EXECUTOR_AVAILABLE = False
@@ -69,7 +69,7 @@ def _register_executor():
 
     try:
         subsystem = unreal.get_editor_subsystem(unreal.MoviePipelineQueueSubsystem)
-        subsystem.get_queue().set_executor_class(MnemosyneExecutor)
+        subsystem.get_queue().set_executor_class(MnemosyneGateExecutor)
         unreal.log(
             f"MNEMOSYNE: Executor registered — gate={_GATE_VERSION} | "
             f"transport=127.0.0.1:8765 (SÖZLEŞME 2: loopback TCP)"

@@ -98,23 +98,8 @@ class MnemoSessionState:
 
 if _UE5_CONTEXT:
     @unreal.uclass()
-    class MnemosyneExecutor(unreal.MoviePipelinePythonHostExecutor):
-        """
-        Mnemosyne Gate hook for Movie Render Queue.
-
-        Registered by init_unreal.py as the active executor for
-        the MnemosyneHookMVP project's Movie Render Queue subsystem.
-
-        UE5 5.7.4 override surface: on_executor_finished_impl only.
-        (on_individual_shot_work_finished_impl does not exist in UE5 5.7.)
-
-        Flow:
-          execute_delayed  → bootstrap session state, start render via super()
-          on_executor_finished_impl → render complete; scan output dir;
-                                      submit each frame to Gate;
-                                      PASS: produce passport
-                                      FAIL: log error, no passport (fail-closed)
-        """
+    class MnemosyneGateExecutor(unreal.MoviePipelinePythonHostExecutor):
+        """Mnemosyne Layer-0 Cryptographic Admission Gate. Enforces fail-closed policy validation and generates Ed25519 Passports for all rendered assets. By Mnemosyne Labs."""
 
         @unreal.ufunction(override=True)
         def execute_delayed(self, pipeline_queue: unreal.MoviePipelineQueue):
@@ -271,15 +256,11 @@ if _UE5_CONTEXT:
 
 else:
     # ── Non-UE5 context: stub class for import safety ─────────────────────────
-    class MnemosyneExecutor:  # type: ignore[no-redef]
-        """
-        Stub — not inside UE5 editor process.
-        Real class requires UE5 Python environment.
-        Use run_faz9d2.py for standalone Gate submission testing.
-        """
+    class MnemosyneGateExecutor:  # type: ignore[no-redef]
+        """Mnemosyne Layer-0 Cryptographic Admission Gate. Enforces fail-closed policy validation and generates Ed25519 Passports for all rendered assets. By Mnemosyne Labs."""
         def __init__(self):
             raise RuntimeError(
-                "MnemosyneExecutor requires UE5 editor Python environment. "
+                "MnemosyneGateExecutor requires UE5 editor Python environment. "
                 "Use run_faz9d2.py for standalone proof runs."
             )
 
