@@ -1,41 +1,41 @@
 {
-  "session_id": "faz9d3-fail-3006fef8",
+  "session_id": "faz9d3-fail-8c58ab0d",
   "session_label": "fail",
-  "timestamp_utc": "2026-03-22T19:25:20.658540+00:00",
+  "timestamp_utc": "2026-03-22T19:42:23.369448+00:00",
   "certified": false,
   "n_frames_expected": 3,
   "n_frames_submitted": 2,
   "n_approved": 1,
   "n_rejected": 1,
-  "abort_reason": "frame[1] faz9d3-fail-3006fef8-frame-0001 REJECTED \u2014 non-KS hash mode: 'raw' (quarantine_id=89026e6d-ba9a-4f17-9072-7f9d80155681)",
-  "total_elapsed_ms": 16.75,
-  "avg_latency_ms": 8.21,
+  "abort_reason": "frame[1] faz9d3-fail-8c58ab0d-frame-0001 REJECTED \u2014 non-KS hash mode: 'raw' (quarantine_id=0d55c9fe-04d2-44e3-b3fc-c93025dce540)",
+  "total_elapsed_ms": 15.95,
+  "avg_latency_ms": 7.84,
   "gate_url": "http://127.0.0.1:8765",
   "gate_version": "3.0.0",
   "policy_pack_version": "final_gate_policy.v1.0",
   "manifest_path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/faz9d3_fail_session/scene_manifest_v1.json",
-  "manifest_hash_ks": "dcde2f739b9ff6955f217ab259b42c41830c9580cc2ec6e588e528630cc21594",
+  "manifest_hash_ks": "1fec7a001ba8766ac496db8f8c27d75f515900b6b93810d2053be713a712c0e5",
   "passport_path": null,
   "fail_closed_triggered": true,
   "loopback_tcp_compliant": true,
   "taxonomy_version": "v1.1",
-  "cryptography_available": true,
-  "executor_registered_in_ue5": false,
+  "cryptography_available": false,
+  "executor_registered_in_ue5": true,
   "frame_manifest": [
     {
-      "frame_id": "faz9d3-fail-3006fef8-frame-0000",
+      "frame_id": "faz9d3-fail-8c58ab0d-frame-0000",
       "frame_index": 0,
       "verdict": "APPROVED",
       "psi": 1,
       "violations": [],
-      "client_latency_ms": 8.62,
-      "server_elapsed_ms": 7.36,
-      "ledger_record_id": "c55b3b2f-6e7f-4e33-916d-efc64a9ea899",
+      "client_latency_ms": 7.76,
+      "server_elapsed_ms": 6.41,
+      "ledger_record_id": "1e38864e-561a-49dd-9691-e86c2eeff874",
       "quarantine_record_id": null,
-      "hash_ks": "5337970e177f745923740bb2aeaa0a7f95fe2c46f8f39a9bb0dc66efaab7935e"
+      "hash_ks": "1e9a28127c27f4e75a0799953ec4c0aa87b442cc30248e1571fdc967ff870249"
     },
     {
-      "frame_id": "faz9d3-fail-3006fef8-frame-0001",
+      "frame_id": "faz9d3-fail-8c58ab0d-frame-0001",
       "frame_index": 1,
       "verdict": "REJECTED",
       "psi": 0,
@@ -73,11 +73,11 @@
           "detail": "Fixed6 900000 > 720000"
         }
       ],
-      "client_latency_ms": 7.81,
-      "server_elapsed_ms": 6.7,
+      "client_latency_ms": 7.93,
+      "server_elapsed_ms": 6.5,
       "ledger_record_id": null,
-      "quarantine_record_id": "89026e6d-ba9a-4f17-9072-7f9d80155681",
-      "hash_ks": "b241eb426cf98f22ec8a15becac5c7227594c79240b7c2c79a0baaf81c801047"
+      "quarantine_record_id": "0d55c9fe-04d2-44e3-b3fc-c93025dce540",
+      "hash_ks": "ab17f6301aee24c6a9d2b9e67611df1c5b7f0224b6eaca19b197b39d2316c14f"
     }
   ]
 }

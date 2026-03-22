@@ -1,6 +1,6 @@
 {
   "schema_version": "scene_manifest_v1",
-  "export_session_id": "faz9d3-fail-3006fef8",
+  "export_session_id": "faz9d3-fail-8c58ab0d",
   "project_name": "MnemosyneHookMVP",
   "level_or_scene_name": "L_MnemosyneLiveTest",
   "asset_list": [
@@ -11,20 +11,20 @@
   "output_files": [
     {
       "path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/faz9d3_fail_session/frame_0000.png",
-      "hash_canonical": "27bb9436cb07e95a46dd0b1b9ce83b0539bc1b3af7a66e517bb4954d693320c5",
-      "hash_ks": "5337970e177f745923740bb2aeaa0a7f95fe2c46f8f39a9bb0dc66efaab7935e",
+      "hash_canonical": "9e6fbcd32019edaddc7a9b5f29229bb7e198e74d53709d44002f0c02e6d4648f",
+      "hash_ks": "1e9a28127c27f4e75a0799953ec4c0aa87b442cc30248e1571fdc967ff870249",
       "size_bytes": 52
     },
     {
       "path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/faz9d3_fail_session/frame_0001.png",
-      "hash_canonical": "4d8f1bc7dddecd245889374d649699a25ecc0127faa5b54d813f88fb0cec6f44",
-      "hash_ks": "b241eb426cf98f22ec8a15becac5c7227594c79240b7c2c79a0baaf81c801047",
+      "hash_canonical": "497bda4be3cd720d70dbc72bb2ad0b1685885b72a3e6aad3e46a5263ce5f572b",
+      "hash_ks": "ab17f6301aee24c6a9d2b9e67611df1c5b7f0224b6eaca19b197b39d2316c14f",
       "size_bytes": 52
     },
     {
       "path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/faz9d3_fail_session/frame_0002.png",
-      "hash_canonical": "e429bf5264e28af6896b59bdaa8d705977e540e43cd4c5c35a478ce05aae4cec",
-      "hash_ks": "59dfd1592fa20c0b94f57a42ad9668390e3c02492b3a7c00b44f242bdb0a8ee7",
+      "hash_canonical": "b927ba40bce7b8cdf9453c03e6cbd2c1908016a9c5ff0e5b4358aeb0235715ef",
+      "hash_ks": "70e61931b0d7a44c8e6a4a048c7962f2796ed36029a48c2fc3cce96a4f95a896",
       "size_bytes": 52
     }
   ],
@@ -39,9 +39,9 @@
     "source_model": "UE5_LUMEN",
     "render_preset": "Mnemosyne_MVP"
   },
-  "timestamp_utc": "2026-03-22T19:25:20.641596+00:00",
+  "timestamp_utc": "2026-03-22T19:42:23.353285+00:00",
   "operator": "ks@mnemosynelabs.ai",
   "node_id": "MNEMOSYNE-NODE-01",
-  "hash_canonical": "572aa9a36b5b95521c588f50a922395bd3aa03e835638ac9ccc5611901dad42f",
-  "hash_ks": "dcde2f739b9ff6955f217ab259b42c41830c9580cc2ec6e588e528630cc21594"
+  "hash_canonical": "f72a8f34ab411036dedf99de1fa780738d421858372b61beac83ba9be0c0d2f1",
+  "hash_ks": "1fec7a001ba8766ac496db8f8c27d75f515900b6b93810d2053be713a712c0e5"
 }

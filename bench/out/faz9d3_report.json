@@ -1,11 +1,11 @@
 {
   "faz": "9D.3",
   "title": "Live UE5 Operator Execution \u2014 Phase Report",
-  "timestamp_utc": "2026-03-22T19:25:20.658807+00:00",
-  "all_ec_pass": false,
+  "timestamp_utc": "2026-03-22T19:42:23.369766+00:00",
+  "all_ec_pass": true,
   "exit_criteria": {
-    "ec1_python_plugin_enabled": false,
-    "ec2_executor_registered_in_log": false,
+    "ec1_python_plugin_enabled": true,
+    "ec2_executor_registered_in_log": true,
     "ec3_pass_job_runs_from_editor": true,
     "ec4_passport_written_from_real_editor_run": true,
     "ec5_fail_job_blocks_and_writes_no_passport": true,
@@ -14,28 +14,28 @@
     "ec8_scope_preserved": true
   },
   "execution_context": {
-    "in_ue5_editor": false,
-    "executor_registered": false,
+    "in_ue5_editor": true,
+    "executor_registered": true,
     "gate_url": "http://127.0.0.1:8765",
     "gate_version": "3.0.0",
     "policy_pack_version": "final_gate_policy.v1.0",
-    "cryptography_available": true,
+    "cryptography_available": false,
     "loopback_tcp_compliant": true
   },
   "pass_run": {
-    "session_id": "faz9d3-pass-08fa3eb9",
+    "session_id": "faz9d3-pass-453cdd9b",
     "certified": true,
     "n_approved": 3,
-    "avg_latency_ms": 11.74,
+    "avg_latency_ms": 11.65,
     "passport_path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/faz9d3_pass_session/Mnemosyne_Certified_Passport.json",
     "manifest_path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/faz9d3_pass_session/scene_manifest_v1.json"
   },
   "fail_run": {
-    "session_id": "faz9d3-fail-3006fef8",
+    "session_id": "faz9d3-fail-8c58ab0d",
     "certified": false,
     "n_approved": 1,
     "n_rejected": 1,
-    "abort_reason": "frame[1] faz9d3-fail-3006fef8-frame-0001 REJECTED \u2014 non-KS hash mode: 'raw' (quarantine_id=89026e6d-ba9a-4f17-9072-7f9d80155681)",
+    "abort_reason": "frame[1] faz9d3-fail-8c58ab0d-frame-0001 REJECTED \u2014 non-KS hash mode: 'raw' (quarantine_id=0d55c9fe-04d2-44e3-b3fc-c93025dce540)",
     "fail_closed_triggered": true,
     "passport_path": null
   },
