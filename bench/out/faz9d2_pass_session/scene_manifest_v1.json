@@ -1,0 +1,47 @@
+{
+  "schema_version": "scene_manifest_v1",
+  "export_session_id": "faz9d2-pass-104472a4",
+  "project_name": "MnemosyneHookMVP",
+  "level_or_scene_name": "L_MnemosyneTest",
+  "asset_list": [
+    "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/faz9d2_pass_session/frame_0000.png",
+    "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/faz9d2_pass_session/frame_0001.png",
+    "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/faz9d2_pass_session/frame_0002.png"
+  ],
+  "output_files": [
+    {
+      "path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/faz9d2_pass_session/frame_0000.png",
+      "hash_canonical": "c6bbd3c22d698c8a52bf8a0c9cdc282ca75cc41c19b36315bf9d737ec5641a05",
+      "hash_ks": "12bba9a4614a2f88592441d0bff9c3bce8d6045b6bf205d6e86e64b7695d7fa8",
+      "size_bytes": 53
+    },
+    {
+      "path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/faz9d2_pass_session/frame_0001.png",
+      "hash_canonical": "7ab27a166b5d93e07d0e3373e2f4a6d5cb5c5892edfdce366a7ac65a85f52f05",
+      "hash_ks": "35ede21ac20beacb5eda98d7b06b608ab76041d4c943719fd71bcfed5ba3c72e",
+      "size_bytes": 53
+    },
+    {
+      "path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/faz9d2_pass_session/frame_0002.png",
+      "hash_canonical": "42b48212d4e8d15639e9d345137aca8129173561dac7daadac587c9258b9cc1e",
+      "hash_ks": "e7a3bb23dd72bcae1859a3f152837704fd9e4d8c227c0545f1867ac37dc91caa",
+      "size_bytes": 53
+    }
+  ],
+  "source_invariants": {
+    "frame_count_expected": 3,
+    "frame_rate": 24,
+    "resolution": {
+      "width": 1920,
+      "height": 1080
+    },
+    "source_pipeline": "UE5_MRQ",
+    "source_model": "UE5_LUMEN",
+    "render_preset": "Mnemosyne_MVP"
+  },
+  "timestamp_utc": "2026-03-22T00:46:24.294885+00:00",
+  "operator": "ks@mnemosynelabs.ai",
+  "node_id": "MNEMOSYNE-NODE-01",
+  "hash_canonical": "23c61974d69030937f8f91f09cb5c9b5013ccf88bde277ffccc40d5664a7e3fc",
+  "hash_ks": "26cf4d26f791de4650391544240d45a0173a0c23c8289f4c8d9d2524956ad25b"
+}

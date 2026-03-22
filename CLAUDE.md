@@ -403,3 +403,34 @@ ec8_summary_written: FAZ 9D.1 nihai özeti oluşturuldu.
 MnemosyneHookMVP.uproject created, Python MoviePipelinePythonHostExecutor 
 selected as MVP surface, MnemosyneExecutor hook design documented, 
 scene_manifest_v1 frozen. Commit: 670834c.
+
+---
+
+## FAZ 9D.2 ARCHITECTURAL FREEZE (ACTIVE)
+**Tema:** Real UE5 Hook Implementation — Narrow MVP
+**Primary Rule:** "Mnemosyne is a fail-closed admission layer for policy-bound, high-throughput media pipelines."
+
+**Constraints & Assumptions (KIRMIZI ÇİZGİLER):**
+- **Yüzey:** SADECE Python `MoviePipelinePythonHostExecutor` kullanılacaktır. C++ plugin kodlaması YOKTUR.
+- **İletişim:** SADECE Loopback TCP (127.0.0.1:8765). UDS veya Cloud YOK.
+- **Sözleşmeler:** `scene_manifest_v1`, `taxonomy v1.1` ve `quarantine schema v1.1` dondurulmuştur (frozen), değiştirilemez.
+- **Proje:** `MnemosyneHookMVP.uproject` referans alınacaktır.
+
+**Görev Tanımları (Tasks):**
+- **TASK 1:** Gate stack (Docker & 127.0.0.1:8765) ayakta mı kontrol edilecek.
+- **TASK 2:** UE5 Python proje iskeleti (`mnemo_ue5_executor.py`, `init_unreal.py`) oluşturulacak.
+- **TASK 3:** Export anında deterministik `scene_manifest_v1` üretilecek.
+- **TASK 4:** UE5 export çıktısı Gate API'ye POST edilecek.
+- **TASK 5:** Geçerse (PASS) `Mnemosyne_Certified_Passport.json` üretilecek, kalırsa (FAIL) anında fail-closed durdurulacak.
+- **TASK 6:** Operatör için minimum UE5 test workflow'u dokümante edilecek.
+- **TASK 7:** 1 PASS ve 1 FAIL kanıt dosyası üretilip test edilecek.
+
+**Exit Criteria (Bitiş Şartları):**
+ec1_gate_live: Gate API'nin ayakta olduğu doğrulandı.
+ec2_executor_integrated: Python hook projeye entegre edildi.
+ec3_manifest_generated: Gerçek bir export'tan scene_manifest_v1 üretildi.
+ec4_gate_submission_works: UE5'ten Gate'e başarıyla POST atıldı.
+ec5_passport_on_pass: PASS durumunda Passport üretildi.
+ec6_fail_closed_on_reject: FAIL durumunda süreç durduruldu ve passport reddedildi.
+ec7_artifacts_written: PASS/FAIL kanıt logları ve rapor yazıldı.
+ec8_scope_preserved: C++'a kayılmadı, mimari sınırlar korundu.

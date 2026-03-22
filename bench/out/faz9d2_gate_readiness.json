@@ -1,0 +1,45 @@
+{
+  "faz": "9D.2",
+  "task": "TASK 1 — Gate Stack Readiness",
+  "ec": "ec1_gate_live",
+  "timestamp_utc": "2026-03-22T00:00:00Z",
+  "verdict": "PASS — gate-api reachable, contract verified, all self-tests pass",
+  "gate_api": {
+    "url": "http://127.0.0.1:8765",
+    "health_status": 200,
+    "response": {"status": "healthy", "service": "gate-api", "version": "3.0.0"},
+    "transport": "Loopback TCP only — 127.0.0.1:8765 (SÖZLEŞME 2 compliant)"
+  },
+  "docker_containers": [
+    {"name": "faz9a-gate-api-1",           "status": "Up (healthy)", "port": "127.0.0.1:8765->8765/tcp"},
+    {"name": "faz9a-quarantine-logger-1",  "status": "Up (healthy)", "port": "8768/tcp"},
+    {"name": "faz9a-ledger-service-1",     "status": "Up (healthy)", "port": "8766/tcp"},
+    {"name": "faz9a-attestation-service-1","status": "Up (healthy)", "port": "8767/tcp"}
+  ],
+  "self_test": {
+    "status": "PASS",
+    "gate_version": "3.0.0",
+    "policy_pack_version": "final_gate_policy.v1.0",
+    "pass_test": {"verdict": "APPROVED", "psi": 1, "ok": true},
+    "fail_test": {"verdict": "REJECTED", "psi": 0, "violations": 4, "ok": true},
+    "ks_domain_separation": {"different": true, "ok": true},
+    "fixed6": {"0.72_as_fixed6": 720000, "0.5x0.5_fixed6": 250000, "ok": true}
+  },
+  "submit_contract": {
+    "required_fields": ["asset_id", "source_model", "source_pipeline", "operator", "attestation"],
+    "attestation_required": ["schema_version", "hash_mode", "signature", "signer", "source_invariants", "render_fingerprint"],
+    "hash_mode_locked": "KS-salted",
+    "signature_format": "Ed25519 — signature_hex must be 128 hex chars",
+    "emissive_budget_limit_fixed6": 720000
+  },
+  "ue5_project": {
+    "path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/MnemosyneHookMVP/MnemosyneHookMVP",
+    "uproject": "MnemosyneHookMVP.uproject",
+    "engine_association": "5.7",
+    "python_plugin_in_uproject": false,
+    "python_plugin_binary_present": true,
+    "python_plugin_binary_path": "/Volumes/MNEMOSYNE-GATE/Vault/UnrealEngine/UE_5.7/Engine/Plugins/Experimental/PythonScriptPlugin"
+  },
+  "blockers": [],
+  "proceed_to_task2": true
+}

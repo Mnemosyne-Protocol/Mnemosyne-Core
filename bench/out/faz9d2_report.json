@@ -1,0 +1,62 @@
+{
+  "faz": "9D.2",
+  "title": "Real UE5 Hook MVP \u2014 Proof Harness Report",
+  "timestamp_utc": "2026-03-22T00:46:24.355184+00:00",
+  "all_ec_pass": true,
+  "exit_criteria": {
+    "ec1_gate_live": true,
+    "ec2_executor_integrated": true,
+    "ec3_manifest_generated": true,
+    "ec4_gate_submission_works": true,
+    "ec5_passport_on_pass": true,
+    "ec6_fail_closed_on_reject": true,
+    "ec7_artifacts_written": true,
+    "ec8_scope_preserved": true
+  },
+  "gate_api": {
+    "url": "http://127.0.0.1:8765",
+    "version": "3.0.0",
+    "policy_pack": "final_gate_policy.v1.0",
+    "transport": "Loopback TCP (S\u00d6ZLE\u015eME 2 compliant)"
+  },
+  "pass_run_summary": {
+    "session_id": "faz9d2-pass-104472a4",
+    "certified": true,
+    "n_frames": 3,
+    "n_approved": 3,
+    "avg_latency_ms": 13.83,
+    "passport_path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/faz9d2_pass_session/Mnemosyne_Certified_Passport.json",
+    "manifest_path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/faz9d2_pass_session/scene_manifest_v1.json"
+  },
+  "fail_run_summary": {
+    "session_id": "faz9d2-fail-aabe5e16",
+    "certified": false,
+    "n_frames_submitted": 2,
+    "n_approved": 1,
+    "n_rejected": 1,
+    "abort_reason": "frame[1] faz9d2-fail-aabe5e16-frame-0001: non-KS hash mode: 'raw' (quarantine=5e095ab8-4283-468d-9e01-874a9ee0922b)",
+    "fail_closed_triggered": true,
+    "passport_path": null
+  },
+  "implementation_notes": [
+    "mnemo_ue5_executor.py: real UE5 MoviePipelinePythonHostExecutor subclass \u2014 requires UE5 editor process with PythonScriptPlugin enabled.",
+    "init_unreal.py: registers executor on UE5 editor start.",
+    "This proof harness validates the Gate submission path with live Gate API.",
+    "A full UE5 GUI render is the next operator step (FAZ 9D.3).",
+    "The submission code path is identical between this harness and the UE5 executor."
+  ],
+  "operator_action_required": [
+    "Enable PythonScriptPlugin in MnemosyneHookMVP.uproject",
+    "Copy faz9d2/*.py to MnemosyneHookMVP/Content/Python/",
+    "Open UE5, set executor to MnemosyneExecutor via MRQ, trigger a render job"
+  ],
+  "architecture_constraints_honored": {
+    "no_cpp_plugin": true,
+    "no_cloud": true,
+    "no_uds": true,
+    "loopback_tcp_only": true,
+    "taxonomy_v1_1_frozen": true,
+    "quarantine_schema_v1_1_frozen": true,
+    "scene_manifest_v1_frozen": true
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "session_id": "faz9d2-fail-aabe5e16",
+  "session_label": "fail",
+  "benchmark_run_id": "proof-faz9d2-fail-aabe5e16",
+  "timestamp_utc": "2026-03-22T00:46:24.354728+00:00",
+  "certified": false,
+  "n_frames_expected": 3,
+  "n_frames_submitted": 2,
+  "n_approved": 1,
+  "n_rejected": 1,
+  "abort_reason": "frame[1] faz9d2-fail-aabe5e16-frame-0001: non-KS hash mode: 'raw' (quarantine=5e095ab8-4283-468d-9e01-874a9ee0922b)",
+  "total_elapsed_ms": 15.93,
+  "avg_latency_ms": 7.85,
+  "gate_url": "http://127.0.0.1:8765",
+  "gate_version": "3.0.0",
+  "policy_pack_version": "final_gate_policy.v1.0",
+  "manifest_path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/faz9d2_fail_session/scene_manifest_v1.json",
+  "manifest_hash_ks": "28eaee9064bf8242d0c49aaa86a5a1e3b06bcc7b73e0e643be507d77dbbdb13f",
+  "passport_path": null,
+  "fail_closed_triggered": true,
+  "loopback_tcp_compliant": true,
+  "taxonomy_version": "v1.1",
+  "cryptography_available": true,
+  "frame_manifest": [
+    {
+      "frame_id": "faz9d2-fail-aabe5e16-frame-0000",
+      "frame_index": 0,
+      "verdict": "APPROVED",
+      "psi": 1,
+      "violations": [],
+      "client_latency_ms": 6.95,
+      "server_elapsed_ms": 5.7,
+      "ledger_record_id": "2040cd61-dc1a-4658-8c7b-6e0bdcc84d51",
+      "quarantine_record_id": null,
+      "hash_ks": "3a8b4f7c3c9c1a9deea6fd5022c816607502cadad501b8ff857a77f8c660c93a"
+    },
+    {
+      "frame_id": "faz9d2-fail-aabe5e16-frame-0001",
+      "frame_index": 1,
+      "verdict": "REJECTED",
+      "psi": 0,
+      "violations": [
+        {
+          "invariant": "ks_mode",
+          "detail": "non-KS hash mode: 'raw'"
+        },
+        {
+          "invariant": "signature",
+          "detail": "invalid Ed25519 format: expected 128 hex chars"
+        },
+        {
+          "invariant": "source_invariant.frame_integrity",
+          "detail": "status=FAIL"
+        },
+        {
+          "invariant": "source_invariant.mesh_topology_hash",
+          "detail": "status=FAIL"
+        },
+        {
+          "invariant": "roi.head",
+          "detail": "status=FAIL"
+        },
+        {
+          "invariant": "roi.chest",
+          "detail": "status=FAIL"
+        },
+        {
+          "invariant": "roi.emblem_zone",
+          "detail": "status=FAIL"
+        },
+        {
+          "invariant": "emissive_budget",
+          "detail": "Fixed6 900000 > 720000"
+        }
+      ],
+      "client_latency_ms": 8.74,
+      "server_elapsed_ms": 7.7,
+      "ledger_record_id": null,
+      "quarantine_record_id": "5e095ab8-4283-468d-9e01-874a9ee0922b",
+      "hash_ks": "d2ce7479f9471ff88d55789e4070c0e6569ae9db84b50e86877479b32575e77b"
+    }
+  ]
+}
