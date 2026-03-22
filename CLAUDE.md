@@ -23,6 +23,11 @@
 7. **Test everything.** Every code artifact must include a self-test that runs without external dependencies.
 8. **No Co-Authored-By.** Git commits carry only "Kerem Salman <ks@mnemosynelabs.ai>". 
    Never add Co-Authored-By Claude or Anthropic lines to any commit message.
+9. **Runtime Reflection First.** When integrating with DCC tools (UE5, Nuke, Maya, Houdini), 
+   NEVER guess or assume API method names. Always instruct the operator to run a reflection 
+   query first (e.g., `dir(unreal.MoviePipelinePythonHostExecutor)`) and wait for confirmed 
+   output before writing or patching any hook code.
+
 ---
 
 ## 1. WHAT MNEMOSYNE IS
