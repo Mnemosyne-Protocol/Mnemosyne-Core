@@ -482,7 +482,7 @@ proven live in editor. Commit: 3f66f49.
 
 ---
 
-## FAZ 9D.4 ARCHITECTURAL FREEZE (ACTIVE)
+## FAZ 9D.4 ARCHITECTURAL FREEZE (CLOSED)
 **Tema:** Executor Surface Hardening
 **Primary Rule:** "Mnemosyne is a fail-closed admission layer for policy-bound, high-throughput media pipelines."
 
@@ -509,6 +509,46 @@ ec3_hardening_implemented: Correct delegate/callback binding or stable bypass im
 ec4_ec2_resolved_or_reframed: ec2_executor_registered_in_log resolved or formally documented.
 ec5_report_written: docs/faz9d4_report.md and bench/out/faz9d4_report.json produced.
 ec6_scope_preserved: No architecture redesign, no C++, no contract drift.
+
+**FAZ 9D.4 Result:** 6/6 Exit Criteria PASS. Reflection probe confirmed
+`on_executor_finished_delegate.add_callable()` as stable Python surface.
+`@unreal.uclass()` subclass path formally abandoned. Delegate binding implemented
+in `faz9d2/mnemo_ue5_executor.py` + `faz9d3/trigger_mnemosyne_render.py`.
+ec2 resolved. Commit: e40e402.
+
+---
+
+## FAZ 10 ARCHITECTURAL FREEZE (ACTIVE)
+**Tema:** Pilot Demo Packaging & Export Automation
+**Primary Rule:** "Mnemosyne is a fail-closed admission layer for policy-bound, high-throughput media pipelines."
+
+**Scope:** Packaging/export only. No new core architecture, no Gate logic changes,
+no UE5 executor modifications, no taxonomy/schema/contract changes.
+
+**Constraints (KIRMIZI ÇİZGİLER):**
+- Gate logic, UE5 executor, taxonomy v1.1, quarantine schema v1.1, scene_manifest_v1: FROZEN.
+- No RLHF, no cloud, no C++.
+- Source artifacts: copy/package only. Do not modify proven Phase 9 outputs.
+- Machine-absolute paths must be redacted from all exported files.
+- Export must be self-contained and reproducible.
+
+**Tasks:**
+- TASK 1: Update CLAUDE.md — close Phase 9, open Phase 10.
+- TASK 2: `faz10/package_pilot_demo.py` — automated packaging script.
+- TASK 3: `exports/pilot_demo_v1/README_PILOT.md` — lead-facing explanation.
+- TASK 4: `exports/pilot_demo_v1/03_METADATA/` — EXPORT_MANIFEST.json + SHA256SUMS.txt.
+- TASK 5: `exports/pilot_demo_v1.zip` — delivery archive.
+- TASK 6: `docs/faz10_report.md` + `bench/out/faz10_report.json` — phase report.
+
+**Exit Criteria (Bitiş Şartları):**
+ec1_export_dir_created: exports/pilot_demo_v1/ exists.
+ec2_pass_scenario_packaged: PASS artifacts organized in 01_PASS_SCENARIO/.
+ec3_fail_scenario_packaged: FAIL artifacts organized in 02_FAIL_SCENARIO/.
+ec4_readme_written: README_PILOT.md exists and is under one page.
+ec5_manifest_written: EXPORT_MANIFEST.json exists and is valid.
+ec6_checksums_written: SHA256SUMS.txt covers exported files.
+ec7_zip_written: exports/pilot_demo_v1.zip exists.
+ec8_scope_preserved: No Gate logic / UE5 executor / taxonomy / schema changes.
 
 ---
 

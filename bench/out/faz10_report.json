@@ -1,0 +1,54 @@
+{
+  "faz": "10",
+  "title": "Pilot Demo Packaging",
+  "generation_timestamp_utc": "2026-03-22T20:41:18.421459+00:00",
+  "all_ec_pass": true,
+  "exit_criteria": {
+    "ec1_export_dir_created": true,
+    "ec2_pass_scenario_packaged": true,
+    "ec3_fail_scenario_packaged": true,
+    "ec4_readme_written": true,
+    "ec5_manifest_written": true,
+    "ec6_checksums_written": true,
+    "ec7_zip_written": true,
+    "ec8_scope_preserved": true
+  },
+  "package_path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/exports/pilot_demo_v1",
+  "zip_path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/exports/pilot_demo_v1.zip",
+  "pass_scenario_file_count": 6,
+  "fail_scenario_file_count": 6,
+  "manifest_path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/exports/pilot_demo_v1/03_METADATA/EXPORT_MANIFEST.json",
+  "checksums_path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/exports/pilot_demo_v1/03_METADATA/SHA256SUMS.txt",
+  "packaged_artifacts": {
+    "pass_scenario": [
+      "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/exports/pilot_demo_v1/01_PASS_SCENARIO/Mnemosyne_Certified_Passport.json",
+      "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/exports/pilot_demo_v1/01_PASS_SCENARIO/frame_0000.png",
+      "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/exports/pilot_demo_v1/01_PASS_SCENARIO/frame_0001.png",
+      "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/exports/pilot_demo_v1/01_PASS_SCENARIO/frame_0002.png",
+      "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/exports/pilot_demo_v1/01_PASS_SCENARIO/pass_run_summary.json",
+      "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/exports/pilot_demo_v1/01_PASS_SCENARIO/scene_manifest_v1.json"
+    ],
+    "fail_scenario": [
+      "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/exports/pilot_demo_v1/02_FAIL_SCENARIO/fail_run_summary.json",
+      "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/exports/pilot_demo_v1/02_FAIL_SCENARIO/frame_0000.png",
+      "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/exports/pilot_demo_v1/02_FAIL_SCENARIO/frame_0001.png",
+      "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/exports/pilot_demo_v1/02_FAIL_SCENARIO/frame_0002.png",
+      "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/exports/pilot_demo_v1/02_FAIL_SCENARIO/rejection_evidence.json",
+      "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/exports/pilot_demo_v1/02_FAIL_SCENARIO/scene_manifest_v1.json"
+    ]
+  },
+  "excluded": [
+    "bench/out/faz9a_benchmark_report.json",
+    "bench/out/faz9b_* (stream/replay benchmarks)",
+    "bench/out/runway_stress_vault/ (stress vault \u2014 separate demo context)",
+    "bench/out/terminal_trace.log",
+    "bench/out/faz9d1_* (env discovery artifacts)",
+    "bench/out/faz9d4_reflection_probe.txt",
+    "Private key material, __pycache__, Docker internals"
+  ],
+  "core_pipeline_modified": false,
+  "gate_logic_modified": false,
+  "ue5_executor_modified": false,
+  "taxonomy_modified": false,
+  "schema_modified": false
+}

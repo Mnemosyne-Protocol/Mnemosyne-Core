@@ -1,0 +1,51 @@
+{
+  "package_version": "pilot_demo_v1",
+  "generation_timestamp_utc": "2026-03-22T20:41:18.421459+00:00",
+  "source_phase": "Phase 9 \u2014 FAZ 9D.3 (Live UE5 Operator Execution)",
+  "source_session_ids": {
+    "pass": "faz9d3-pass-453cdd9b",
+    "fail": "faz9d3-fail-8c58ab0d"
+  },
+  "gate_version": "3.0.0",
+  "policy_pack_version": "final_gate_policy.v1.0",
+  "taxonomy_version": "v1.1",
+  "pass_scenario_files": [
+    "01_PASS_SCENARIO/Mnemosyne_Certified_Passport.json",
+    "01_PASS_SCENARIO/frame_0000.png",
+    "01_PASS_SCENARIO/frame_0001.png",
+    "01_PASS_SCENARIO/frame_0002.png",
+    "01_PASS_SCENARIO/pass_run_summary.json",
+    "01_PASS_SCENARIO/scene_manifest_v1.json"
+  ],
+  "fail_scenario_files": [
+    "02_FAIL_SCENARIO/fail_run_summary.json",
+    "02_FAIL_SCENARIO/frame_0000.png",
+    "02_FAIL_SCENARIO/frame_0001.png",
+    "02_FAIL_SCENARIO/frame_0002.png",
+    "02_FAIL_SCENARIO/rejection_evidence.json",
+    "02_FAIL_SCENARIO/scene_manifest_v1.json"
+  ],
+  "readme": "README_PILOT.md",
+  "included_artifacts": [
+    "01_PASS_SCENARIO/Mnemosyne_Certified_Passport.json",
+    "01_PASS_SCENARIO/frame_0000.png",
+    "01_PASS_SCENARIO/frame_0001.png",
+    "01_PASS_SCENARIO/frame_0002.png",
+    "01_PASS_SCENARIO/pass_run_summary.json",
+    "01_PASS_SCENARIO/scene_manifest_v1.json",
+    "02_FAIL_SCENARIO/fail_run_summary.json",
+    "02_FAIL_SCENARIO/frame_0000.png",
+    "02_FAIL_SCENARIO/frame_0001.png",
+    "02_FAIL_SCENARIO/frame_0002.png",
+    "02_FAIL_SCENARIO/rejection_evidence.json",
+    "02_FAIL_SCENARIO/scene_manifest_v1.json",
+    "README_PILOT.md"
+  ],
+  "notes_on_redactions_or_omissions": [
+    "Absolute machine filesystem paths in source JSON files have been replaced with '[PACKAGE_ROOT]/' to avoid leaking internal directory structure.",
+    "Frame files (*.png) are deterministic synthetic test bytes, not production renders. They exercise the full Gate submission code path.",
+    "Passport signature uses KS-HMAC fallback (cryptography library absent in test environment). Gate logic and fail-closed behavior are unaffected.",
+    "Private key material, Docker internals, and internal benchmark logs not included in this package.",
+    "runway_stress_vault and faz9a/9b/9c benchmark artifacts excluded \u2014 not required to understand PASS/FAIL flow."
+  ]
+}

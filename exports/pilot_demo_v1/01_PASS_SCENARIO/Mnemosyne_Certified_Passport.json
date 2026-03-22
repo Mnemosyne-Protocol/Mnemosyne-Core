@@ -1,0 +1,51 @@
+{
+  "protocol": "mnemosyne:v1.7",
+  "schema": "mnemosyne.certification.v1",
+  "session_id": "faz9d3-pass-453cdd9b",
+  "certification_timestamp": "2026-03-22T19:42:23.352525+00:00",
+  "frame_count": 3,
+  "all_frames_approved": true,
+  "gate_version": "3.0.0",
+  "policy_pack_version": "final_gate_policy.v1.0",
+  "benchmark_run_id": "live-faz9d3-pass-453cdd9b",
+  "merkle_root": "1b11c9a0b1a5210d18c4261e6dfbca43ceb4869f4dc828c20dcec73505cc7114",
+  "manifest_ref": "[PACKAGE_ROOT]/faz9d3_pass_session/scene_manifest_v1.json",
+  "frame_manifest": [
+    {
+      "frame_id": "faz9d3-pass-453cdd9b-frame-0000",
+      "frame_index": 0,
+      "verdict": "APPROVED",
+      "psi": 1,
+      "hash_ks": "f5d241dba393c32defe01a347f899821e4a07aeee7155b3ce0169bb0e707da17",
+      "ledger_record_id": "5c626a1d-7a2d-4647-af14-2c05124239a7",
+      "client_latency_ms": 13.92
+    },
+    {
+      "frame_id": "faz9d3-pass-453cdd9b-frame-0001",
+      "frame_index": 1,
+      "verdict": "APPROVED",
+      "psi": 1,
+      "hash_ks": "e0fee310f115a85c3884cb890ec4410ca6aa6506997275faba7ac88de1b1174f",
+      "ledger_record_id": "fa9f124e-74d0-436b-9eb3-a6c63d295be6",
+      "client_latency_ms": 8.75
+    },
+    {
+      "frame_id": "faz9d3-pass-453cdd9b-frame-0002",
+      "frame_index": 2,
+      "verdict": "APPROVED",
+      "psi": 1,
+      "hash_ks": "f2af8df624fc92e6192b13b9f8e6a40d78e062d4370a8b29f0ed40bd441a624d",
+      "ledger_record_id": "0d0c6baf-3fef-47a1-b0ca-232fd1e95706",
+      "client_latency_ms": 12.28
+    }
+  ],
+  "taxonomy_version": "v1.1",
+  "loopback_tcp_compliant": true,
+  "source_pipeline": "UE5_MRQ",
+  "signature": {
+    "signature_hex": "44760bbbd4739a5a7bc4a4d5a5e6fcbb36fc2df295c7f9cf1c9d9c960986ea8244760bbbd4739a5a7bc4a4d5a5e6fcbb36fc2df295c7f9cf1c9d9c960986ea82",
+    "algorithm": "KS-HMAC-fallback",
+    "public_key_hex": "NO_CRYPTOGRAPHY_AVAILABLE",
+    "signed_over": "canonical_passport_body"
+  }
+}

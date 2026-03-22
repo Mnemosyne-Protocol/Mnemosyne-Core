@@ -1,0 +1,62 @@
+{
+  "session_id": "faz9d3-pass-453cdd9b",
+  "session_label": "pass",
+  "timestamp_utc": "2026-03-22T19:42:23.352871+00:00",
+  "certified": true,
+  "n_frames_expected": 3,
+  "n_frames_submitted": 3,
+  "n_approved": 3,
+  "n_rejected": 0,
+  "abort_reason": null,
+  "total_elapsed_ms": 35.52,
+  "avg_latency_ms": 11.65,
+  "gate_url": "http://127.0.0.1:8765",
+  "gate_version": "3.0.0",
+  "policy_pack_version": "final_gate_policy.v1.0",
+  "manifest_path": "[PACKAGE_ROOT]/faz9d3_pass_session/scene_manifest_v1.json",
+  "manifest_hash_ks": "2ecfeaab65d110458a6725527208ff7b51e2e03b5111f3ced75847c299d4de9f",
+  "passport_path": "[PACKAGE_ROOT]/faz9d3_pass_session/Mnemosyne_Certified_Passport.json",
+  "fail_closed_triggered": false,
+  "loopback_tcp_compliant": true,
+  "taxonomy_version": "v1.1",
+  "cryptography_available": false,
+  "executor_registered_in_ue5": true,
+  "frame_manifest": [
+    {
+      "frame_id": "faz9d3-pass-453cdd9b-frame-0000",
+      "frame_index": 0,
+      "verdict": "APPROVED",
+      "psi": 1,
+      "violations": [],
+      "client_latency_ms": 13.92,
+      "server_elapsed_ms": 11.44,
+      "ledger_record_id": "5c626a1d-7a2d-4647-af14-2c05124239a7",
+      "quarantine_record_id": null,
+      "hash_ks": "f5d241dba393c32defe01a347f899821e4a07aeee7155b3ce0169bb0e707da17"
+    },
+    {
+      "frame_id": "faz9d3-pass-453cdd9b-frame-0001",
+      "frame_index": 1,
+      "verdict": "APPROVED",
+      "psi": 1,
+      "violations": [],
+      "client_latency_ms": 8.75,
+      "server_elapsed_ms": 6.64,
+      "ledger_record_id": "fa9f124e-74d0-436b-9eb3-a6c63d295be6",
+      "quarantine_record_id": null,
+      "hash_ks": "e0fee310f115a85c3884cb890ec4410ca6aa6506997275faba7ac88de1b1174f"
+    },
+    {
+      "frame_id": "faz9d3-pass-453cdd9b-frame-0002",
+      "frame_index": 2,
+      "verdict": "APPROVED",
+      "psi": 1,
+      "violations": [],
+      "client_latency_ms": 12.28,
+      "server_elapsed_ms": 10.93,
+      "ledger_record_id": "0d0c6baf-3fef-47a1-b0ca-232fd1e95706",
+      "quarantine_record_id": null,
+      "hash_ks": "f2af8df624fc92e6192b13b9f8e6a40d78e062d4370a8b29f0ed40bd441a624d"
+    }
+  ]
+}
