@@ -27,18 +27,9 @@ import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 
-# ─── Resolve repo root (works from UE5 console and standalone) ────────────────
+# ─── Repo root (hardcoded — UE5 Python Console does not define __file__) ────────
 
-def _find_repo_root() -> Path:
-    """Walk up from this file to find Mnemosyne-Core repo root."""
-    here = Path(__file__).resolve().parent
-    for candidate in [here.parent, here.parent.parent]:
-        if (candidate / "CLAUDE.md").exists():
-            return candidate
-    # Fallback: known absolute path
-    return Path("/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core")
-
-REPO_ROOT = _find_repo_root()
+REPO_ROOT = Path("/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core")
 FAZ9D2_DIR = REPO_ROOT / "faz9d2"
 BENCH_OUT  = REPO_ROOT / "bench" / "out"
 BENCH_OUT.mkdir(parents=True, exist_ok=True)
