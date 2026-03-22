@@ -371,7 +371,7 @@ ec4_fail_closed_blocked: Hatalı kare bulunduğunda sertifika reddedildi ve kara
 
 ---
 
-## FAZ 9D.1 ARCHITECTURAL FREEZE (ACTIVE)
+## FAZ 9D.1 ARCHITECTURAL FREEZE (CLOSED)
 **Tema:** UE5 Bring-Up, Export Surface Discovery & Real Hook Design
 **Primary Rule:** "Mnemosyne is a fail-closed admission layer for policy-bound, high-throughput media pipelines."
 
@@ -398,3 +398,8 @@ ec5_export_surface_ranked: Entegrasyon yüzeyleri karşılaştırıldı ve MVP s
 ec6_real_hook_design_written: Gerçek hook mimari tasarımı dokümante edildi.
 ec7_scene_manifest_defined: scene/export manifest v1 dokümanı yazıldı.
 ec8_summary_written: FAZ 9D.1 nihai özeti oluşturuldu.
+
+**FAZ 9D.1 Result:** 8/8 Exit Criteria PASS. UE5 5.7.4 confirmed, 
+MnemosyneHookMVP.uproject created, Python MoviePipelinePythonHostExecutor 
+selected as MVP surface, MnemosyneExecutor hook design documented, 
+scene_manifest_v1 frozen. Commit: 670834c.
