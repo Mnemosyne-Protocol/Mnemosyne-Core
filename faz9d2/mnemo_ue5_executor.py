@@ -16,10 +16,18 @@ ARCHITECTURE (frozen — FAZ 9D.1):
   Taxonomy  : v1.1 (frozen)
   Contracts : Gate API FrameSubmission (frozen — gate-api/main.py)
 
+UE5 5.7.4 API NOTE:
+  MoviePipelinePythonHostExecutor valid overrides (confirmed via UE5 API query):
+    cancel_all_jobs, cancel_current_job,
+    on_executor_finished_delegate, on_executor_finished_impl
+  on_individual_shot_work_finished_impl does NOT exist in UE5 5.7.
+  All frame processing is done in on_executor_finished_impl (post-render).
+
 FAIL-CLOSED GUARANTEE:
-  Any frame with psi=0 → quarantine written by gate-api → RuntimeError raised
-  → UE5 marks pipeline job FAILED → No passport generated → No partial cert.
+  Any frame with psi=0 → quarantine written by gate-api → error logged
+  → No passport generated → No partial certification.
   Communication error → same outcome.
+  Render job completes before Gate evaluation; certification is blocked post-render.
 
 OPERATOR NOTES:
   - PythonScriptPlugin must be enabled in MnemosyneHookMVP.uproject
@@ -75,8 +83,9 @@ class MnemoSessionState:
     project_name: str = "MnemosyneHookMVP"
     level_name: str = "Unknown"
     output_dir: Optional[Path] = None
+    # output_dir_override: set from job output settings during execute_delayed
+    output_dir_override: Optional[Path] = None
     frame_results: list = field(default_factory=list)
-    frame_index: int = 0
     certified: bool = False
     abort_reason: Optional[str] = None
     manifest_path: Optional[Path] = None
@@ -96,144 +105,149 @@ if _UE5_CONTEXT:
         Registered by init_unreal.py as the active executor for
         the MnemosyneHookMVP project's Movie Render Queue subsystem.
 
-        Per-shot callback submits rendered frames to gate-api (127.0.0.1:8765).
-        All frames PASS → Mnemosyne_Certified_Passport.json is written.
-        Any frame FAILS → pipeline aborts (fail-closed), no passport.
+        UE5 5.7.4 override surface: on_executor_finished_impl only.
+        (on_individual_shot_work_finished_impl does not exist in UE5 5.7.)
+
+        Flow:
+          execute_delayed  → bootstrap session state, start render via super()
+          on_executor_finished_impl → render complete; scan output dir;
+                                      submit each frame to Gate;
+                                      PASS: produce passport
+                                      FAIL: log error, no passport (fail-closed)
         """
 
         @unreal.ufunction(override=True)
         def execute_delayed(self, pipeline_queue: unreal.MoviePipelineQueue):
-            """Called by MRQ when job starts. Bootstrap session state."""
+            """Bootstrap session state. Store queue ref. Start render via super()."""
             if not _GATE_CLIENT_AVAILABLE:
                 unreal.log_error(f"MNEMOSYNE: Gate client unavailable — {_GATE_IMPORT_ERROR}")
                 raise RuntimeError("Mnemosyne gate client not found — abort")
 
             self._state = MnemoSessionState()
+            self._pipeline_queue = pipeline_queue
 
-            # Extract project and level info from queue
+            # Extract level name and output dir from first job
             jobs = pipeline_queue.get_jobs()
             if jobs:
                 job = jobs[0]
                 map_pkg = job.map
                 self._state.level_name = str(map_pkg.asset_name) if map_pkg else "Unknown"
+                # Try to get configured output directory from job settings
+                try:
+                    cfg = job.get_configuration()
+                    out_setting = cfg.find_setting_by_class(unreal.MoviePipelineOutputSetting)
+                    if out_setting:
+                        raw_path = str(out_setting.output_directory.path)
+                        # Resolve {project_dir} token
+                        resolved = unreal.Paths.convert_relative_path_to_full(
+                            raw_path.replace("{project_dir}", unreal.Paths.project_dir())
+                        )
+                        self._state.output_dir_override = Path(resolved)
+                except Exception as e:
+                    unreal.log_warning(f"MNEMOSYNE: could not resolve output dir from job: {e}")
 
             unreal.log(
                 f"MNEMOSYNE: Session {self._state.session_id} started — "
-                f"gate={GATE_URL} (SÖZLEŞME 2: loopback TCP)"
+                f"gate={GATE_URL} | level={self._state.level_name} "
+                f"(SÖZLEŞME 2: loopback TCP)"
             )
 
-            # Call parent to actually start the render
+            # Start the actual render
             super().execute_delayed(pipeline_queue)
-
-        @unreal.ufunction(override=True)
-        def on_individual_shot_work_finished_impl(
-            self,
-            shot_info: unreal.MoviePipelineShotRenderData,
-        ):
-            """
-            Called after each shot (frame) is rendered and written to disk.
-            Submits the frame to gate-api. Fail-closed on any rejection.
-            """
-            state = self._state
-
-            # Locate the rendered output file
-            # UE5 writes output to: Project/Saved/MovieRenders/<output_dir>/<frame>.png
-            output_state = shot_info.output_state
-            shot_name = str(shot_info.shot_config.outer_name) if shot_info.shot_config else f"frame-{state.frame_index:04d}"
-
-            # Attempt to find the rendered PNG on disk
-            render_paths = output_state.file_metadata.keys() if hasattr(output_state, "file_metadata") else []
-            frame_path: Optional[Path] = None
-            for p in render_paths:
-                candidate = Path(str(p))
-                if candidate.exists() and candidate.suffix.lower() in (".png", ".exr"):
-                    frame_path = candidate
-                    break
-
-            if frame_path is None:
-                # Fallback: construct expected path from output settings
-                unreal.log_warning(
-                    f"MNEMOSYNE: frame_path not resolved for shot={shot_name}, "
-                    f"using metadata-based ID"
-                )
-                # Use shot name as frame_id; generate synthetic bytes from shot metadata
-                frame_bytes = shot_name.encode("utf-8")
-            else:
-                frame_bytes = frame_path.read_bytes()
-                if state.output_dir is None:
-                    state.output_dir = frame_path.parent
-
-            frame_id = f"{state.session_id}-{shot_name}-{state.frame_index:04d}"
-
-            unreal.log(f"MNEMOSYNE: Submitting frame {state.frame_index} → {GATE_URL}/submit")
-
-            try:
-                result = submit_frame(
-                    frame_bytes=frame_bytes,
-                    frame_id=frame_id,
-                    frame_index=state.frame_index,
-                    session_id=state.session_id,
-                    benchmark_run_id=state.benchmark_run_id,
-                    operator=state.operator,
-                    source_model=state.source_model,
-                    source_pipeline=state.source_pipeline,
-                    force_fail=False,
-                )
-            except RuntimeError as exc:
-                # Communication error → fail-closed
-                state.abort_reason = f"Gate communication error: {exc}"
-                unreal.log_error(f"MNEMOSYNE FAIL-CLOSED: {state.abort_reason}")
-                raise RuntimeError(f"MNEMOSYNE FAIL-CLOSED: {state.abort_reason}") from exc
-
-            state.frame_results.append(result)
-            state.frame_index += 1
-
-            if result.verdict != "APPROVED":
-                viol = result.violations[0].get("detail", "unknown") if result.violations else "unknown"
-                state.abort_reason = (
-                    f"frame[{result.frame_index}] {frame_id} REJECTED — {viol} "
-                    f"(quarantine_id={result.quarantine_record_id})"
-                )
-                unreal.log_error(f"MNEMOSYNE FAIL-CLOSED: {state.abort_reason}")
-                raise RuntimeError(f"MNEMOSYNE FAIL-CLOSED: {state.abort_reason}")
-
-            unreal.log(
-                f"MNEMOSYNE: frame[{result.frame_index}] APPROVED "
-                f"ψ=1 | {result.client_latency_ms:.1f}ms | ledger={result.ledger_record_id}"
-            )
 
         @unreal.ufunction(override=True)
         def on_executor_finished_impl(self):
             """
-            Called after all shots complete.
-            If all frames approved → produce passport.
-            If any were rejected → abort already triggered; do nothing.
+            Called by UE5 after all render jobs in the queue complete.
+
+            Scans the render output directory for PNG/EXR files, submits each
+            to gate-api (127.0.0.1:8765), and certifies or blocks fail-closed.
+
+            PASS path: all frames psi=1 → Mnemosyne_Certified_Passport.json written.
+            FAIL path: first frame psi=0 → processing stops, no passport, error logged.
             """
             state = self._state
 
-            if state.abort_reason:
-                unreal.log_error(
-                    f"MNEMOSYNE: Session FAILED — {state.abort_reason}. No passport issued."
+            # ── Resolve output directory ──────────────────────────────────────
+            # Priority: (1) override from job settings, (2) UE5 default renders path
+            if state.output_dir_override and state.output_dir_override.exists():
+                scan_dir = state.output_dir_override
+            else:
+                scan_dir = Path(unreal.Paths.project_saved_dir()) / "MovieRenders"
+
+            unreal.log(f"MNEMOSYNE: Scanning output dir: {scan_dir}")
+
+            # ── Collect rendered frame files (sorted, deterministic) ──────────
+            frame_files: list[Path] = []
+            if scan_dir.exists():
+                frame_files = sorted(
+                    f for f in scan_dir.rglob("*")
+                    if f.suffix.lower() in (".png", ".exr") and f.is_file()
                 )
+
+            if not frame_files:
+                state.abort_reason = f"No rendered frames found in {scan_dir}"
+                unreal.log_error(f"MNEMOSYNE FAIL-CLOSED: {state.abort_reason}")
                 return
 
-            n = len(state.frame_results)
-            unreal.log(f"MNEMOSYNE: All {n} frames approved — producing passport.")
+            unreal.log(f"MNEMOSYNE: Found {len(frame_files)} frames — submitting to Gate.")
 
-            output_dir = state.output_dir or Path(
+            # ── Submit each frame to Gate API (fail-closed on first rejection) ─
+            for i, fp in enumerate(frame_files):
+                frame_bytes = fp.read_bytes()
+                frame_id = f"{state.session_id}-{fp.stem}-{i:04d}"
+
+                unreal.log(f"MNEMOSYNE: [{i:03d}] Submitting {fp.name} → {GATE_URL}/submit")
+
+                try:
+                    result = submit_frame(
+                        frame_bytes=frame_bytes,
+                        frame_id=frame_id,
+                        frame_index=i,
+                        session_id=state.session_id,
+                        benchmark_run_id=state.benchmark_run_id,
+                        operator=state.operator,
+                        source_model=state.source_model,
+                        source_pipeline=state.source_pipeline,
+                        force_fail=False,
+                        gate_url=GATE_URL,
+                    )
+                except RuntimeError as exc:
+                    state.abort_reason = f"Gate communication error at frame[{i}]: {exc}"
+                    unreal.log_error(f"MNEMOSYNE FAIL-CLOSED: {state.abort_reason}")
+                    return
+
+                state.frame_results.append(result)
+
+                if result.verdict != "APPROVED":
+                    viol = (result.violations[0].get("detail", "unknown")
+                            if result.violations else "unknown")
+                    state.abort_reason = (
+                        f"frame[{i}] {frame_id} REJECTED — {viol} "
+                        f"(quarantine_id={result.quarantine_record_id})"
+                    )
+                    unreal.log_error(f"MNEMOSYNE FAIL-CLOSED: {state.abort_reason}")
+                    unreal.log_error("MNEMOSYNE: No certification issued.")
+                    return
+
+                unreal.log(
+                    f"MNEMOSYNE: [{i:03d}] APPROVED ψ=1 | "
+                    f"{result.client_latency_ms:.1f}ms | ledger={result.ledger_record_id}"
+                )
+
+            # ── All frames approved — produce certification ────────────────────
+            n = len(state.frame_results)
+            unreal.log(f"MNEMOSYNE: All {n} frames APPROVED ψ=1 — producing passport.")
+
+            output_dir = Path(
                 unreal.Paths.project_saved_dir(), "MnemosyneCertification", state.session_id
             )
 
-            # Build and write scene_manifest_v1
-            frame_paths = [
-                Path(fr.frame_id)   # frame_id encodes path context for passport binding
-                for fr in state.frame_results
-            ]
             manifest = build_manifest(
                 project_name=state.project_name,
                 level_or_scene_name=state.level_name,
                 output_dir=output_dir,
-                frame_paths=frame_paths,
+                frame_paths=frame_files,
                 operator=state.operator,
                 node_id="MNEMOSYNE-NODE-01",
                 export_session_id=state.session_id,
