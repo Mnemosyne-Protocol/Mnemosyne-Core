@@ -1,0 +1,47 @@
+{
+  "schema_version": "scene_manifest_v1",
+  "export_session_id": "faz9d3-fail-8a0a3793",
+  "project_name": "MnemosyneHookMVP",
+  "level_or_scene_name": "L_MnemosyneLiveTest",
+  "asset_list": [
+    "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/faz9d3_fail_session/frame_0000.png",
+    "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/faz9d3_fail_session/frame_0001.png",
+    "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/faz9d3_fail_session/frame_0002.png"
+  ],
+  "output_files": [
+    {
+      "path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/faz9d3_fail_session/frame_0000.png",
+      "hash_canonical": "7c657f2084af633e7cb2ef81fb851070ec547839419c67880d81e9bf8036a1f2",
+      "hash_ks": "2771ff5cbfea0699214e1ebdc850d0b1061d4e0d0533034104ea420f407606c0",
+      "size_bytes": 52
+    },
+    {
+      "path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/faz9d3_fail_session/frame_0001.png",
+      "hash_canonical": "7fbcd1994b65f87768dfc2405f40c5ee386097880866f006a0e905216181cda3",
+      "hash_ks": "5531be6d2f50949d3726493b71df39aa29a95920f0a318ca038c466c3d749929",
+      "size_bytes": 52
+    },
+    {
+      "path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/faz9d3_fail_session/frame_0002.png",
+      "hash_canonical": "a3e2e6733fdd51d3037839e9536d5fe343e36c05013486d400619b770cc85355",
+      "hash_ks": "4a6b878f938a6b3d2335ce2cac8fe26182866868c105a065709c207446a07909",
+      "size_bytes": 52
+    }
+  ],
+  "source_invariants": {
+    "frame_count_expected": 3,
+    "frame_rate": 24,
+    "resolution": {
+      "width": 1920,
+      "height": 1080
+    },
+    "source_pipeline": "UE5_MRQ",
+    "source_model": "UE5_LUMEN",
+    "render_preset": "Mnemosyne_MVP"
+  },
+  "timestamp_utc": "2026-03-22T18:27:48.771504+00:00",
+  "operator": "ks@mnemosynelabs.ai",
+  "node_id": "MNEMOSYNE-NODE-01",
+  "hash_canonical": "7d3c07d84f5b814d10cfddc32e04e2c33703e43375087e29e3ad1e60b5d25d78",
+  "hash_ks": "0fbd4a45f7de5b6623364a21a669db64168cd180725886766146e4eda94dac92"
+}

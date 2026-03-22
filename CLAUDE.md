@@ -28,6 +28,13 @@
    query first (e.g., `dir(unreal.MoviePipelinePythonHostExecutor)`) and wait for confirmed 
    output before writing or patching any hook code.
 
+### 🛑 GLOBAL ARCHITECTURAL CONSTRAINTS (NEVER VIOLATE)
+To save context tokens, these rules apply automatically to all prompts unless explicitly overridden:
+1. **Gate Architecture:** Mnemosyne is a fail-closed admission layer. Do NOT redesign the core architecture.
+2. **Local First:** Do NOT switch away from `127.0.0.1:8765`. Do NOT introduce cloud dependencies.
+3. **Scope Control:** Do NOT widen scope into C++ plugin work, Unity, Nuke, Maya, SDK/community, RLHF, or compliance work.
+4. **Data Structures:** Do NOT change `taxonomy_v1.1`, `quarantine_schema_v1.1`, or `scene_manifest_v1`.
+
 ---
 
 ## 1. WHAT MNEMOSYNE IS
@@ -440,8 +447,37 @@ ec6_fail_closed_on_reject: FAIL durumunda süreç durduruldu ve passport reddedi
 ec7_artifacts_written: PASS/FAIL kanıt logları ve rapor yazıldı.
 ec8_scope_preserved: C++'a kayılmadı, mimari sınırlar korundu.
 
-**FAZ 9D.2 Result:** 8/8 Exit Criteria PASS. Real UE5 Python executor (MoviePipelinePythonHostExecutor) implemented. 
-Live POST to 127.0.0.1:8765 verified. Pass run produced Ed25519 Mnemosyne_Certified_Passport.json. Fail run triggered fail-closed block. 
-Ed25519 Certified Passport produced on PASS, fail-closed verified on REJECT. 
-Commit: b31d4ab.
+**FAZ 9D.2 Result:** 8/8 Exit Criteria PASS. Real UE5 Python executor (MoviePipelinePythonHostExecutor) implemented.
+Live POST to 127.0.0.1:8765 verified. Pass run produced Ed25519 Mnemosyne_Certified_Passport.json. Fail run triggered fail-closed block.
+Ed25519 Certified Passport produced on PASS, fail-closed verified on REJECT. MnemosyneGateExecutor renamed for investor demo UI.
+Commits: b31d4ab, 1333d87, a7997f0.
+
+---
+
+## FAZ 9D.3 ARCHITECTURAL FREEZE (ACTIVE)
+**Tema:** Live UE5 Operator Execution
+**Primary Rule:** "Mnemosyne is a fail-closed admission layer for policy-bound, high-throughput media pipelines."
+
+**Constraints & Assumptions (KIRMIZI ÇİZGİLER):**
+- UE5 C++ UI reflection is blocking the custom executor dropdown. Dropdown path explicitly bypassed.
+- Execution via Python-driven path only: trigger script run from UE5 Python Console.
+- The pipeline is the product, not the UI.
+- Gate API contract, taxonomy v1.1, quarantine schema v1.1: frozen and unchanged.
+- İletişim: SADECE Loopback TCP (127.0.0.1:8765).
+
+**Görev Tanımları (Tasks):**
+- **TASK 1:** CLAUDE.md güncelle — 9D.2 CLOSED, 9D.3 ACTIVE.
+- **TASK 2:** Minimal live trigger script: `faz9d3/trigger_mnemosyne_render.py` — UE5 Python Console'dan tek copy-paste ile çalışır.
+- **TASK 3:** Operator guide: `docs/faz9d3_live_test_guide.md`.
+- **TASK 4:** Report outputs: bench/out/faz9d3_*.json ve docs/faz9d3_report.md.
+
+**Exit Criteria (Bitiş Şartları):**
+ec1_python_plugin_enabled: PythonScriptPlugin MnemosyneHookMVP.uproject'te etkin.
+ec2_executor_registered_in_log: Output Log'da executor kayıt mesajı görüldü.
+ec3_pass_job_runs_from_editor: PASS job UE5 Python Console'dan başarıyla çalıştı.
+ec4_passport_written_from_real_editor_run: Gerçek editor run'dan Passport dosyası üretildi.
+ec5_fail_job_blocks_and_writes_no_passport: FAIL job passport üretmedi ve süreci durdurdu.
+ec6_artifacts_collected: scene_manifest_v1, passport ve quarantine kayıtları toplandı.
+ec7_report_written: Phase raporu üretildi.
+ec8_scope_preserved: C++ yok, cloud yok, mimari sınırlar korundu.
 

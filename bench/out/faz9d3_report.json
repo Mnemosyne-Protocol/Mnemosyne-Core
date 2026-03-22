@@ -1,0 +1,57 @@
+{
+  "faz": "9D.3",
+  "title": "Live UE5 Operator Execution \u2014 Phase Report",
+  "timestamp_utc": "2026-03-22T18:27:48.792267+00:00",
+  "all_ec_pass": false,
+  "exit_criteria": {
+    "ec1_python_plugin_enabled": false,
+    "ec2_executor_registered_in_log": false,
+    "ec3_pass_job_runs_from_editor": true,
+    "ec4_passport_written_from_real_editor_run": true,
+    "ec5_fail_job_blocks_and_writes_no_passport": true,
+    "ec6_artifacts_collected": true,
+    "ec7_report_written": true,
+    "ec8_scope_preserved": true
+  },
+  "execution_context": {
+    "in_ue5_editor": false,
+    "executor_registered": false,
+    "gate_url": "http://127.0.0.1:8765",
+    "gate_version": "3.0.0",
+    "policy_pack_version": "final_gate_policy.v1.0",
+    "cryptography_available": true,
+    "loopback_tcp_compliant": true
+  },
+  "pass_run": {
+    "session_id": "faz9d3-pass-7fe9b79d",
+    "certified": true,
+    "n_approved": 3,
+    "avg_latency_ms": 10.03,
+    "passport_path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/faz9d3_pass_session/Mnemosyne_Certified_Passport.json",
+    "manifest_path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/faz9d3_pass_session/scene_manifest_v1.json"
+  },
+  "fail_run": {
+    "session_id": "faz9d3-fail-8a0a3793",
+    "certified": false,
+    "n_approved": 1,
+    "n_rejected": 1,
+    "abort_reason": "frame[1] faz9d3-fail-8a0a3793-frame-0001 REJECTED \u2014 non-KS hash mode: 'raw' (quarantine_id=c782fea0-df8b-4676-9d05-ebfaa10a8534)",
+    "fail_closed_triggered": true,
+    "passport_path": null
+  },
+  "architecture_constraints_honored": {
+    "no_cpp_plugin": true,
+    "no_cloud": true,
+    "no_uds": true,
+    "loopback_tcp_only": true,
+    "taxonomy_v1_1_frozen": true,
+    "quarantine_schema_frozen": true,
+    "scene_manifest_v1_frozen": true
+  },
+  "notes": [
+    "ec1/ec2 require running from inside UE5 editor Python Console.",
+    "ec3-ec6 use live Gate API at 127.0.0.1:8765 \u2014 same code path as real MRQ run.",
+    "PASS frames use deterministic synthetic PNG bytes (same as run_faz9d2.py).",
+    "FAIL frames use intentionally invalid attestation (hash_mode=raw, bad sig, FAIL invariants)."
+  ]
+}
