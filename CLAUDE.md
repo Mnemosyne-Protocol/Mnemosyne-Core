@@ -454,7 +454,7 @@ Commits: b31d4ab, 1333d87, a7997f0.
 
 ---
 
-## FAZ 9D.3 ARCHITECTURAL FREEZE (ACTIVE)
+## FAZ 9D.3 ARCHITECTURAL FREEZE (CLOSED — PARTIAL PASS)
 **Tema:** Live UE5 Operator Execution
 **Primary Rule:** "Mnemosyne is a fail-closed admission layer for policy-bound, high-throughput media pipelines."
 
@@ -465,12 +465,6 @@ Commits: b31d4ab, 1333d87, a7997f0.
 - Gate API contract, taxonomy v1.1, quarantine schema v1.1: frozen and unchanged.
 - İletişim: SADECE Loopback TCP (127.0.0.1:8765).
 
-**Görev Tanımları (Tasks):**
-- **TASK 1:** CLAUDE.md güncelle — 9D.2 CLOSED, 9D.3 ACTIVE.
-- **TASK 2:** Minimal live trigger script: `faz9d3/trigger_mnemosyne_render.py` — UE5 Python Console'dan tek copy-paste ile çalışır.
-- **TASK 3:** Operator guide: `docs/faz9d3_live_test_guide.md`.
-- **TASK 4:** Report outputs: bench/out/faz9d3_*.json ve docs/faz9d3_report.md.
-
 **Exit Criteria (Bitiş Şartları):**
 ec1_python_plugin_enabled: PythonScriptPlugin MnemosyneHookMVP.uproject'te etkin.
 ec2_executor_registered_in_log: Output Log'da executor kayıt mesajı görüldü.
@@ -480,4 +474,39 @@ ec5_fail_job_blocks_and_writes_no_passport: FAIL job passport üretmedi ve süre
 ec6_artifacts_collected: scene_manifest_v1, passport ve quarantine kayıtları toplandı.
 ec7_report_written: Phase raporu üretildi.
 ec8_scope_preserved: C++ yok, cloud yok, mimari sınırlar korundu.
+
+**FAZ 9D.3 Result:** 7/8 PARTIAL PASS.
+ec1, ec3–ec8 PASS. ec2_executor_registered_in_log OPEN — failure isolated to UE5
+Python executor/reflection surface, not Gate logic. PASS/FAIL/Passport pipeline
+proven live in editor. Commit: 3f66f49.
+
+---
+
+## FAZ 9D.4 ARCHITECTURAL FREEZE (ACTIVE)
+**Tema:** Executor Surface Hardening
+**Primary Rule:** "Mnemosyne is a fail-closed admission layer for policy-bound, high-throughput media pipelines."
+
+**Single Objective:** Resolve ec2_executor_registered_in_log in the narrowest
+possible way, without changing the proven PASS/FAIL/Passport pipeline.
+
+**Constraints & Assumptions (KIRMIZI ÇİZGİLER):**
+- Gate architecture, 127.0.0.1:8765 contract: UNCHANGED.
+- Taxonomy v1.1, quarantine schema v1.1, scene_manifest_v1: FROZEN.
+- No C++ plugin work.
+- No guessing Unreal Python method names — reflection probe first.
+- Proven pass/fail artifact flow: untouched unless required for surface hardening.
+
+**Steps:**
+- STEP 1: UE5 reflection probe → operator pastes output → no code before output.
+- STEP 2: Persist reflection evidence to bench/out/faz9d4_reflection_probe.txt.
+- STEP 3: Implement correct hardening path based on real reflection output.
+- STEP 4: Prove ec2 or formally reframe if UE5 Python does not expose the surface.
+
+**Exit Criteria (Bitiş Şartları):**
+ec1_reflection_probe_captured: Raw UE5 reflection output saved to disk.
+ec2_analysis_written: docs/faz9d4_reflection_analysis.md produced.
+ec3_hardening_implemented: Correct delegate/callback binding or stable bypass implemented.
+ec4_ec2_resolved_or_reframed: ec2_executor_registered_in_log resolved or formally documented.
+ec5_report_written: docs/faz9d4_report.md and bench/out/faz9d4_report.json produced.
+ec6_scope_preserved: No architecture redesign, no C++, no contract drift.
 
