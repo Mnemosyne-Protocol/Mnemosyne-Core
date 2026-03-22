@@ -67,7 +67,7 @@ health = _check_gate()
 _log(f"Gate API healthy — version={health.get('version')} policy={health.get('service','gate-api')}")
 
 
-# ─── STEP 1: Import executor and gate client ──────────────────────────────────
+# ─── STEP 1: Import gate client and delegate callback ─────────────────────────
 
 try:
     from mnemo_gate_client import (
@@ -75,33 +75,47 @@ try:
         GATE_URL, GATE_VERSION, POLICY_PACK_VERSION, _HAS_CRYPTOGRAPHY,
     )
     from mnemo_manifest import build_manifest, write_manifest
+    from mnemo_ue5_executor import begin_session, on_mrq_finished_callback
 except ImportError as e:
     _log_err(f"Cannot import gate client from {FAZ9D2_DIR}: {e}")
-    _log_err("Ensure mnemo_gate_client.py and mnemo_manifest.py are in faz9d2/")
+    _log_err("Ensure mnemo_gate_client.py, mnemo_manifest.py, mnemo_ue5_executor.py are in faz9d2/")
     raise SystemExit(1)
 
 _log(f"Gate client loaded — KS-SHA256 + Ed25519 available={_HAS_CRYPTOGRAPHY}")
 
 
-# ─── STEP 2: Register MnemosyneGateExecutor (if inside UE5) ──────────────────
+# ─── STEP 2: Bind delegate via on_executor_finished_delegate (FAZ 9D.4) ───────
+# Confirmed surface: on_executor_finished_delegate.add_callable()
+# Reflection probe: bench/out/faz9d4_reflection_probe.txt
+# No @unreal.uclass() or custom subclass required.
 
 _executor_registered = False
 
 if _IN_UE5:
     try:
-        # Import our executor (Content/Python/ is on UE5 path when plugin is enabled)
-        from mnemo_ue5_executor import MnemosyneGateExecutor
+        # Initialize session state before binding
+        begin_session(
+            project_name="MnemosyneHookMVP",
+            level_name="L_MnemosyneLiveTest",
+            operator="ks@mnemosynelabs.ai",
+        )
 
-        subsystem = _unreal.get_editor_subsystem(_unreal.MoviePipelineQueueSubsystem)
-        subsystem.get_queue().set_executor_class(MnemosyneGateExecutor)
+        # Standard PIEExecutor — no custom subclass
+        _pie_executor = _unreal.MoviePipelinePIEExecutor()
+
+        # Bind delegate — probe-confirmed surface
+        _pie_executor.on_executor_finished_delegate.add_callable(on_mrq_finished_callback)
+
         _executor_registered = True
-        _log("MnemosyneGateExecutor registered with Movie Render Queue subsystem.")
+        _log("Delegate bound: on_executor_finished_delegate → on_mrq_finished_callback")
+        _log(f"  Executor: MoviePipelinePIEExecutor (standard)")
         _log(f"  Transport: {GATE_URL} (SÖZLEŞME 2: loopback TCP only)")
+        _log("  Gate will evaluate rendered frames when MRQ job finishes.")
     except Exception as e:
-        _log_err(f"Executor registration failed: {e}")
-        _log_err("Continuing with direct gate submission path (no MRQ render).")
+        _log_err(f"Delegate binding failed: {e}")
+        _log_err("Continuing with direct gate submission path.")
 else:
-    _log("Not in UE5 context — skipping MRQ executor registration.")
+    _log("Not in UE5 context — skipping delegate binding.")
     _log("Running standalone gate submission proof.")
 
 

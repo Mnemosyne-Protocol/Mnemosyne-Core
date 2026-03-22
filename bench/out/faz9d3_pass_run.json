@@ -1,20 +1,20 @@
 {
-  "session_id": "faz9d3-pass-7fe9b79d",
+  "session_id": "faz9d3-pass-08fa3eb9",
   "session_label": "pass",
-  "timestamp_utc": "2026-03-22T18:27:48.771063+00:00",
+  "timestamp_utc": "2026-03-22T19:25:20.641204+00:00",
   "certified": true,
   "n_frames_expected": 3,
   "n_frames_submitted": 3,
   "n_approved": 3,
   "n_rejected": 0,
   "abort_reason": null,
-  "total_elapsed_ms": 31.38,
-  "avg_latency_ms": 10.03,
+  "total_elapsed_ms": 36.07,
+  "avg_latency_ms": 11.74,
   "gate_url": "http://127.0.0.1:8765",
   "gate_version": "3.0.0",
   "policy_pack_version": "final_gate_policy.v1.0",
   "manifest_path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/faz9d3_pass_session/scene_manifest_v1.json",
-  "manifest_hash_ks": "c1ad61dcb860408195265086a6693d1898dab322094cf54b004222b1a3929be5",
+  "manifest_hash_ks": "704b8b7ee6b5729ff69097aaab7d8e320908960031c4e776c6c5bc74f5ac5509",
   "passport_path": "/Volumes/MNEMOSYNE-GATE/Vault/repos/Mnemosyne-Core/bench/out/faz9d3_pass_session/Mnemosyne_Certified_Passport.json",
   "fail_closed_triggered": false,
   "loopback_tcp_compliant": true,
@@ -23,40 +23,40 @@
   "executor_registered_in_ue5": false,
   "frame_manifest": [
     {
-      "frame_id": "faz9d3-pass-7fe9b79d-frame-0000",
+      "frame_id": "faz9d3-pass-08fa3eb9-frame-0000",
       "frame_index": 0,
       "verdict": "APPROVED",
       "psi": 1,
       "violations": [],
-      "client_latency_ms": 15.69,
-      "server_elapsed_ms": 12.7,
-      "ledger_record_id": "dba8e043-22de-45b1-b0cf-6cf22a82e6d3",
+      "client_latency_ms": 16.23,
+      "server_elapsed_ms": 13.19,
+      "ledger_record_id": "feb99624-799a-4156-bf2f-8ee8c724da3b",
       "quarantine_record_id": null,
-      "hash_ks": "c48a5a4584f53740e0f04c26e4e993c8e3e564508eb78a7a0c75b27a157f15d6"
+      "hash_ks": "1375b67ead9b3c0b045f270e3e050a36087241009531589c21ff79ce7ef1be6e"
     },
     {
-      "frame_id": "faz9d3-pass-7fe9b79d-frame-0001",
+      "frame_id": "faz9d3-pass-08fa3eb9-frame-0001",
       "frame_index": 1,
       "verdict": "APPROVED",
       "psi": 1,
       "violations": [],
-      "client_latency_ms": 7.01,
-      "server_elapsed_ms": 5.85,
-      "ledger_record_id": "df497801-c169-47dc-88bf-faa6a5e6fbe6",
+      "client_latency_ms": 10.6,
+      "server_elapsed_ms": 9.41,
+      "ledger_record_id": "7b3d959a-b878-4ac2-a416-4eeb5bf39cc4",
       "quarantine_record_id": null,
-      "hash_ks": "6a14f5b1d52f28a8d8e2dc1ec90ea546a33bedaf2c5f0f40136d0fd1296af0de"
+      "hash_ks": "072544fe6fc4e18c218bc1ee09bf86942bcab7803a456d0b1beddb2144630f9c"
     },
     {
-      "frame_id": "faz9d3-pass-7fe9b79d-frame-0002",
+      "frame_id": "faz9d3-pass-08fa3eb9-frame-0002",
       "frame_index": 2,
       "verdict": "APPROVED",
       "psi": 1,
       "violations": [],
-      "client_latency_ms": 7.39,
-      "server_elapsed_ms": 5.96,
-      "ledger_record_id": "e9d903d0-f4da-401a-a5fa-4c5fce6c2489",
+      "client_latency_ms": 8.4,
+      "server_elapsed_ms": 6.54,
+      "ledger_record_id": "52306287-d171-468f-b25e-12ea1a8c09b5",
       "quarantine_record_id": null,
-      "hash_ks": "195fbbf15e1eecba683998fdf629891e7c2150c8cd8e86f86d5297e5dfe9d4f3"
+      "hash_ks": "9684355aa516948aca5413b3e8cdd575f399ecde7e3780f0709583bbb54fdd90"
     }
   ]
 }

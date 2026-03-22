@@ -1,0 +1,23 @@
+# FAZ 9D.4 — UE5 Python Reflection Probe Output
+# Date: 2026-03-22
+# Source: Live UE5 5.7.4 editor, MoviePipelinePIEExecutor()
+# Probe query: [m for m in dir(executor) if 'delegate' in m.lower() or 'finish' in m.lower() or 'executor' in m.lower()]
+
+RAW OUTPUT:
+['http_response_recieved_delegate', 'on_executor_errored_delegate',
+'on_executor_errored_impl', 'on_executor_finished_delegate',
+'on_executor_finished_impl', 'on_individual_job_finished_delegate',
+'on_individual_job_started_delegate', 'on_individual_job_...']
+
+KEY FINDINGS:
+- on_executor_finished_delegate  : EXISTS — bindable delegate (add_callable)
+- on_executor_errored_delegate   : EXISTS — bindable delegate
+- on_individual_job_finished_delegate : EXISTS — per-job bindable delegate
+- on_individual_job_started_delegate  : EXISTS — per-job bindable delegate
+- on_executor_finished_impl      : EXISTS — override method (confirmed)
+- on_executor_errored_impl       : EXISTS — override method
+
+SELECTED BINDING SURFACE:
+  on_executor_finished_delegate.add_callable(callback)
+  Using: unreal.MoviePipelinePIEExecutor (standard, no custom subclass)
+  No @unreal.uclass() required.

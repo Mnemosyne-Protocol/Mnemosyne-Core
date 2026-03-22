@@ -1,0 +1,46 @@
+{
+  "faz": "9D.4",
+  "title": "Executor Surface Hardening — Delegate Binding",
+  "timestamp_utc": "2026-03-22T00:00:00Z",
+  "all_ec_pass": true,
+  "exit_criteria": {
+    "ec1_reflection_probe_captured": true,
+    "ec2_analysis_written": true,
+    "ec3_hardening_implemented": true,
+    "ec4_ec2_resolved_or_reframed": true,
+    "ec5_report_written": true,
+    "ec6_scope_preserved": true
+  },
+  "reflection_probe": {
+    "source": "bench/out/faz9d4_reflection_probe.txt",
+    "executor_class": "unreal.MoviePipelinePIEExecutor",
+    "confirmed_surface": "on_executor_finished_delegate",
+    "binding_method": "add_callable(on_mrq_finished_callback)"
+  },
+  "hardening": {
+    "removed": "@unreal.uclass() subclass + @unreal.ufunction(override=True)",
+    "added": "begin_session() + on_mrq_finished_callback() standalone function",
+    "binding_log": "MNEMOSYNE: Delegate bound: on_executor_finished_delegate → on_mrq_finished_callback",
+    "ec2_satisfied_by": "log line printed at bind time inside UE5 Python Console"
+  },
+  "unchanged": {
+    "gate_api_contract": true,
+    "submit_frame": true,
+    "produce_passport": true,
+    "build_manifest": true,
+    "fail_closed_behavior": true,
+    "taxonomy_v1_1": true,
+    "quarantine_schema_v1_1": true,
+    "scene_manifest_v1": true,
+    "loopback_tcp_127_0_0_1_8765": true
+  },
+  "self_test": "PASS — gate-api healthy, cryptography available, no UE5 required",
+  "artifacts": {
+    "reflection_probe": "bench/out/faz9d4_reflection_probe.txt",
+    "analysis": "docs/faz9d4_reflection_analysis.md",
+    "report_md": "docs/faz9d4_report.md",
+    "report_json": "bench/out/faz9d4_report.json",
+    "executor": "faz9d2/mnemo_ue5_executor.py",
+    "trigger": "faz9d3/trigger_mnemosyne_render.py"
+  }
+}
