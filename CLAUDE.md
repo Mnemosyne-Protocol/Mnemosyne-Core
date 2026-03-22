@@ -406,7 +406,7 @@ scene_manifest_v1 frozen. Commit: 670834c.
 
 ---
 
-## FAZ 9D.2 ARCHITECTURAL FREEZE (ACTIVE)
+## FAZ 9D.2 ARCHITECTURAL FREEZE (CLOSED)
 **Tema:** Real UE5 Hook Implementation — Narrow MVP
 **Primary Rule:** "Mnemosyne is a fail-closed admission layer for policy-bound, high-throughput media pipelines."
 
@@ -434,3 +434,9 @@ ec5_passport_on_pass: PASS durumunda Passport üretildi.
 ec6_fail_closed_on_reject: FAIL durumunda süreç durduruldu ve passport reddedildi.
 ec7_artifacts_written: PASS/FAIL kanıt logları ve rapor yazıldı.
 ec8_scope_preserved: C++'a kayılmadı, mimari sınırlar korundu.
+
+**FAZ 9D.2 Result:** 8/8 Exit Criteria PASS. Real UE5 Python executor (MoviePipelinePythonHostExecutor) implemented. 
+Live POST to 127.0.0.1:8765 verified. Pass run produced Ed25519 Mnemosyne_Certified_Passport.json. Fail run triggered fail-closed block. 
+Ed25519 Certified Passport produced on PASS, fail-closed verified on REJECT. 
+Commit: b31d4ab.
+
