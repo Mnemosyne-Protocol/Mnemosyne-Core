@@ -22,7 +22,6 @@ Source of truth: docs/agent_system/v1/agent_contracts_v1.md
 """
 
 import json
-import sys
 from pathlib import Path
 from typing import Dict, List, Optional
 

@@ -27,11 +27,19 @@
       "description": "The exact claim being evaluated"
     },
     "validation_state": {
-      "enum": ["supported", "unsupported", "escalated", "insufficient_evidence"]
+      "enum": [
+        "supported",
+        "partially_supported",
+        "unsupported",
+        "blocked",
+        "escalated",
+        "insufficient_evidence"
+      ]
     },
-    "artifact_ref": {
-      "type": ["string", "null"],
-      "description": "Path to the document containing the evidence"
+    "supporting_artifacts": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Paths to artifacts that support or were checked for this claim"
     },
     "evidence_excerpt": {
       "type": ["string", "null"],
@@ -61,14 +69,14 @@
         }
       },
       "then": {
-        "required": ["artifact_ref", "evidence_excerpt", "lineage_ref"]
+        "required": ["supporting_artifacts", "evidence_excerpt", "lineage_ref"]
       }
     },
     {
       "if": {
         "properties": {
           "validation_state": {
-            "enum": ["unsupported", "escalated", "insufficient_evidence"]
+            "enum": ["unsupported", "blocked", "escalated", "insufficient_evidence"]
           }
         }
       },

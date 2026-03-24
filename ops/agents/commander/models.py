@@ -5,7 +5,7 @@ Sprint 1 / Mnemosyne Agent System v1
 Source of truth: docs/agent_system/v1/agent_contracts_v1.md
 """
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Dict, List, Optional
 import uuid
 from datetime import datetime, timezone

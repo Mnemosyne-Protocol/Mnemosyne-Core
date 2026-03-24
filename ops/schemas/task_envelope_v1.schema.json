@@ -10,6 +10,7 @@
     "intent",
     "required_output",
     "approval_state",
+    "priority",
     "timestamp_utc"
   ],
   "properties": {
@@ -86,6 +87,10 @@
       "maximum": 8,
       "default": 4,
       "description": "Time-To-Live in agent hops to prevent infinite loops"
+    },
+    "priority": {
+      "enum": ["low", "normal", "high", "urgent"],
+      "description": "Task priority level"
     },
     "timestamp_utc": {
       "type": "string",

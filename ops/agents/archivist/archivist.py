@@ -111,7 +111,7 @@ class Archivist:
                 action="evidence_collection_escalated",
                 task_id=task_id,
                 inputs=payload_refs,
-                outputs=[str(esc["path"])],
+                outputs=[str(esc["path"].relative_to(self.repo_root))],
                 approval_state="escalated",
                 status="escalated",
                 notes=f"Missing: {missing}",
