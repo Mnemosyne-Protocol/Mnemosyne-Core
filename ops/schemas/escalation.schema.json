@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Escalation v1",
+  "type": "object",
+  "required": [
+    "escalation_id",
+    "task_id",
+    "agent",
+    "reason",
+    "details",
+    "timestamp_utc",
+    "status"
+  ],
+  "properties": {
+    "escalation_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique escalation record ID"
+    },
+    "task_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Task envelope ID tied to the escalation"
+    },
+    "agent": {
+      "enum": ["commander", "archivist", "outreach", "pilot_ops"]
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Machine-readable escalation reason"
+    },
+    "details": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable explanation"
+    },
+    "timestamp_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "enum": ["open", "resolved", "rejected", "blocked"]
+    },
+    "operator_ref": {
+      "type": ["string", "null"],
+      "description": "Optional operator reference or message ID"
+    },
+    "resolution_note": {
+      "type": ["string", "null"],
+      "description": "Optional note when escalation is resolved or rejected"
+    }
+  },
+  "additionalProperties": false
+}

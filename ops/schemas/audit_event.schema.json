@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Audit Event v1",
+  "type": "object",
+  "required": [
+    "event_id",
+    "timestamp_utc",
+    "agent",
+    "action",
+    "task_id",
+    "inputs",
+    "outputs",
+    "approval_state",
+    "status"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique ID for this audit event"
+    },
+    "timestamp_utc": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 UTC timestamp"
+    },
+    "agent": {
+      "enum": ["commander", "archivist", "outreach", "pilot_ops"]
+    },
+    "action": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Machine-readable action name"
+    },
+    "task_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Task envelope ID tied to this event"
+    },
+    "inputs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Input artifact refs used by the action"
+    },
+    "outputs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Output artifact refs produced by the action"
+    },
+    "approval_state": {
+      "enum": [
+        "not_required",
+        "draft",
+        "ready_for_review",
+        "approved",
+        "rejected",
+        "blocked",
+        "escalated",
+        "delivered"
+      ]
+    },
+    "status": {
+      "enum": ["success", "failure", "blocked", "escalated", "rejected"]
+    },
+    "notes": {
+      "type": ["string", "null"]
+    },
+    "error_code": {
+      "type": ["string", "null"]
+    },
+    "operator_ref": {
+      "type": ["string", "null"]
+    }
+  },
+  "additionalProperties": false
+}

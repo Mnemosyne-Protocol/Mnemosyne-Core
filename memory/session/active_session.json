@@ -1,0 +1,12 @@
+{
+  "schema_version": "v1",
+  "session_id": null,
+  "phase": "AGENT_SYSTEM_V1_SPRINT1",
+  "active_tasks": [],
+  "pending_approvals": [],
+  "unresolved_escalations": [],
+  "current_phase_state": "scaffold_complete",
+  "notes": "Commander and Archivist skeletons deployed. Sprint 1 runtime active.",
+  "last_updated": null,
+  "_note": "Session memory is short-lived. Write owner is commander. Must not replace artifact lineage."
+}

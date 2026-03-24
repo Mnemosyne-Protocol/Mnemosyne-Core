@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Task Envelope v1",
+  "type": "object",
+  "required": [
+    "task_id",
+    "correlation_id",
+    "from_agent",
+    "to_agent",
+    "intent",
+    "required_output",
+    "approval_state",
+    "timestamp_utc"
+  ],
+  "properties": {
+    "task_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique UUID for this specific hop/task"
+    },
+    "parent_task_id": {
+      "type": ["string", "null"],
+      "description": "UUID of the task that triggered this, if any"
+    },
+    "correlation_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "UUID tying the entire workflow together"
+    },
+    "from_agent": {
+      "enum": ["commander", "archivist", "outreach", "pilot_ops"]
+    },
+    "to_agent": {
+      "enum": ["commander", "archivist", "outreach", "pilot_ops"]
+    },
+    "intent": {
+      "enum": [
+        "collect_evidence",
+        "validate_claims",
+        "draft_outreach",
+        "prepare_package",
+        "validate_package",
+        "request_approval",
+        "summarize_status",
+        "collect_delivery_readiness",
+        "collect_lineage",
+        "redraft_message"
+      ]
+    },
+    "payload_ref": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": [],
+      "description": "Array of file paths or document IDs to act upon"
+    },
+    "required_output": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Expected schema of the response"
+    },
+    "approval_state": {
+      "enum": [
+        "not_required",
+        "draft",
+        "ready_for_review",
+        "approved",
+        "rejected",
+        "blocked",
+        "escalated"
+      ]
+    },
+    "retry_count": {
+      "type": "integer",
+      "minimum": 0,
+      "default": 0
+    },
+    "max_retries": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 5,
+      "default": 2
+    },
+    "ttl_hops": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 8,
+      "default": 4,
+      "description": "Time-To-Live in agent hops to prevent infinite loops"
+    },
+    "timestamp_utc": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,20 @@
+{
+  "_template": true,
+  "schema": "weekly_summary_v1",
+  "week_start": "<ISO-8601 date>",
+  "week_end": "<ISO-8601 date>",
+  "generated_by": "commander",
+  "total_tasks": 0,
+  "task_status_counts": {
+    "success": 0,
+    "blocked": 0,
+    "escalated": 0,
+    "failure": 0
+  },
+  "operator_approvals_granted": 0,
+  "operator_approvals_rejected": 0,
+  "unsupported_claims_blocked": 0,
+  "packages_validated": 0,
+  "audit_events_written": 0,
+  "notes": null
+}

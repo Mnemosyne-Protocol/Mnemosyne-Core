@@ -36,6 +36,71 @@ To save context tokens, these rules apply automatically to all prompts unless ex
 4. **Data Structures:** Do NOT change `taxonomy_v1.1`, `quarantine_schema_v1.1`, or `scene_manifest_v1`.
 
 ---
+## AGENT SYSTEM V1 (SOURCE OF TRUTH)
+
+The Mnemosyne internal 4-agent operating layer is documented here:
+
+- `docs/agent_system/v1/mnemosyne_agent_system_v1_index.md`
+- `docs/agent_system/v1/mnemosyne_agent_system_v1_executive_summary.md`
+- `docs/agent_system/v1/agent_architecture_v1.md`
+- `docs/agent_system/v1/agent_contracts_v1.md`
+- `docs/agent_system/v1/agent_workflows_v1.md`
+- `docs/agent_system/v1/agent_memory_model_v1.md`
+- `docs/agent_system/v1/agent_telemetry_and_eval_v1.md`
+
+### Read Order for Agent-Related Work
+1. `docs/agent_system/v1/mnemosyne_agent_system_v1_index.md`
+2. `docs/agent_system/v1/agent_contracts_v1.md`
+3. `docs/agent_system/v1/agent_workflows_v1.md`
+4. `docs/agent_system/v1/agent_memory_model_v1.md`
+5. `docs/agent_system/v1/agent_telemetry_and_eval_v1.md`
+
+### Agent-Layer Cardinal Rules
+- Source of truth for the agent layer is `docs/agent_system/v1/`
+- If any older doc, PDF, brief, or summary conflicts with `docs/agent_system/v1/`, `docs/agent_system/v1/` wins
+- The agent layer must not mutate Gate logic, taxonomy, quarantine schema, or scene manifest
+- No email without ONAY
+- No unsupported external claims
+- Fail closed on ambiguity
+
+### Sprint 1 Implementation Boundary
+Current implementation scope is limited to:
+- repo scaffolding
+- Commander skeleton
+- Archivist skeleton
+
+The following are documented but NOT yet implemented:
+- Outreach runtime
+- Pilot Ops runtime
+- autonomous sending
+- delivery automation
+- expanded telemetry runtime
+
+### Sprint 1 Additional Constraints
+- Audit scaffolding in Sprint 1 means schema-valid audit events, not stub logging
+- Commander and Archivist must emit valid audit records for all meaningful actions, state transitions, validation results, blocked actions, and escalations
+- Any permission surface that is architecturally defined but not active in Sprint 1 must be explicitly marked inert in code
+- Commander Gmail Draft capability is `INERT_UNTIL_OUTREACH_RUNTIME`
+
+### Sprint 1 Implementation Note
+For Sprint 1 runtime scaffolding, shared JSON schema files live under `ops/schemas/`.
+If any older prompt or note mentions `schemas/` or another schema path, use `ops/schemas/`.
+This is an implementation-path choice, not a change to the constitutional source of truth under `docs/agent_system/v1/`.
+
+### Deferred / Parked Work (NOT ACTIVE IN CURRENT SPRINT)
+These items are intentionally deferred to preserve focus.
+They are reminders, not active implementation scope.
+
+- Telegram approval path integration
+- Gmail MCP connection
+- `canonical_scene_manifest.json` v1
+- Ollama PoC
+- ComfyUI PoC
+- UE5 / DCC auxiliary PoCs beyond verified Gate path
+- pilot outreach targets: Riot Games, Ubisoft
+- demo video for pilot presentation
+
+Do not pull deferred items into the active sprint unless explicitly instructed by KS.---
 
 ## 1. WHAT MNEMOSYNE IS
 
@@ -267,20 +332,26 @@ ROI: 12.5x
 - GitHub: `MNEMOSYNE-NODE-01` (added 2026-03-20)
 - Passphrase: Keychain'de saklı
 
-### Agent Architecture (IN PROGRESS)
-- **Telegram Bot:** `Mnemosyne_Commander_Bot` — Human-in-the-Loop gate
-- **CARDINAL RULE:** NO EMAIL IS SENT WITHOUT TELEGRAM 'ONAY' (approval) FROM KEREM
-- **Gmail MCP:** To be connected via Google Cloud API for pilot outreach
-- **Flow:** Claude drafts → Telegram sends preview → Kerem approves/rejects → Only then: send
+### Agent System Status
+- Constitution layer: written
+- Source of truth: `docs/agent_system/v1/`
+- Runtime implementation: Sprint 1 active
+- Current scope: Commander + Archivist only
+- Human-in-the-Loop gate remains mandatory
 
-### Pending Tasks
-- [ ] Gmail MCP connection (needs Google Cloud API setup)
-- [ ] Telegram bot ↔ Claude Code integration
-- [ ] `canonical_scene_manifest.json` v1 (closes the trust chain)
-- [ ] Pilot outreach: Riot Games (cosmetic pipeline), Ubisoft (vendor intake)
-- [ ] Demo video for pilot presentation
-- [ ] FAZ 9: Docker, Unreal Engine 5, Ollama, ComfyUI (sonraki aşama)
+### Deferred / Parked Work (NOT ACTIVE IN CURRENT SPRINT)
+These items are intentionally deferred to preserve focus.  
+They are reminders, not active implementation scope.
 
+- Telegram approval path integration (not yet reliable)
+- Gmail MCP connection
+- `canonical_scene_manifest.json` v1
+- Ollama PoC
+- ComfyUI PoC
+- UE5 / DCC auxiliary PoCs beyond verified Gate path
+- Pilot outreach targets: Riot Games, Ubisoft
+- Demo video for pilot presentation
+Do not pull deferred items into the active sprint unless explicitly instructed by KS.
 ---
 
 ## 9. DOCUMENT REFERENCES

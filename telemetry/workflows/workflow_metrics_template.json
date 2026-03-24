@@ -1,0 +1,15 @@
+{
+  "_template": true,
+  "schema": "workflow_metrics_v1",
+  "workflow_id": "<uuid>",
+  "workflow_type": "<e.g. outreach_draft | pilot_package | evidence_collection>",
+  "initiated_by": "commander",
+  "started_at": "<ISO-8601 UTC>",
+  "completed_at": "<ISO-8601 UTC>",
+  "status": "<success | blocked | escalated | failure>",
+  "task_ids": [],
+  "agent_hops": 0,
+  "approval_required": false,
+  "operator_interventions": 0,
+  "notes": null
+}

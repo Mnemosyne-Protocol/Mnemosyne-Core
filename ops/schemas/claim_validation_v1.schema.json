@@ -1,0 +1,81 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Claim Validation v1",
+  "type": "object",
+  "required": [
+    "claim_id",
+    "task_id",
+    "claim_text",
+    "validation_state",
+    "validated_by",
+    "timestamp_utc"
+  ],
+  "properties": {
+    "claim_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "UUID of the claim being validated"
+    },
+    "task_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "UUID of the task envelope that requested this validation"
+    },
+    "claim_text": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The exact claim being evaluated"
+    },
+    "validation_state": {
+      "enum": ["supported", "unsupported", "escalated", "insufficient_evidence"]
+    },
+    "artifact_ref": {
+      "type": ["string", "null"],
+      "description": "Path to the document containing the evidence"
+    },
+    "evidence_excerpt": {
+      "type": ["string", "null"],
+      "description": "Exact quote, field, or value from the artifact"
+    },
+    "lineage_ref": {
+      "type": ["string", "null"],
+      "description": "Path to the JSON/log proving the lineage"
+    },
+    "blocked_reason": {
+      "type": ["string", "null"],
+      "description": "Explanation if validation_state is not 'supported'"
+    },
+    "validated_by": {
+      "enum": ["archivist"]
+    },
+    "timestamp_utc": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "validation_state": { "const": "supported" }
+        }
+      },
+      "then": {
+        "required": ["artifact_ref", "evidence_excerpt", "lineage_ref"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "validation_state": {
+            "enum": ["unsupported", "escalated", "insufficient_evidence"]
+          }
+        }
+      },
+      "then": {
+        "required": ["blocked_reason"]
+      }
+    }
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,37 @@
+{
+  "schema_version": "v1",
+  "operator_id": "ks",
+  "operator_name": "Kerem Salman",
+  "role": "Lead Architect",
+  "organization": "Mnemosyne Labs",
+  "email": "ks@mnemosynelabs.ai",
+  "approval_authority": ["all"],
+  "communication_preferences": {
+    "language": "Turkish",
+    "technical_terms": "English",
+    "tone": "concise, chess-like, no vibe-coding"
+  },
+  "fail_closed_boundaries": [
+    "no_email_without_onay",
+    "no_git_push_without_approval",
+    "no_delete_without_approval",
+    "no_gate_mutation",
+    "no_taxonomy_mutation",
+    "no_quarantine_schema_mutation"
+  ],
+  "target_account_priorities": [
+    "Epic Games",
+    "Ubisoft",
+    "Riot Games",
+    "ILM",
+    "Weta FX"
+  ],
+  "strategic_constraints": [
+    "Gate architecture is frozen",
+    "Local-first: 127.0.0.1:8765 only",
+    "No C++ plugin work in current sprint",
+    "No cloud dependencies"
+  ],
+  "last_updated": "2026-03-24T00:00:00Z",
+  "_note": "Operator memory is stable and operator-approved. Do not overwrite silently."
+}
